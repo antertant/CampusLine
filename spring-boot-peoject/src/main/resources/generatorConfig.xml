@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <properties resource="generatorConfig.properties" />
+    <!--oracle 连接数据库jar 这里选择自己本地位置-->
+    <classPathEntry location = "${drive.class.path}" />
+    <context id="mybatis" targetRuntime="MyBatis3">
+
+        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin">
+        </plugin>
+
+        <commentGenerator>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true" />
+            <!-- 是否生成注释代时间戳-->
+            <property name="suppressDate" value="false" />
+        </commentGenerator>
+
+        <!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
+        <jdbcConnection driverClass="${jdbc.driver}"
+                        connectionURL="${jdbc.url}"
+                        userId="${jdbc.username}"
+                        password="${jdbc.password}">
+        </jdbcConnection>
+
+        <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL 和
+           NUMERIC 类型解析为java.math.BigDecimal -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <!-- 生成实体类地址 -->
+        <javaModelGenerator targetPackage="${entity.targetProject}"
+                            targetProject="${entity.targetPackage}">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false" />
+            <!-- 是否针对string类型的字段在set的时候进行trim调用 -->
+            <property name="trimStrings" value="false" />
+            <!-- EclipseWork父类路径 -->
+            <!--<property name="rootClass" value="${entity.abstract}" />-->
+        </javaModelGenerator>
+
+        <!-- targetProject:mapper.xml映射文件生成的位置-->
+        <sqlMapGenerator targetPackage="${mapper.targetPackage}"
+                         targetProject="${mapper.targetProject}">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false" />
+        </sqlMapGenerator>
+
+        <!-- targetPackage：mapper接口生成的位置 -->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="${mapper.interface.targetPackage}"
+                             targetProject="${mapper.interface.targetProject}">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false" />
+        </javaClientGenerator>
+
+        <!-- 指定数据库表 -->
+        <table tableName="${table.name}" domainObjectName="${entity.name}" enableDeleteByExample="false"
+               enableSelectByExample="false"  enableCountByExample="false" enableUpdateByExample="false"
+               enableUpdateByPrimaryKey="false">
+            <!--<generatedKey column="sid" sqlStatement="${table.primaryKey}"/>-->
+            <!-- 需要忽略的列true 大小写完全匹配，false 忽略大小写匹配 -->
+            <!--<ignoreColumn column="PLAN_ID"  delimitedColumnName="true" />-->
+        </table>
+
+    </context>
+</generatorConfiguration>
