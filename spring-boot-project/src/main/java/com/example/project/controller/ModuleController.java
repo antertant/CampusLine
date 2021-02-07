@@ -4,6 +4,7 @@ import com.example.project.entity.Module;
 import com.example.project.entity.Post;
 import com.example.project.result.Result;
 import com.example.project.service.IModuleService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,8 @@ public class ModuleController {
     private IModuleService iModuleService;
 
     @CrossOrigin
+    @ApiOperation("After click the dropdown menu of 'mudule' at the navbar" +
+            "choice=1-->life choice=2-->knowledge")
     @RequestMapping(value = "/api/getmodule",method = RequestMethod.GET)
     @ResponseBody
     public Result getmodule(@RequestParam("choice")int choice){
@@ -37,6 +40,7 @@ public class ModuleController {
     }
 
     @CrossOrigin
+    @ApiOperation("Search Knowledge Module via search key")
     @RequestMapping(value = "/api/searchmodule",method = RequestMethod.GET)
     @ResponseBody
     public Result searchmodule(@RequestParam("key")String key){
@@ -45,6 +49,7 @@ public class ModuleController {
     }
 
     @CrossOrigin
+    @ApiOperation("Get Posts of a mudule by its module_name")
     @RequestMapping(value = "/api/getposts",method = RequestMethod.GET)
     @ResponseBody
     public Result getposts(@RequestParam("module_name")String module_name){
@@ -52,4 +57,13 @@ public class ModuleController {
         return Result.ok(posts);
     }
 
+
+    @CrossOrigin
+    @RequestMapping(value="/api/getpoints", method = RequestMethod.POST)
+    @ResponseBody
+    public Result getpoints(@RequestParam("username")String username,
+                            @RequestParam("module_name")String module_name){
+        int point = iModuleService.getPoints(username,module_name);
+        return Result.ok(point);
+    }
 }

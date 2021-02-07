@@ -14,4 +14,8 @@ public interface ModuleMapper {
     List<String> getAdmins(@Param(value="module_name")String module_name);
 
     List<Module> searchModule(@Param(value="key")String key);
+
+    List<Integer> getPoints(@Param("username")String username,@Param("module_name")String module_name);
+
+    void insertPoint(@Param("username")String username, @Param("module_name")String module_name);
 }

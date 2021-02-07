@@ -32,4 +32,15 @@
         and module_name != 'life'
         order by module_name asc
     </select>
+
+    <select id="getPoints" resultType="java.lang.Integer">
+        select count(1),point from module_point
+        where username = #{username}
+        and module_name = #{module_name}
+    </select>
+
+    <insert id="insertPoint">
+        insert into module_point
+        values (#{username},#{module_name},0)
+    </insert>
 </mapper>

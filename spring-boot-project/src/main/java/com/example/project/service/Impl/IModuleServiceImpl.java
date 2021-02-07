@@ -41,4 +41,17 @@ public class IModuleServiceImpl implements IModuleService {
         }
         return modules;
     }
+
+    @Override
+    public int getPoints(String username,String module_name){
+        List<Integer> i = moduleMapper.getPoints(username,module_name);
+        //i.get(0)=0 if no entry, else 1
+        if(i.get(0) == 0){
+            moduleMapper.insertPoint(username,module_name);
+            return 0;
+        }
+        else{
+            return i.get(1);
+        }
+    }
 }
