@@ -11,7 +11,7 @@
  Target Server Version : 80011
  File Encoding         : 65001
 
- Date: 05/02/2021 09:32:23
+ Date: 08/02/2021 07:47:46
 */
 
 SET NAMES utf8mb4;
@@ -65,7 +65,7 @@ CREATE TABLE `comment_reply`  (
 DROP TABLE IF EXISTS `module`;
 CREATE TABLE `module`  (
   `module_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `module_intro` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `module_intro` varchar(3000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `max_adminnumber` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`module_name`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
@@ -73,6 +73,9 @@ CREATE TABLE `module`  (
 -- ----------------------------
 -- Records of module
 -- ----------------------------
+INSERT INTO `module` VALUES ('life', 'This is a module for students to share their daily lives with others', 5);
+INSERT INTO `module` VALUES ('springboot', 'Spring Boot offers a fast way to build applications. It looks at your classpath and at the beans you have configured, makes reasonable assumptions about what you are missing, and adds those items. With Spring Boot, you can focus more on business features and less on infrastructure.', 5);
+INSERT INTO `module` VALUES ('vue', 'Vue (pronounced /vjuː/, like view) is a progressive framework for building user interfaces. It is designed from the ground up to be incrementally adoptable, and can easily scale between a library and a framework depending on different use cases. It consists of an approachable core library that focuses on the view layer only, and an ecosystem of supporting libraries that helps you tackle complexity in large Single-Page Applications.', 5);
 
 -- ----------------------------
 -- Table structure for module_management
@@ -80,7 +83,7 @@ CREATE TABLE `module`  (
 DROP TABLE IF EXISTS `module_management`;
 CREATE TABLE `module_management`  (
   `permission_id` int(11) NOT NULL,
-  `module_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `module_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`permission_id`) USING BTREE,
   INDEX `module_name`(`module_name`) USING BTREE,
   CONSTRAINT `module_management_ibfk_1` FOREIGN KEY (`module_name`) REFERENCES `module` (`module_name`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -89,6 +92,9 @@ CREATE TABLE `module_management`  (
 -- ----------------------------
 -- Records of module_management
 -- ----------------------------
+INSERT INTO `module_management` VALUES (1, 'life');
+INSERT INTO `module_management` VALUES (2, 'springboot');
+INSERT INTO `module_management` VALUES (3, 'vue');
 
 -- ----------------------------
 -- Table structure for module_point
@@ -98,15 +104,16 @@ CREATE TABLE `module_point`  (
   `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `module_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `point` int(255) NULL DEFAULT NULL,
-  PRIMARY KEY (`username`) USING BTREE,
   INDEX `module`(`module_name`) USING BTREE,
-  CONSTRAINT `module_point_ibfk_1` FOREIGN KEY (`module_name`) REFERENCES `module` (`module_name`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `module_point_ibfk_2` FOREIGN KEY (`username`) REFERENCES `user_info` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `module_point_ibfk_1` FOREIGN KEY (`module_name`) REFERENCES `module` (`module_name`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of module_point
 -- ----------------------------
+INSERT INTO `module_point` VALUES ('Mao', 'springboot', 0);
+INSERT INTO `module_point` VALUES ('meng', 'springboot', 0);
+INSERT INTO `module_point` VALUES ('Mao', 'life', 8);
 
 -- ----------------------------
 -- Table structure for post
@@ -131,9 +138,10 @@ CREATE TABLE `post`  (
 -- ----------------------------
 -- Records of post
 -- ----------------------------
-INSERT INTO `post` VALUES (1, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `post` VALUES (2, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `post` VALUES (3, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `post` VALUES (1, NULL, 'Hello, my name is mao.', 'Mao', '2021-02-06 03:27:17', 1, 0, 2);
+INSERT INTO `post` VALUES (2, 'springboot', 'springboot is perfect', 'meng', '2021-02-06 03:28:00', 0, 0, 0);
+INSERT INTO `post` VALUES (3, 'vue', 'vue vuevue vue', 'ppp', '2021-02-06 03:28:24', 0, 0, 0);
+INSERT INTO `post` VALUES (4, NULL, 'Test', 'meng', '2021-02-06 08:31:57', 0, 0, 0);
 
 -- ----------------------------
 -- Table structure for post_collect
@@ -152,7 +160,7 @@ CREATE TABLE `post_collect`  (
 -- Records of post_collect
 -- ----------------------------
 INSERT INTO `post_collect` VALUES (1, 'Mao');
-INSERT INTO `post_collect` VALUES (2, 'Mao');
+INSERT INTO `post_collect` VALUES (1, 'meng');
 
 -- ----------------------------
 -- Table structure for post_comment
@@ -192,6 +200,7 @@ CREATE TABLE `post_like`  (
 -- ----------------------------
 -- Records of post_like
 -- ----------------------------
+INSERT INTO `post_like` VALUES (1, 'meng', '2021-02-08 12:40:38');
 
 -- ----------------------------
 -- Table structure for user_follow
@@ -248,8 +257,8 @@ CREATE TABLE `user_info`  (
 -- ----------------------------
 -- Records of user_info
 -- ----------------------------
-INSERT INTO `user_info` VALUES ('Mao', '123', '', NULL);
-INSERT INTO `user_info` VALUES ('meng', '123', '', NULL);
-INSERT INTO `user_info` VALUES ('ppp', '123', ' ', NULL);
+INSERT INTO `user_info` VALUES ('Mao', '123', '', 1);
+INSERT INTO `user_info` VALUES ('meng', '123', '', 2);
+INSERT INTO `user_info` VALUES ('ppp', '123', ' ', 3);
 
 SET FOREIGN_KEY_CHECKS = 1;
