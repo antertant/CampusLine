@@ -61,6 +61,7 @@ public class ModuleController {
     @CrossOrigin
     @RequestMapping(value="/api/getpoints", method = RequestMethod.POST)
     @ResponseBody
+    //module_name of life module: "life", when frontend send http request
     public Result getpoints(@RequestParam("username")String username,
                             @RequestParam("module_name")String module_name){
         int point = iModuleService.getPoints(username,module_name);
