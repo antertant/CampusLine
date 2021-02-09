@@ -34,7 +34,7 @@ public class UserController {
         if (iUserService.getuser(username)!=null) {
             String password = iUserService.getpassword(username);
             if (Objects.equals(password_,password)) {
-                return Result.ok(null);
+                return Result.ok(user);
             }
         }
         return Result.fail();

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.project.mapper.ModuleMapper">
+    <select id="getPosts" resultType="com.example.project.entity.Post">
+        select *
+        from post
+        where module_name = #{module_name}
+        <if test="module_name == 'life'">
+            or module_name is null
+        </if>
+        order by post_createtime desc
+    </select>
+
+    <select id="getModules" resultType="com.example.project.entity.Module">
+        select *
+        from module
+        where module_name != 'life'
+        order by module_name asc
+    </select>
+
+    <select id="getAdmins" resultType="java.lang.String">
+        select user_info.username
+        from user_info,module_management
+        where module_management.permission_id = user_info.permission_id
+        and module_management.module_name = #{module_name}
+    </select>
+
+    <select id="searchModule" resultType="com.example.project.entity.Module">
+        select *
+        from module
+        where module_name like "%"#{key}"%"
+        and module_name != 'life'
+        order by module_name asc
+    </select>
+
+    <select id="getPoints" resultType="java.lang.Integer">
+        select count(1),point from module_point
+        where username = #{username}
+        and module_name = #{module_name}
+    </select>
+
+    <insert id="insertPoint">
+        insert into module_point
+        values (#{username},#{module_name},0)
+    </insert>
+</mapper>
