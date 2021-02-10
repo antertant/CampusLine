@@ -14,4 +14,6 @@ public interface IModuleService {
     List<Module> searchModule(String key);
 
     int getPoints(String username,String module_name);
+
+    int applym(String username,String module_name);
 }

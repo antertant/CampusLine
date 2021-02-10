@@ -59,12 +59,31 @@ public class ModuleController {
 
 
     @CrossOrigin
+    @ApiOperation("Get user's point at a module")
     @RequestMapping(value="/api/getpoints", method = RequestMethod.POST)
     @ResponseBody
-    //module_name of life module: "life", when frontend send http request
+    //request params: module_name of life module: "life", when frontend send http request
     public Result getpoints(@RequestParam("username")String username,
                             @RequestParam("module_name")String module_name){
         int point = iModuleService.getPoints(username,module_name);
         return Result.ok(point);
     }
+
+    @CrossOrigin
+    @ApiOperation("Apply for manager of a module")
+    @RequestMapping(value = "/api/applym", method = RequestMethod.POST)
+    @ResponseBody
+    public Result applym(@RequestParam("username")String username,
+                         @RequestParam("module_name")String module_name){
+        int res = iModuleService.applym(username,module_name);
+        if(res == 0)
+            return Result.ok("apply successfully");
+        else if(res == 1)
+            return Result.fail("you have been manager of certain module");
+        else if(res ==2)
+            return Result.fail("the module has had enough managers");
+        else//res =3
+            return Result.fail("dont have enough points to apply for a manager");
+    }
+
 }

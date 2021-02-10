@@ -37,6 +37,6 @@ public class UserController {
                 return Result.ok(user);
             }
         }
-        return Result.fail();
+        return Result.fail("fail");
     }
 }

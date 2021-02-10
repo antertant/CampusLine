@@ -37,7 +37,7 @@ public class Result {
         return new Result(200,"success",data);
     }
 
-    public static Result fail(){
-        return new Result(400,"fail",null);
+    public static Result fail(Object data){
+        return new Result(400,"fail",data);
     }
 }

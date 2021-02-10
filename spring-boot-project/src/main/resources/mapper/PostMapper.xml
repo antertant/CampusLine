@@ -40,17 +40,6 @@
           and collect_user = #{username}
     </delete>
 
-    <select id="existPoint" resultType="java.lang.Integer">
-        select count(1) from module_point
-        where username = #{username}
-          and module_name = #{module_name}
-    </select>
-
-    <insert id="insertPoint">
-        insert into module_point
-        values (#{username},#{module_name},#{point})
-    </insert>
-
     <update id="updateP">
         update post set
         <if test="choice==1">

@@ -1,12 +1,15 @@
 package com.example.project.mapper;
 
 import com.example.project.entity.Module;
+import com.example.project.entity.ModuleManagement;
 import com.example.project.entity.Post;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 public interface ModuleMapper {
+    Module getModule(@Param(value = "module_name")String module_name);
+
     List<Post> getPosts(@Param(value="module_name")String module_name);
 
     List<Module> getModules();
@@ -15,7 +18,18 @@ public interface ModuleMapper {
 
     List<Module> searchModule(@Param(value="key")String key);
 
-    List<Integer> getPoints(@Param("username")String username,@Param("module_name")String module_name);
+    Integer getPoints(@Param(value ="username")String username,
+                  @Param(value ="module_name")String module_name);
 
-    void insertPoint(@Param("username")String username, @Param("module_name")String module_name);
+    //whether there is a record in module_point table
+    int existPoint(@Param(value = "username")String username,@Param(value = "module_name")String module_name);
+    void insertPoint(@Param(value = "username")String username,
+                     @Param(value = "module_name")String module_name,
+                     @Param(value = "point")int point);
+
+    void insertManagement(ModuleManagement mm);
+
+    void updateUserpermission(@Param(value = "username")String username,
+                              @Param(value ="permission_id")int permission_id);
+
 }

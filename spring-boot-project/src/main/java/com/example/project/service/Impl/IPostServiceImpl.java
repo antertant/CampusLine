@@ -1,6 +1,7 @@
 package com.example.project.service.Impl;
 
 import com.example.project.entity.Post;
+import com.example.project.mapper.ModuleMapper;
 import com.example.project.mapper.PostMapper;
 import com.example.project.service.IPostService;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,8 @@ public class IPostServiceImpl implements IPostService {
     //choice=3 collect choice=-3 remove collection
     @Resource
     private PostMapper postMapper;
+    @Resource
+    private ModuleMapper moduleMapper;
 
     @Override
     public int likepost(int post_id, String username){
@@ -29,9 +32,9 @@ public class IPostServiceImpl implements IPostService {
             choice = 1;
             postMapper.insertLike(post_id,username);//and like time
             postMapper.updateP(post_id,choice);//likes++ at table post
-            int existpoint = postMapper.existPoint(author,module_name);
+            int existpoint = moduleMapper.existPoint(author,module_name);
             if(existpoint == 0){//no entry at module_point table
-                postMapper.insertPoint(author,module_name,eachlikepoint);
+                moduleMapper.insertPoint(author,module_name,eachlikepoint);
             }
             else{//update author's point at module_name
                 postMapper.updatePoint(author,module_name,eachlikepoint);
@@ -64,9 +67,9 @@ public class IPostServiceImpl implements IPostService {
             choice = 3;
             postMapper.insertCollect(post_id,username);
             postMapper.updateP(post_id,choice);
-            int existpoint = postMapper.existPoint(author,module_name);
+            int existpoint = moduleMapper.existPoint(author,module_name);
             if(existpoint == 0){
-                postMapper.insertPoint(author,module_name,eachcollectpoint);
+                moduleMapper.insertPoint(author,module_name,eachcollectpoint);
             }
             else{
                 postMapper.updatePoint(author,module_name,eachcollectpoint);
