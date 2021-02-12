@@ -5,6 +5,7 @@ import BlogLogin from "../components/manage/BlogLogin";
 import BlogIndex from "../components/home/BlogIndex";
 import homePage from "../view/homePage";
 import loginPage from "../view/loginPage";
+import modulesPage from "../view/modulesPage";
 
 Vue.use(Router)
 
@@ -26,13 +27,9 @@ export default new Router({
       component: loginPage
     },
     {
-      path:'/index',
-      name: 'BlogIndex',
-      component: BlogIndex
-    },
-    {
-      path:'/manage',
-      redirect:'/login'
+      path: '/knowledge-modules',
+      name: 'modulesPage',
+      component: modulesPage
     }
   ]
 })
