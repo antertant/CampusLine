@@ -4,30 +4,30 @@ export default {
   namespaced: true,
 
   state: {
-    moduleList: []
+    lifePostList: []
   },
   getters:{
-    getModuleList: state => {
-      return state.moduleList
+    getLifePostList: state => {
+      return state.lifePostList
     }
   },
   mutations: {
-    setModuleList(state, list) {
-      return state.moduleList = list
+    setLifePostList(state, list) {
+      return state.lifePostList = list
     }
   },
   actions: {
-    getModulefromServer(context) {
+    getlifePostfromServer(context) {
       axios
         .get('/getmodule', {
           params:{
-            choice: 2
+            choice: 1
           }
         })
         .then(response=>{
           console.log(response)
           if(response.data.code === 200){
-            context.commit('setModuleList', response.data.data)
+            context.commit('setLifePostList', response.data.data)
           }
         })
         .catch(failResponse=>{

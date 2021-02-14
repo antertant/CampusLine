@@ -6,9 +6,10 @@
 
 <script>
 import StickyHeader from "../components/header/stickyHeader";
+import PostCard from "../components/post/postCard";
 export default {
   name: "homePage",
-  components: {StickyHeader}
+  components: {PostCard, StickyHeader}
 }
 </script>
 

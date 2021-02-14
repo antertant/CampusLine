@@ -31,6 +31,7 @@ export default {
     userLogout(state) {
       state.loginState = false
       state.loginUserName = ''
+      localStorage.loginUserName = ''
       localStorage.loginState = false
     }
   }

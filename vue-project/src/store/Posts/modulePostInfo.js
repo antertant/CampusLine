@@ -4,30 +4,31 @@ export default {
   namespaced: true,
 
   state: {
-    moduleList: []
+    modulePostList: [],
+    moduleName: ''
   },
   getters:{
-    getModuleList: state => {
-      return state.moduleList
+    getModulePostList: state => {
+      return state.modulePostList
     }
   },
   mutations: {
-    setModuleList(state, list) {
-      return state.moduleList = list
+    setModulePostList(state, list) {
+      return state.modulePostList = list
     }
   },
   actions: {
-    getModulefromServer(context) {
+    getModulePostfromServer(context, name) {
       axios
-        .get('/getmodule', {
+        .get('/getposts', {
           params:{
-            choice: 2
+            module_name: name
           }
         })
         .then(response=>{
           console.log(response)
           if(response.data.code === 200){
-            context.commit('setModuleList', response.data.data)
+            context.commit('setModulePostList', response.data.data)
           }
         })
         .catch(failResponse=>{

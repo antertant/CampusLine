@@ -37,13 +37,24 @@
             placement="bottom"
             triggers="hover"
           >
-            <b-list-group style="text-align: center" v-show="!loginState">
-              <b-list-group-item to="/login">Login</b-list-group-item>
-              <b-list-group-item to="/register">Register</b-list-group-item>
-            </b-list-group>
-            <b-list-group style="text-align: center" v-show="loginState">
-              <b-list-group-item @click="logout" button>Logout</b-list-group-item>
-            </b-list-group>
+<!--            Visitor Login-->
+            <b-button-group vertical v-show="!loginState">
+              <b-button to="/login" variant="outline-secondary" style="text-align: left">
+                <b-icon icon="person-check" aria-hidden="true" variant="primary"></b-icon> Login
+              </b-button>
+              <b-button to="/register" variant="outline-secondary" style="text-align: left">
+                <b-icon icon="person-plus" aria-hidden="true" variant="success"></b-icon> Register
+              </b-button>
+            </b-button-group>
+<!--            After log in-->
+            <b-button-group vertical v-show="loginState">
+              <b-button :to="'/user_'+loginName+'/profile'" variant="outline-secondary" style="text-align: left">
+                <b-icon icon="person" aria-hidden="true" variant="primary"></b-icon> Profile
+              </b-button>
+              <b-button @click="logout" variant="outline-secondary" style="text-align: left">
+                <b-icon icon="power" aria-hidden="true" variant="danger"></b-icon> Logout
+              </b-button>
+            </b-button-group>
           </b-popover>
 
           <b-nav-form>
@@ -65,7 +76,6 @@ export default {
   name: "stickyHeader",
   data() {
     return {
-      accessMode:"/login"
     }
   },
   computed: {
@@ -77,6 +87,7 @@ export default {
   methods: {
     logout(event){
       event.preventDefault()
+      this.$router.replace('/home')
       this.$store.commit("loginInfo/userLogout")
     }
   }
