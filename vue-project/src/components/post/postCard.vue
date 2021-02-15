@@ -1,5 +1,6 @@
 <template>
   <b-card style="max-width: 50rem;" class="mt-4 mx-auto">
+    {{foo}}
 <!--    Post author-->
     <template #header>
       <b-avatar></b-avatar>
@@ -18,9 +19,9 @@
           Collect
           <b-badge>{{ postContent.post_collections }}</b-badge>
         </b-list-group-item>
-        <b-list-group-item button>
+        <b-list-group-item  @click="likePost" button>
           Like
-          <b-badge>{{ postContent.post_likes }}</b-badge>
+          <b-badge>{{ postContent.post_likes + likeCount }}</b-badge>
         </b-list-group-item>
         <b-list-group-item button>
           Comment
@@ -36,22 +37,72 @@
 
 <script>
 import moment from "moment";
+import {mapGetters} from "vuex";
+import axios from "axios";
 
 export default {
   name: "postCard",
+  props: ['postContent'],
   data() {
     return{
-      postTime: Date
+      postTime: Date,
+      likeCount: 0
     }
   },
-  props: ['postContent'],
+  computed: {
+    ...mapGetters ({
+      current_user: "loginInfo/getLUName",
+    })
+  },
   methods: {
-    timeConvert() {
-      this.postTime = moment(new Date(this.postContent.post_createtime))
+    likePost() {
+
+      const crtEl = this.$createElement
+      const errTitle = crtEl(
+        'p',
+        { class: ['text-center', 'mb-0'] },
+        [
+          crtEl('b-icon', { props:{ icon: 'exclamation-diamond', small: true } }),
+          crtEl('strong', ' Error')
+        ]
+      )
+
+      if(this.current_user === '')
+        this.$bvToast.toast(
+          'Please login before interacting with posts.',{
+            title: [errTitle],
+            toaster: 'b-toaster-top-center',
+            variant: 'danger',
+            solid: true
+          }
+        )
+      else{
+        axios
+          .post('/likepost', null, {params:{
+              post_id: this.postContent.post_id,
+              username: this.current_user
+            }
+          })
+          .then(response=>{
+            console.log(response)
+            if(response.data.code === 200){
+              if(response.data.data === 'like successfully'){
+                this.likeCount += 1
+              }
+              else if(response.data.data === 'cancel like successfully'){
+                this.likeCount -= 1
+              }
+            }
+          })
+          .catch(failResponse=>{
+            console.log(failResponse)
+          })
+      }
     }
   },
   mounted() {
-    this.timeConvert()
+    this.likeCount = 0
+    this.postTime = moment(new Date(this.postContent.post_createtime))
   }
 }
 </script>
