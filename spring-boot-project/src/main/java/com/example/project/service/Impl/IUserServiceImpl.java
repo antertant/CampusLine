@@ -19,6 +19,10 @@ public class IUserServiceImpl implements IUserService {
 
     @Override
     public User getuser(String username){
-        return userMapper.selectByPrimaryKey(username);
+        User user = userMapper.selectByPrimaryKey(username);
+        user.setFollows(userMapper.selectFollow(username));
+        user.setFollowers(userMapper.selectFollower(username));
+        user.setCollections(userMapper.selectCollection(username));
+        return user;
     }
 }

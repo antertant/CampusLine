@@ -10,24 +10,25 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Objects;
 
 @Controller
-public class SpringBootProjectController {
+public class UserController {
     @Autowired
     private IUserService iUserService;
 
-    @RequestMapping("/hello")
-    @ResponseBody
-    public String hello() {
+//    @RequestMapping("/hello")
+//    @ResponseBody
+//    public String hello() {
 //        User user = new User();
 //        User user1 = userMapper.selectByPrimaryKey("Mao");
-        String out = "Mao's password: " + iUserService.getpassword("Mao");
-        return out;
-    }
-
+//        String out = "Mao's password: " + iUserService.getpassword("Mao");
+//        return out;
+//    }
     @CrossOrigin
     @RequestMapping(value = "/api/login", method = RequestMethod.POST,
             produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Result login(@RequestBody User loginInfo) {
+        User user = iUserService.getuser(loginInfo.getUsername());
+
         String username = loginInfo.getUsername();
         String password_ = loginInfo.getPassword();
         if (iUserService.getuser(username)!=null) {

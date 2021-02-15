@@ -5,44 +5,64 @@
     <id column="username" jdbcType="VARCHAR" property="username" />
     <result column="password" jdbcType="VARCHAR" property="password" />
   </resultMap>
-  <sql id="Base_Column_List">
-    username, password
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
+<!--  resultMap="BaseResultMap"-->
+<!--  <sql id="Base_Column_List">-->
+<!--    username, password-->
+<!--  </sql>-->
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultType="com.example.project.entity.User">
+    select distinct user_info.username, user_info.password, user_info.email, user_info.permission_id
     from user_info
+    where user_info.username = #{username,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectFollow" parameterType="java.lang.String" resultType="java.lang.String">
+    select follow
+    from user_follow
     where username = #{username,jdbcType=VARCHAR}
   </select>
+
+  <select id="selectFollower" parameterType="java.lang.String" resultType="java.lang.String">
+    select follower
+    from user_follower
+    where username = #{username,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectCollection" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select post_id
+    from post_collect
+    where collect_user = #{username}
+  </select>
+
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from user_info
     where username = #{username,jdbcType=VARCHAR}
   </delete>
 
-  <insert id="insert" parameterType="com.example.project.entity.User">
-    insert into user_info (username, password)
-    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR})
-  </insert>
+<!--  <insert id="insert" parameterType="com.example.project.entity.User">-->
+<!--    insert into user_info (username, password)-->
+<!--    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR})-->
+<!--  </insert>-->
 
-  <insert id="insertSelective" parameterType="com.example.project.entity.User">
-    insert into user_info
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="username != null">
-        username,
-      </if>
-      <if test="password != null">
-        password,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="username != null">
-        #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null">
-        #{password,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
+<!--  <insert id="insertSelective" parameterType="com.example.project.entity.User">-->
+<!--    insert into user_info-->
+<!--    <trim prefix="(" suffix=")" suffixOverrides=",">-->
+<!--      <if test="username != null">-->
+<!--        username,-->
+<!--      </if>-->
+<!--      <if test="password != null">-->
+<!--        password,-->
+<!--      </if>-->
+<!--    </trim>-->
+<!--    <trim prefix="values (" suffix=")" suffixOverrides=",">-->
+<!--      <if test="username != null">-->
+<!--        #{username,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="password != null">-->
+<!--        #{password,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--    </trim>-->
+<!--  </insert>-->
 
 </mapper>

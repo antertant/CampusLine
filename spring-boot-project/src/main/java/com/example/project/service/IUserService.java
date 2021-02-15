@@ -6,4 +6,5 @@ public interface IUserService {
     String getpassword(String username);
 
     User getuser(String username);
+
 }
