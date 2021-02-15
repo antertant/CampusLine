@@ -6,7 +6,7 @@ public class Result {
     private String message;
     private Object data;
 
-    Result(int code, String message, Object data) {
+    public Result(int code, String message, Object data) {
         this.code = code;
         this.message = message;
         this.data = data;
@@ -37,7 +37,7 @@ public class Result {
         return new Result(200,"success",data);
     }
 
-    public static Result fail(){
-        return new Result(400,"fail",null);
+    public static Result fail(Object data){
+        return new Result(400,"fail",data);
     }
 }

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.project.mapper.PostMapper">
+    <select id="getPost" resultType="com.example.project.entity.Post">
+        select * from post
+        where post_id = #{post_id}
+    </select>
+
+    <select id="existLike" resultType="java.lang.Integer">
+        select count(1) from post_like
+        where post_id = #{post_id}
+          and like_user = #{username}
+    </select>
+
+    <insert id="insertLike">
+        insert into post_like
+        values (#{post_id},#{username},UTC_TIMESTAMP)
+    </insert>
+
+    <delete id="deleteLike">
+        delete from post_like
+        where post_id = #{post_id}
+         and like_user = #{username}
+    </delete>
+
+    <select id="existCollect" resultType="java.lang.Integer">
+        select count(1) from post_collect
+        where post_id = #{post_id}
+          and collect_user = #{username}
+    </select>
+
+    <insert id="insertCollect">
+        insert into post_collect
+        values (#{post_id},#{username})
+    </insert>
+
+    <delete id="deleteCollect">
+        delete from post_collect
+        where post_id = #{post_id}
+          and collect_user = #{username}
+    </delete>
+
+    <update id="updateP">
+        update post set
+        <if test="choice==1">
+            post_likes = post_likes+1
+        </if>
+        <if test="choice==-1">
+            post_likes = post_likes-1
+        </if>
+        <if test="choice==2">
+            post_comments = post_comments+1
+        </if>
+        <if test="choice==-2">
+            post_comments = post_comments-1
+        </if>
+        <if test="choice==3">
+            post_collections = post_collections+1
+        </if>
+        <if test="choice==-3">
+            post_collections = post_collections-1
+        </if>
+        where post_id = #{post_id}
+    </update>
+
+    <update id="updatePoint">
+        update module_point set
+        point = point+#{point}
+        where username = #{username}
+        and module_name = #{module_name}
+    </update>
+</mapper>
