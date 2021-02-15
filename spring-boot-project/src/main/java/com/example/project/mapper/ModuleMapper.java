@@ -18,14 +18,14 @@ public interface ModuleMapper {
 
     List<Module> searchModule(@Param(value="key")String key);
 
-    Integer getPoints(@Param(value ="username")String username,
-                  @Param(value ="module_name")String module_name);
+//    Integer getPoints(@Param(value ="username")String username,
+//                  @Param(value ="module_name")String module_name);
 
     //whether there is a record in module_point table
-    int existPoint(@Param(value = "username")String username,@Param(value = "module_name")String module_name);
-    void insertPoint(@Param(value = "username")String username,
-                     @Param(value = "module_name")String module_name,
-                     @Param(value = "point")int point);
+//    int existPoint(@Param(value = "username")String username,@Param(value = "module_name")String module_name);
+//    void insertPoint(@Param(value = "username")String username,
+//                     @Param(value = "module_name")String module_name,
+//                     @Param(value = "point")int point);
 
     void insertManagement(ModuleManagement mm);
 
