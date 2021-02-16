@@ -35,4 +35,7 @@ public interface ModuleMapper {
                   @Param(value = "module_name")String module_name);
 
     void deleteAdmin(@Param(value = "username")String username);
+
+    void editIntro(@Param(value = "module_name")String module_name,
+                   @Param(value = "new_intro")String new_intro);
 }

@@ -19,6 +19,12 @@ public class IPostServiceImpl implements IPostService {
     private ModuleMapper moduleMapper;
 
     @Override
+    public int deletePost(int post_id){
+        int flag = postMapper.deletePost(post_id);
+        return flag;
+    }
+
+    @Override
     public int likepost(int post_id, String username){
         int choice;//like or cancel like
 //        int eachlikepoint = 2;

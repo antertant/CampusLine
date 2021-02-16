@@ -93,4 +93,8 @@ public class IModuleServiceImpl implements IModuleService {
         moduleMapper.deleteAdmin(username);
     }
 
+    @Override
+    public void editintro(String module_name,String new_intro){
+        moduleMapper.editIntro(module_name,new_intro);
+    }
 }

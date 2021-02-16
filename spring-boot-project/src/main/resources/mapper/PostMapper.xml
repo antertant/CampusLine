@@ -13,6 +13,10 @@
         </if>
         and post_author = #{username}
     </select>
+    <delete id="deletePost">
+        delete from post
+        where post_id = #{post_id}
+    </delete>
 
     <select id="existLike" resultType="java.lang.Integer">
         select count(1) from post_like
