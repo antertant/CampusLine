@@ -13,6 +13,18 @@ public class PostController {
     private IPostService iPostService;
 
     @CrossOrigin
+    @ApiOperation("Delete post")
+    @RequestMapping(value = "/api/deletepost", method = RequestMethod.POST)
+    @ResponseBody
+    public Result deletepost(@RequestParam("post_id")int post_id){
+        int flag = iPostService.deletePost(post_id);
+        if(flag == 1)
+            return Result.ok("delete successfully");
+        else
+            return Result.fail("delete failed");
+    }
+
+    @CrossOrigin
     @ApiOperation("like or cancel like")
     @RequestMapping(value = "/api/likepost", method = RequestMethod.POST)
     @ResponseBody

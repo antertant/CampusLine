@@ -18,4 +18,6 @@ public interface IModuleService {
     int applym(String username,String module_name);
 
     void quitAdmin(String username);
+
+    void editintro(String module_name,String new_intro);
 }

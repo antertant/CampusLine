@@ -115,6 +115,15 @@ public class ModuleController {
         return Result.ok("quit successfully");
     }
 
+    @CrossOrigin
+    @ApiOperation("Edit module introduction")
+    @RequestMapping(value = "/api/editintro", method = RequestMethod.POST)
+    @ResponseBody
+    public Result editintro(@RequestParam("module_name")String module_name,
+                            @RequestParam("new_intro")String new_intro){
+        iModuleService.editintro(module_name,new_intro);
+        return Result.ok("modify successfully");
+    }
 
 
 

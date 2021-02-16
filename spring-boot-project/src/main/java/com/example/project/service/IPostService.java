@@ -1,6 +1,8 @@
 package com.example.project.service;
 
 public interface IPostService {
+    int deletePost(int post_id);
+
     int likepost(int post_id, String username);
 
     void commentpost(int post_id, String username, String content);

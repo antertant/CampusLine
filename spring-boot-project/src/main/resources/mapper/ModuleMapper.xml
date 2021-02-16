@@ -71,4 +71,9 @@
         where username = #{username}
     </update>
 
+    <update id="editIntro">
+        update module set module_intro = #{new_intro}
+        where module_name = #{module_name}
+    </update>
+
 </mapper>
