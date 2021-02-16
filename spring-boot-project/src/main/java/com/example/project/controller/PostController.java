@@ -64,7 +64,6 @@ public class PostController {
     }
 
 
-    
 //    @CrossOrigin
 //    @ApiOperation(value = "show hot posts in life module")
 //    @RequestMapping(value = "/api/getlifehot",method = RequestMethod.GET)
@@ -72,5 +71,6 @@ public class PostController {
 //    public Result getlifehot(){
 //
 //    }
+
 
 }

@@ -39,6 +39,7 @@ public class IPostServiceImpl implements IPostService {
 //            else{//update author's point at module_name
 //                postMapper.updatePoint(author,module_name,eachlikepoint);
 //            }
+
             return 1;
         }
         else{

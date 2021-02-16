@@ -15,6 +15,7 @@ public interface PostMapper {
     void insertLike(@Param(value = "post_id")int post_id,@Param(value = "username")String username);
     void deleteLike(@Param(value = "post_id")int post_id,@Param(value = "username")String username);
 
+
     void insertComment(@Param(value = "post_id")int post_id,
                        @Param(value = "username")String username,
                        @Param(value = "content")String content);
@@ -25,8 +26,6 @@ public interface PostMapper {
     int existCollect(@Param(value = "post_id")int post_id,@Param(value = "username")String username);
     void insertCollect(@Param(value = "post_id")int post_id,@Param(value = "username")String username);
     void deleteCollect(@Param(value = "post_id")int post_id,@Param(value = "username")String username);
-
-
 
     //update table post
     void updateP(@Param(value = "post_id")int post_id,@Param(value = "choice")int choice);

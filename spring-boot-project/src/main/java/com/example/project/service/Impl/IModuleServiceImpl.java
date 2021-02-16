@@ -62,6 +62,7 @@ public class IModuleServiceImpl implements IModuleService {
         }
         return points;
     }
+
     @Override
     public int applym(String username, String module_name){
         int leastpoint = 2;
@@ -74,6 +75,7 @@ public class IModuleServiceImpl implements IModuleService {
         else if(managers>=maxadmins){
             return 2;//the module has had enough managers
         }
+
         else if(this.getPoints(username,module_name)<leastpoint){
             return 3;//dont have enough points to apply for a manager
         }

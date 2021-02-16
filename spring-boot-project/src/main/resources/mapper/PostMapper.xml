@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.project.mapper.PostMapper">
+<<<<<<< HEAD
 <!--    <select id="getPost" resultType="com.example.project.entity.Post">-->
 <!--        select * from post-->
 <!--        where post_id = #{post_id}-->
@@ -12,6 +13,11 @@
             or module_name is null
         </if>
         and post_author = #{username}
+=======
+    <select id="getPost" resultType="com.example.project.entity.Post">
+        select * from post
+        where post_id = #{post_id}
+>>>>>>> origin/24-module-page-design-implementation
     </select>
 
     <select id="existLike" resultType="java.lang.Integer">
@@ -31,6 +37,7 @@
          and like_user = #{username}
     </delete>
 
+<<<<<<< HEAD
     <insert id="insertComment">
         insert into post_comment(post_id,comment_user,comment_content,comment_time)
         values(#{post_id},#{username},#{content},UTC_TIMESTAMP)
@@ -45,6 +52,8 @@
     </delete>
 
 
+=======
+>>>>>>> origin/24-module-page-design-implementation
     <select id="existCollect" resultType="java.lang.Integer">
         select count(1) from post_collect
         where post_id = #{post_id}
@@ -85,10 +94,19 @@
         where post_id = #{post_id}
     </update>
 
+<<<<<<< HEAD
 <!--    <update id="updatePoint">-->
 <!--        update module_point set-->
 <!--        point = point+#{point}-->
 <!--        where username = #{username}-->
 <!--        and module_name = #{module_name}-->
 <!--    </update>-->
+=======
+    <update id="updatePoint">
+        update module_point set
+        point = point+#{point}
+        where username = #{username}
+        and module_name = #{module_name}
+    </update>
+>>>>>>> origin/24-module-page-design-implementation
 </mapper>

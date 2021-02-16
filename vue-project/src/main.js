@@ -2,9 +2,18 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
+import store from './store'
 import router from './router'
+import {BootstrapVue, BootstrapVueIcons} from "bootstrap-vue";
 
-// 引用axios，并设置基础URL为后端服务api地址
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
+// Use bootstrap-vue
+Vue.use(BootstrapVue)
+Vue.use(BootstrapVueIcons)
+
+// Render axios, and set basic URL for back-end
 var axios = require('axios')
 axios.defaults.baseURL = 'http://localhost:8843/api'
 Vue.config.productionTip = false
@@ -15,6 +24,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
