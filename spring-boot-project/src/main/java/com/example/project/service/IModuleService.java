@@ -16,4 +16,6 @@ public interface IModuleService {
     int getPoints(String username,String module_name);
 
     int applym(String username,String module_name);
+
+    void quitAdmin(String username);
 }

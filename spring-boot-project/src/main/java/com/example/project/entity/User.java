@@ -7,10 +7,17 @@ public class User {
     private String password;
     private String email;
     private int permission_id;
+    private String module_admin;
     private List<String> follows;
     private List<String> followers;
     private List<Integer> collections;
 
+    public String getModule_admin() {
+        return module_admin;
+    }
+    public void setModule_admin(String module_admin) {
+        this.module_admin = module_admin;
+    }
     public String getEmail() {
         return email;
     }

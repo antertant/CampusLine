@@ -2,6 +2,8 @@ package com.example.project.controller;
 
 import com.example.project.entity.Module;
 import com.example.project.entity.Post;
+import com.example.project.entity.User;
+import com.example.project.mapper.UserMapper;
 import com.example.project.result.Result;
 import com.example.project.service.IModuleService;
 import io.swagger.annotations.ApiOperation;
@@ -9,12 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class ModuleController {
     @Autowired
     private IModuleService iModuleService;
+    @Resource
+    private UserMapper userMapper;
 
     @CrossOrigin
     @ApiOperation("After click the dropdown menu of 'mudule' at the navbar" +
@@ -40,6 +46,21 @@ public class ModuleController {
     }
 
     @CrossOrigin
+    @ApiOperation("get user's role at a module")
+    @RequestMapping(value = "/api/getrole",method = RequestMethod.GET)
+    @ResponseBody
+    public Result getRole(@RequestParam("username")String username,
+                          @RequestParam("module_name")String module_name){
+        User user = userMapper.selectByPrimaryKey(username);
+        if(Objects.equals(user.getModule_admin(),module_name)){
+            return Result.ok("admin");
+        }
+        else {
+            return Result.ok("user");
+        }
+    }
+
+    @CrossOrigin
     @ApiOperation("Search Knowledge Module via search key")
     @RequestMapping(value = "/api/searchmodule",method = RequestMethod.GET)
     @ResponseBody
@@ -49,7 +70,7 @@ public class ModuleController {
     }
 
     @CrossOrigin
-    @ApiOperation("Get Posts of a mudule by its module_name")
+    @ApiOperation("Get Posts of a mudule by module_name")
     @RequestMapping(value = "/api/getposts",method = RequestMethod.GET)
     @ResponseBody
     public Result getposts(@RequestParam("module_name")String module_name){
@@ -57,9 +78,8 @@ public class ModuleController {
         return Result.ok(posts);
     }
 
-
     @CrossOrigin
-    @ApiOperation("Get user's point at a module")
+    @ApiOperation("Get user's points at a module")
     @RequestMapping(value="/api/getpoints", method = RequestMethod.POST)
     @ResponseBody
     //request params: module_name of life module: "life", when frontend send http request
@@ -70,8 +90,8 @@ public class ModuleController {
     }
 
     @CrossOrigin
-    @ApiOperation("Apply for manager of a module")
-    @RequestMapping(value = "/api/applym", method = RequestMethod.POST)
+    @ApiOperation("Apply for admin of a module")
+    @RequestMapping(value = "/api/applyadmin", method = RequestMethod.POST)
     @ResponseBody
     public Result applym(@RequestParam("username")String username,
                          @RequestParam("module_name")String module_name){
@@ -79,11 +99,23 @@ public class ModuleController {
         if(res == 0)
             return Result.ok("apply successfully");
         else if(res == 1)
-            return Result.fail("you have been manager of certain module");
+            return Result.fail("you have been an admin of certain module");
         else if(res ==2)
-            return Result.fail("the module has had enough managers");
+            return Result.fail("the module has had enough admins");
         else//res =3
-            return Result.fail("dont have enough points to apply for a manager");
+            return Result.fail("dont have enough points to become an admin");
     }
+
+    @CrossOrigin
+    @ApiOperation("Quit module admin")
+    @RequestMapping(value = "/api/deladmin", method = RequestMethod.POST)
+    @ResponseBody
+    public Result deladmin(@RequestParam("username")String username){
+        iModuleService.quitAdmin(username);
+        return Result.ok("quit successfully");
+    }
+
+
+
 
 }

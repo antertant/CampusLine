@@ -1,7 +1,6 @@
 package com.example.project.mapper;
 
 import com.example.project.entity.Module;
-import com.example.project.entity.ModuleManagement;
 import com.example.project.entity.Post;
 import org.apache.ibatis.annotations.Param;
 
@@ -27,9 +26,13 @@ public interface ModuleMapper {
 //                     @Param(value = "module_name")String module_name,
 //                     @Param(value = "point")int point);
 
-    void insertManagement(ModuleManagement mm);
+//    void insertManagement(ModuleManagement mm);
 
-    void updateUserpermission(@Param(value = "username")String username,
-                              @Param(value ="permission_id")int permission_id);
+//    void updateUserpermission(@Param(value = "username")String username,
+//                              @Param(value ="permission_id")int permission_id);
 
+    void setAdmin(@Param(value = "username")String username,
+                  @Param(value = "module_name")String module_name);
+
+    void deleteAdmin(@Param(value = "username")String username);
 }

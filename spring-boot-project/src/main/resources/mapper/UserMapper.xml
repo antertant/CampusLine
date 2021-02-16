@@ -1,43 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.project.mapper.UserMapper">
-  <resultMap id="BaseResultMap" type="com.example.project.entity.User">
-    <id column="username" jdbcType="VARCHAR" property="username" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
-  </resultMap>
-<!--  resultMap="BaseResultMap"-->
-<!--  <sql id="Base_Column_List">-->
-<!--    username, password-->
-<!--  </sql>-->
 
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultType="com.example.project.entity.User">
-    select distinct user_info.username, user_info.password, user_info.email, user_info.permission_id
-    from user_info
-    where user_info.username = #{username,jdbcType=VARCHAR}
+  <select id="selectByPrimaryKey" resultType="com.example.project.entity.User">
+    select * from user_info
+    where username = #{username}
   </select>
 
-  <select id="selectFollow" parameterType="java.lang.String" resultType="java.lang.String">
-    select follow
-    from user_follow
-    where username = #{username,jdbcType=VARCHAR}
+  <select id="selectFollow" resultType="java.lang.String">
+    select follow from user_follow
+    where username = #{username}
   </select>
 
-  <select id="selectFollower" parameterType="java.lang.String" resultType="java.lang.String">
-    select follower
-    from user_follower
-    where username = #{username,jdbcType=VARCHAR}
+  <select id="selectFollower"  resultType="java.lang.String">
+    select follower from user_follower
+    where username = #{username}
   </select>
 
-  <select id="selectCollection" parameterType="java.lang.String" resultType="java.lang.Integer">
-    select post_id
-    from post_collect
+  <select id="selectCollection" resultType="java.lang.Integer">
+    select post_id from post_collect
     where collect_user = #{username}
   </select>
 
-
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <delete id="deleteByPrimaryKey" >
     delete from user_info
-    where username = #{username,jdbcType=VARCHAR}
+    where username = #{username}
   </delete>
 
 <!--  <insert id="insert" parameterType="com.example.project.entity.User">-->

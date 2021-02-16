@@ -22,9 +22,8 @@
     </select>
 
     <select id="getAdmins" resultType="java.lang.String">
-        select user_info.username from user_info,module_management
-        where module_management.permission_id = user_info.permission_id
-        and module_management.module_name = #{module_name}
+        select username from user_info
+        where  module_admin = #{module_name}
     </select>
 
     <select id="searchModule" resultType="com.example.project.entity.Module">
@@ -51,14 +50,25 @@
 <!--        values (#{username},#{module_name},#{point})-->
 <!--    </insert>-->
 
-    <insert id="insertManagement" parameterType="com.example.project.entity.ModuleManagement" useGeneratedKeys="true" keyProperty="permission_id" >
-        insert into module_management(module_name)
-        values(#{module_name})
-    </insert>
+<!--    <insert id="insertManagement" parameterType="com.example.project.entity.ModuleManagement" useGeneratedKeys="true" keyProperty="permission_id" >-->
+<!--        insert into module_management(module_name)-->
+<!--        values(#{module_name})-->
+<!--    </insert>-->
 
-    <update id="updateUserpermission">
-        update user_info set
-        permission_id = #{permission_id}
+<!--    <update id="updateUserpermission">-->
+<!--        update user_info set-->
+<!--        permission_id = #{permission_id}-->
+<!--        where username = #{username}-->
+<!--    </update>-->
+
+    <update id="setAdmin">
+        update user_info set module_admin = #{module_name}
         where username = #{username}
     </update>
+
+    <update id="deleteAdmin">
+        update user_info set module_admin = null
+        where username = #{username}
+    </update>
+
 </mapper>
