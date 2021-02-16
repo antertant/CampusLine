@@ -34,22 +34,22 @@
         order by module_name asc
     </select>
 
-    <select id="getPoints" resultType="java.lang.Integer">
-        select point from module_point
-        where username = #{username}
-        and module_name = #{module_name}
-    </select>
+<!--    <select id="getPoints" resultType="java.lang.Integer">-->
+<!--        select point from module_point-->
+<!--        where username = #{username}-->
+<!--        and module_name = #{module_name}-->
+<!--    </select>-->
 
-    <select id="existPoint" resultType="java.lang.Integer">
-        select count(1) from module_point
-        where username = #{username}
-          and module_name = #{module_name}
-    </select>
+<!--    <select id="existPoint" resultType="java.lang.Integer">-->
+<!--        select count(1) from module_point-->
+<!--        where username = #{username}-->
+<!--          and module_name = #{module_name}-->
+<!--    </select>-->
 
-    <insert id="insertPoint">
-        insert into module_point
-        values (#{username},#{module_name},#{point})
-    </insert>
+<!--    <insert id="insertPoint">-->
+<!--        insert into module_point-->
+<!--        values (#{username},#{module_name},#{point})-->
+<!--    </insert>-->
 
     <insert id="insertManagement" parameterType="com.example.project.entity.ModuleManagement" useGeneratedKeys="true" keyProperty="permission_id" >
         insert into module_management(module_name)
