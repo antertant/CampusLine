@@ -88,9 +88,11 @@ public class IModuleServiceImpl implements IModuleService {
         }
     }
 
+
     @Override
     public void quitAdmin(String username){
         moduleMapper.deleteAdmin(username);
     }
+
 
 }
