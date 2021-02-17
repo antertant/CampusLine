@@ -11,7 +11,7 @@
  Target Server Version : 80011
  File Encoding         : 65001
 
- Date: 16/02/2021 22:58:47
+ Date: 17/02/2021 10:17:00
 */
 
 SET NAMES utf8mb4;
@@ -34,13 +34,14 @@ CREATE TABLE `comment_like`  (
 -- ----------------------------
 -- Records of comment_like
 -- ----------------------------
+INSERT INTO `comment_like` VALUES (5, 'Mao', '2021-02-17 08:56:47');
 
 -- ----------------------------
 -- Table structure for comment_reply
 -- ----------------------------
 DROP TABLE IF EXISTS `comment_reply`;
 CREATE TABLE `comment_reply`  (
-  `reply_id` int(11) NOT NULL,
+  `reply_id` int(11) NOT NULL AUTO_INCREMENT,
   `comment_id` int(11) NOT NULL,
   `creply_content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `creply_time` datetime(0) NULL DEFAULT NULL,
@@ -53,11 +54,14 @@ CREATE TABLE `comment_reply`  (
   CONSTRAINT `comment_reply_ibfk_2` FOREIGN KEY (`from_user`) REFERENCES `user_info` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `comment_reply_ibfk_3` FOREIGN KEY (`to_user`) REFERENCES `user_info` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `comment_reply_ibfk_4` FOREIGN KEY (`comment_id`) REFERENCES `post_comment` (`comment_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of comment_reply
 -- ----------------------------
+INSERT INTO `comment_reply` VALUES (1, 3, 'I agree', '2021-02-17 05:25:47', 'meng', 'Mao');
+INSERT INTO `comment_reply` VALUES (2, 4, 'no', '2021-02-17 05:29:57', 'meng', 'ppp');
+INSERT INTO `comment_reply` VALUES (4, 3, 'hahahaha', '2021-02-17 12:48:34', 'Mao', 'meng');
 
 -- ----------------------------
 -- Table structure for module
@@ -95,12 +99,12 @@ CREATE TABLE `post`  (
   INDEX `module_name`(`module_name`) USING BTREE,
   CONSTRAINT `post_ibfk_2` FOREIGN KEY (`post_author`) REFERENCES `user_info` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `post_ibfk_3` FOREIGN KEY (`module_name`) REFERENCES `module` (`module_name`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of post
 -- ----------------------------
-INSERT INTO `post` VALUES (2, 'springboot', 'springboot is perfect', 'meng', '2021-02-06 03:28:00', 0, 0, 0);
+INSERT INTO `post` VALUES (2, 'springboot', 'springboot is perfect', 'meng', '2021-02-06 03:28:00', 2, 3, 0);
 INSERT INTO `post` VALUES (3, 'vue', 'vue vuevue vue', 'ppp', '2021-02-06 03:28:24', 0, 0, 0);
 INSERT INTO `post` VALUES (4, NULL, 'Test', 'meng', '2021-02-06 08:31:57', 0, 0, 1);
 
@@ -137,11 +141,14 @@ CREATE TABLE `post_comment`  (
   INDEX `comment_user`(`comment_user`) USING BTREE,
   CONSTRAINT `post_comment_ibfk_2` FOREIGN KEY (`comment_user`) REFERENCES `user_info` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `post_comment_ibfk_3` FOREIGN KEY (`post_id`) REFERENCES `post` (`post_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of post_comment
 -- ----------------------------
+INSERT INTO `post_comment` VALUES (3, 2, 'Mao', 'good post', '2021-02-17 05:18:44');
+INSERT INTO `post_comment` VALUES (4, 2, 'ppp', 'what a bad post!', '2021-02-17 05:19:20');
+INSERT INTO `post_comment` VALUES (5, 2, 'meng', 'I like my post', '2021-02-17 10:36:07');
 
 -- ----------------------------
 -- Table structure for post_like
