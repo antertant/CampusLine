@@ -7,6 +7,7 @@ import com.example.project.service.IPostService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class IPostServiceImpl implements IPostService {
@@ -54,6 +55,12 @@ public class IPostServiceImpl implements IPostService {
 //            postMapper.updatePoint(author,module_name,-eachlikepoint);
             return 2;
         }
+    }
+
+    @Override
+    public List<String> getlikes(int post_id){
+        List<String> likes = postMapper.getLikes(post_id);
+        return likes;
     }
 
     @Override

@@ -7,13 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 public class PostController {
     @Autowired
     private IPostService iPostService;
 
     @CrossOrigin
-    @ApiOperation("Delete post")
+    @ApiOperation("delete post")
     @RequestMapping(value = "/api/deletepost", method = RequestMethod.POST)
     @ResponseBody
     public Result deletepost(@RequestParam("post_id")int post_id){
@@ -38,6 +40,15 @@ public class PostController {
         else
             msg = "cancel like successfully";
         return Result.ok(msg);
+    }
+
+    @CrossOrigin
+    @ApiOperation("get the like_list of a post")
+    @RequestMapping(value = "/api/getlikes", method = RequestMethod.GET)
+    @ResponseBody
+    public Result getlikes(@RequestParam("post_id")int post_id){
+        List<String> likes = iPostService.getlikes(post_id);
+        return Result.ok(likes);
     }
 
     @CrossOrigin
