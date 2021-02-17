@@ -1,6 +1,7 @@
 package com.example.project.service.Impl;
 
 import com.example.project.entity.Post;
+import com.example.project.entity.PostComment;
 import com.example.project.mapper.ModuleMapper;
 import com.example.project.mapper.PostMapper;
 import com.example.project.service.IPostService;
@@ -63,16 +64,6 @@ public class IPostServiceImpl implements IPostService {
         return likes;
     }
 
-    @Override
-    public void commentpost(int post_id, String username, String content){
-        postMapper.insertComment(post_id,username,content);
-        postMapper.updateP(post_id,2);
-    }
-    @Override
-    public void deletecomment(int comment_id){
-        postMapper.updateP(postMapper.getPost_id(comment_id),-2);
-        postMapper.deleteComment(comment_id);
-    }
 
     @Override
     public int collect(int post_id,String username){

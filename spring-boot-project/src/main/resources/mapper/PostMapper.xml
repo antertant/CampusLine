@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.project.mapper.PostMapper">
-<!--    <select id="getPost" resultType="com.example.project.entity.Post">-->
-<!--        select * from post-->
-<!--        where post_id = #{post_id}-->
-<!--    </select>-->
+    <select id="getPost" resultType="com.example.project.entity.Post">
+        select * from post
+        where post_id = #{post_id}
+    </select>
+
+    <select id="searchPosts" resultType="com.example.project.entity.Post">
+        select * from post
+        where post_content like "%"#{key}"%"
+        order by post_createtime desc
+    </select>
+
     <select id="getPosts" resultType="com.example.project.entity.Post">
         select * from post
         where module_name = #{module_name}
@@ -13,6 +20,7 @@
         </if>
         and post_author = #{username}
     </select>
+
     <delete id="deletePost">
         delete from post
         where post_id = #{post_id}
@@ -40,20 +48,6 @@
         where post_id = #{post_id}
         order by like_time desc
     </select>
-
-    <insert id="insertComment">
-        insert into post_comment(post_id,comment_user,comment_content,comment_time)
-        values(#{post_id},#{username},#{content},UTC_TIMESTAMP)
-    </insert>
-    <select id="getPost_id" resultType="java.lang.Integer">
-        select post_id from post_comment
-        where comment_id = #{comment_id}
-    </select>
-    <delete id="deleteComment">
-        delete from post_comment
-        where comment_id = #{comment_id}
-    </delete>
-
 
     <select id="existCollect" resultType="java.lang.Integer">
         select count(1) from post_collect

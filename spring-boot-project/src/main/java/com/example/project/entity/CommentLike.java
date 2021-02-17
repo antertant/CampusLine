@@ -6,7 +6,6 @@ import java.util.List;
 
 public class CommentLike {
     private int comment_id;
-
     //user:like_date
     private List<HashMap<String, Date>> clike_list;
 

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.project.mapper.CommentMapper">
+
+    <insert id="insertComment">
+        insert into post_comment(post_id,comment_user,comment_content,comment_time)
+        values(#{post_id},#{username},#{content},UTC_TIMESTAMP)
+    </insert>
+
+    <select id="getPost_id" resultType="java.lang.Integer">
+        select post_id from post_comment
+        where comment_id = #{comment_id}
+    </select>
+
+    <delete id="deleteComment">
+        delete from post_comment
+        where comment_id = #{comment_id}
+    </delete>
+
+    <select id="getComments" resultType="com.example.project.entity.PostComment">
+        select * from post_comment
+        where post_id = #{post_id}
+        order by comment_time asc
+    </select>
+
+    <select id="getLikeCount" resultType="java.lang.Integer">
+        select count(1) from comment_like
+        where comment_id = #{comment_id}
+    </select>
+
+    <select id="getReplies" resultType="com.example.project.entity.CommentReply">
+        select * from comment_reply
+        where comment_id = #{comment_id}
+        order by creply_time asc
+    </select>
+
+    <insert id="insertCommentReply">
+        insert into comment_reply(comment_id,creply_content,creply_time,from_user,to_user)
+        values(#{comment_id},#{reply_content},UTC_TIMESTAMP,#{from_user},#{to_user})
+    </insert>
+
+    <select id="existLike" resultType="java.lang.Integer">
+        select count(1) from comment_like
+        where comment_id = #{comment_id}
+        and clike_user = #{clike_user}
+    </select>
+
+    <insert id="insertCommentLike">
+        insert into comment_like values
+        (#{comment_id},#{clike_user},UTC_TIMESTAMP)
+    </insert>
+
+    <delete id="deleteCommentLike">
+        delete from comment_like
+        where comment_id = #{comment_id}
+          and clike_user = #{clike_user}
+    </delete>
+</mapper>

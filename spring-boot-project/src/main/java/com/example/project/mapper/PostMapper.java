@@ -6,21 +6,18 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface PostMapper {
-//    Post getPost(@Param(value = "post_id")int post_id);
+    Post getPost(@Param(value = "post_id")int post_id);
+    List<Post> searchPosts(@Param(value = "key")String key);
+
     List<Post> getPosts(@Param(value = "username")String username,
                         @Param(value = "module_name")String module_name);
     int deletePost(@Param(value = "post_id")int post_id);
+
     //whether the user has liked this post
     int existLike(@Param(value = "post_id")int post_id,@Param(value = "username")String username);
     void insertLike(@Param(value = "post_id")int post_id,@Param(value = "username")String username);
     void deleteLike(@Param(value = "post_id")int post_id,@Param(value = "username")String username);
     List<String> getLikes(@Param(value = "post_id")int post_id);
-
-    void insertComment(@Param(value = "post_id")int post_id,
-                       @Param(value = "username")String username,
-                       @Param(value = "content")String content);
-    int getPost_id(@Param(value = "comment_id")int comment_id);
-    void deleteComment(@Param(value = "comment_id")int comment_id);
 
     //whether the user has collected this post
     int existCollect(@Param(value = "post_id")int post_id,@Param(value = "username")String username);
