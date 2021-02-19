@@ -4,6 +4,7 @@ import com.example.project.entity.Module;
 import com.example.project.entity.Post;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface ModuleMapper {
@@ -38,4 +39,14 @@ public interface ModuleMapper {
 
     void editIntro(@Param(value = "module_name")String module_name,
                    @Param(value = "new_intro")String new_intro);
+
+    //module_name:post_count
+    List<HashMap<String,String>> gethotmodules(@Param("module_count")int module_count);
+    //post_id: like_count/comment_count in 24hrs
+    List<HashMap<String,Object>> postlikecount(@Param(value = "module_name")String module_name);
+    List<HashMap<String,Object>> postcommentcount(@Param(value = "module_name")String module_name);
+    //get reply count in 24hrs of a post
+    int commentreplycount(@Param(value = "post_id")int post_id);
+
+
 }

@@ -38,23 +38,19 @@
 <!--        where username = #{username}-->
 <!--        and module_name = #{module_name}-->
 <!--    </select>-->
-
 <!--    <select id="existPoint" resultType="java.lang.Integer">-->
 <!--        select count(1) from module_point-->
 <!--        where username = #{username}-->
 <!--          and module_name = #{module_name}-->
 <!--    </select>-->
-
 <!--    <insert id="insertPoint">-->
 <!--        insert into module_point-->
 <!--        values (#{username},#{module_name},#{point})-->
 <!--    </insert>-->
-
 <!--    <insert id="insertManagement" parameterType="com.example.project.entity.ModuleManagement" useGeneratedKeys="true" keyProperty="permission_id" >-->
 <!--        insert into module_management(module_name)-->
 <!--        values(#{module_name})-->
 <!--    </insert>-->
-
 <!--    <update id="updateUserpermission">-->
 <!--        update user_info set-->
 <!--        permission_id = #{permission_id}-->
@@ -76,4 +72,45 @@
         where module_name = #{module_name}
     </update>
 
+    <select id="gethotmodules" resultType="java.util.HashMap">
+        select module.module_name,count(1)
+        from module INNER JOIN post
+        on module.module_name = post.module_name
+        GROUP BY (module.module_name)
+        order by count(1) desc limit 0,#{module_count}
+    </select>
+
+    <select id="postlikecount" resultType="java.util.HashMap">
+        select post.post_id,count(1)
+        from post INNER JOIN post_like
+        on post.post_id = post_like.post_id
+        where post.module_name = #{module_name}
+        <if test="module_name == 'life'">
+            or module_name is null
+        </if>
+        and post_like.like_time >= DATE_ADD(UTC_TIMESTAMP,INTERVAL -1 DAY)
+        GROUP BY (post.post_id)
+        order by post.post_id asc
+    </select>
+
+    <select id="postcommentcount" resultType="java.util.HashMap">
+        select post.post_id,count(1)
+        from post INNER JOIN post_comment
+        on post.post_id = post_comment.post_id
+        where post.module_name = #{module_name}
+        <if test="module_name == 'life'">
+            or module_name is null
+        </if>
+        and post_comment.comment_time >= DATE_ADD(UTC_TIMESTAMP,INTERVAL -1 DAY)
+        GROUP BY (post.post_id)
+        order by post.post_id asc
+    </select>
+
+    <select id="commentreplycount" resultType="java.lang.Integer">
+        select count(1)
+        from post_comment INNER JOIN comment_reply
+        on post_comment.comment_id = comment_reply.comment_id
+        where post_comment.post_id = #{post_id}
+        and comment_reply.creply_time >= DATE_ADD(UTC_TIMESTAMP,INTERVAL -1 DAY)
+    </select>
 </mapper>

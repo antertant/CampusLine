@@ -1,5 +1,6 @@
 package com.example.project.service.Impl;
 
+import com.example.project.entity.HotModule;
 import com.example.project.entity.Module;
 import com.example.project.entity.Post;
 import com.example.project.entity.User;
@@ -7,10 +8,11 @@ import com.example.project.mapper.ModuleMapper;
 import com.example.project.mapper.PostMapper;
 import com.example.project.mapper.UserMapper;
 import com.example.project.service.IModuleService;
+import com.example.project.utils.HashmapUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class IModuleServiceImpl implements IModuleService {
@@ -98,5 +100,71 @@ public class IModuleServiceImpl implements IModuleService {
     public void editintro(String module_name,String new_intro){
         moduleMapper.editIntro(module_name,new_intro);
     }
+
+    public List<Post> gethots(String module_name,int count){
+        List<Post> posts = moduleMapper.getPosts(module_name);
+        //"post_id": int
+        // "like_count/comment_count"-"count(1)":int
+        List<HashMap<String,Object>> likecounts = moduleMapper.postlikecount(module_name);
+        List<HashMap<String,Object>> commentcounts = moduleMapper.postcommentcount(module_name);
+        HashMap<Integer,Integer> likecount = HashmapUtils.trans(likecounts);
+        HashMap<Integer,Integer> commentcount = HashmapUtils.trans(commentcounts);
+
+        //post_id:total_like&comment&reply_counts within 24hrs
+        HashMap<Integer,Integer> hashMap = new HashMap();
+        for(int i=0;i<posts.size();i++){
+            int post_id = posts.get(i).getPost_id();
+            int like_count = (likecount.get(post_id)==null)?0:likecount.get(post_id);
+            int comment_count = (commentcount.get(post_id)==null)?0:commentcount.get(post_id);
+            int reply_count = moduleMapper.commentreplycount(post_id);
+            int total_count = like_count+comment_count+reply_count;
+            hashMap.put(post_id,total_count);
+        }
+        //post_id:count
+        List<Post> hotposts = new ArrayList<>();
+        List<Map.Entry<Integer,Integer>> list = HashmapUtils.sort(hashMap,count);
+        for(Map.Entry<Integer,Integer> m:list){
+            hotposts.add(postMapper.getPost(m.getKey()));
+        }
+        return hotposts;
+    }
+
+    @Override
+    public List<HotModule> gethotmodules(){
+        int life_hot_posts = 5;
+        int know_hot_modules = 4, know_hot_posts = 3;
+        List<HotModule> hotModules = new ArrayList();
+        List<String> knowmodules = new ArrayList<>();
+        //module_name:""
+        // post_count:""
+        List<HashMap<String,String>> module_names = moduleMapper.gethotmodules(know_hot_modules);
+        for(int i=0;i<module_names.size();i++){
+            HashMap h = module_names.get(i);
+            String module_name = (String) h.get("module_name");
+            knowmodules.add(module_name);
+        }
+
+        for(int i=0;i<1+knowmodules.size();i++){
+            List<Post> posts = new ArrayList<>();
+            if(i == 0){
+                posts = this.gethots("life",life_hot_posts);
+                HotModule hm = new HotModule();
+                hm.setModule_name("life");
+                hm.setPosts(posts);
+                hotModules.add(hm);
+            }
+            else{
+                String module_name = knowmodules.get(i-1);
+                posts = this.gethots(module_name,know_hot_posts);
+                HotModule hm = new HotModule();
+                hm.setModule_name(module_name);
+                hm.setPosts(posts);
+                hotModules.add(hm);
+            }
+        }
+        return hotModules;
+
+    }
+
 
 }

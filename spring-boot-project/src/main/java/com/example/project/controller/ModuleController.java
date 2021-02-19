@@ -1,5 +1,6 @@
 package com.example.project.controller;
 
+import com.example.project.entity.HotModule;
 import com.example.project.entity.Module;
 import com.example.project.entity.Post;
 import com.example.project.entity.User;
@@ -125,6 +126,14 @@ public class ModuleController {
         return Result.ok("modify successfully");
     }
 
+    @CrossOrigin
+    @ApiOperation("Get Posts of a mudule by module_name")
+    @RequestMapping(value = "/api/homeposts",method = RequestMethod.GET)
+    @ResponseBody
+    public Result homeposts(){
+        List<HotModule> hotmodules = iModuleService.gethotmodules();
+        return Result.ok(hotmodules);
+    }
 
 
 }

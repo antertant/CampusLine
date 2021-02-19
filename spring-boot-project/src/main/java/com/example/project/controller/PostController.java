@@ -90,14 +90,4 @@ public class PostController {
         return Result.ok(msg);
     }
 
-
-//    @CrossOrigin
-//    @ApiOperation(value = "show hot posts in life module")
-//    @RequestMapping(value = "/api/getlifehot",method = RequestMethod.GET)
-//    @ResponseBody
-//    public Result getlifehot(){
-//
-//    }
-
-
 }

@@ -1,5 +1,6 @@
 package com.example.project.service;
 
+import com.example.project.entity.HotModule;
 import com.example.project.entity.Module;
 import com.example.project.entity.Post;
 
@@ -20,4 +21,6 @@ public interface IModuleService {
     void quitAdmin(String username);
 
     void editintro(String module_name,String new_intro);
+
+    List<HotModule> gethotmodules();
 }
