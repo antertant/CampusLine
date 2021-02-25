@@ -6,6 +6,7 @@ import com.example.project.entity.PostComment;
 import java.util.List;
 
 public interface IPostService {
+    void insertPost(Post post);
 
     int deletePost(int post_id);
 
@@ -13,4 +14,6 @@ public interface IPostService {
     List<String> getlikes(int post_id);
 
     int collect(int post_id,String username);
+
+
 }

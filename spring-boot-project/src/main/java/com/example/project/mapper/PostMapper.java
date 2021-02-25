@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface PostMapper {
+    void insertPost(@Param(value="post")Post post);
+
     Post getPost(@Param(value = "post_id")int post_id);
     List<Post> searchPosts(@Param(value = "key")String key);
 

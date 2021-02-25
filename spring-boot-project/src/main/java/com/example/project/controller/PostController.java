@@ -5,6 +5,7 @@ import com.example.project.entity.PostComment;
 import com.example.project.mapper.PostMapper;
 import com.example.project.result.Result;
 import com.example.project.service.IPostService;
+import com.example.project.utils.HTMLUtils;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,12 +22,21 @@ public class PostController {
     private PostMapper postMapper;
 
     @CrossOrigin
+    @ApiOperation("post a new post")
+    @RequestMapping(value = "/api/createpost", method = RequestMethod.POST)
+    @ResponseBody
+    public Result createpost(@RequestBody Post post){
+        iPostService.insertPost(post);
+        return Result.ok("post successfully");
+    }
+
+    @CrossOrigin
     @ApiOperation("get post by its id")
     @RequestMapping(value = "/api/getpost", method = RequestMethod.GET)
     @ResponseBody
     public Result getpost(@RequestParam("post_id")int post_id){
         Post post = postMapper.getPost(post_id);
-        return Result.ok(post);
+        return Result.ok(HTMLUtils.tohtml(post));
     }
 
     @CrossOrigin
@@ -35,7 +45,7 @@ public class PostController {
     @ResponseBody
     public Result searchpost(@RequestParam("key")String key){
         List<Post> posts = postMapper.searchPosts(key);
-        return Result.ok(posts);
+        return Result.ok(HTMLUtils.tohtmls(posts));
     }
 
     @CrossOrigin
