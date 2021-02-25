@@ -7,6 +7,7 @@ import com.example.project.entity.User;
 import com.example.project.mapper.UserMapper;
 import com.example.project.result.Result;
 import com.example.project.service.IModuleService;
+import com.example.project.utils.HTMLUtils;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,7 +34,7 @@ public class ModuleController {
         if(choice ==1){
             //get post list of life module
             List<Post> posts = iModuleService.getPosts("life");
-            result = Result.ok(posts);
+            result = Result.ok(HTMLUtils.tohtmls(posts));
         }
         else if(choice == 2){
             //get module list of knowledge module
@@ -76,7 +77,7 @@ public class ModuleController {
     @ResponseBody
     public Result getposts(@RequestParam("module_name")String module_name){
         List<Post> posts = iModuleService.getPosts(module_name);
-        return Result.ok(posts);
+        return Result.ok(HTMLUtils.tohtmls(posts));
     }
 
     @CrossOrigin

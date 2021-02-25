@@ -5,7 +5,9 @@ import com.example.project.entity.PostComment;
 import com.example.project.mapper.ModuleMapper;
 import com.example.project.mapper.PostMapper;
 import com.example.project.service.IPostService;
+import com.example.project.utils.HTMLUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.HtmlUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -19,6 +21,11 @@ public class IPostServiceImpl implements IPostService {
     private PostMapper postMapper;
     @Resource
     private ModuleMapper moduleMapper;
+    @Override
+    public void insertPost(Post post){
+        Post post_ = HTMLUtils.escape(post);
+        postMapper.insertPost(post_);
+    }
 
     @Override
     public int deletePost(int post_id){
