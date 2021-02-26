@@ -35,7 +35,7 @@
           Twitter
         </a>
       </li>
-      <br>
+      <br></br>
       <li>
         <a
           href="http://vuejs-templates.github.io/webpack/"
