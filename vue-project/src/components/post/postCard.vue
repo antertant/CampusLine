@@ -1,37 +1,85 @@
 <template>
-  <b-card style="max-width: 50rem;" class="mt-4 mx-auto">
-    {{foo}}
+  <b-card
+    style="max-width: 50rem;"
+    class="mt-4 mx-auto bg-light shadow"
+    footer-tag="footer"
+    header-tag="header"
+    v-if="showPost">
 <!--    Post author-->
-    <template #header>
-      <b-avatar></b-avatar>
-      <span id="post-author"><b>{{ postContent.post_author }}</b></span>
-      <span id="post-time">{{postTime.format("MMM Do YYYY, HH:mm") }}</span>
-    </template>
+    <b-form-row class="mb-3 shadow-sm p-3 bg-light text-dark rounded-bottom" id="header" align-v="stretch">
+      <b-col cols="auto"><b-avatar size="lg"></b-avatar></b-col>
+      <b-col cols="auto" id="post-author" align-self="center">
+        <b>{{ postContent.post_author }}</b>
+        <span id="post-time"><{{ postTime }}></span>
+      </b-col>
+    </b-form-row>
 <!--    Post content-->
-    <b-card-text>
-      {{ postContent.post_content }}
-    </b-card-text>
-    <b-img src="https://placekitten.com/380/200" center></b-img>
+      <b-card-text style="position:relative; max-height:150px; overflow-y:auto">
+        {{ postContent.post_content }}
+      </b-card-text>
+      <b-img src="https://placekitten.com/380/200" class="border-secondary shadow" center></b-img>
 <!--    Post buttons-->
-    <template #footer>
-      <b-list-group style="text-align: center" horizontal>
+    <b-row align-h="center" class="mt-3">
+      <b-col>
+      <b-list-group style="text-align: center" class="shadow-sm" horizontal>
+<!--        Collect Button-->
         <b-list-group-item button>
           Collect
           <b-badge>{{ postContent.post_collections }}</b-badge>
         </b-list-group-item>
+
+<!--        Like Button-->
         <b-list-group-item  @click="likePost" button>
           Like
           <b-badge>{{ postContent.post_likes + likeCount }}</b-badge>
         </b-list-group-item>
-        <b-list-group-item button>
+
+<!--        Comment button-->
+        <b-list-group-item :id="'pc-comment-'+postContent.post_id"
+                           v-b-toggle="'postComment-'+postContent.post_id"
+                           @click="getComment"
+                           button>
           Comment
-          <b-badge>{{ postContent.post_comments }}</b-badge>
+          <b-badge>{{ comment_count }}</b-badge>
         </b-list-group-item>
+<!--        Comment input trigger-->
+        <b-popover :target="'pc-comment-'+postContent.post_id" triggers="hover" placement="bottom">
+          <b-button variant="white"
+                    size="sm"
+                    v-b-modal="'comment-modal-'+postContent.post_id">
+            <b-icon icon="chat-left-text" size="sm"></b-icon> Do Comment
+          </b-button>
+        </b-popover>
+<!--        Child Component: Comment input-->
+        <comment-input :comment-id="postContent.post_id" @rreply="getComment">
+        </comment-input>
+
+<!--        Repost Button-->
         <b-list-group-item button>
           Repost
         </b-list-group-item>
+
+<!--        Delete Button-->
+<!--        <b-list-group-item button-->
+<!--                           v-if="current_user===postContent.post_author"-->
+<!--                           @click="deletePost">-->
+<!--          Delete-->
+<!--        </b-list-group-item>-->
       </b-list-group>
-    </template>
+
+<!--      Comment Cards-->
+      <b-collapse :id="'postComment-'+postContent.post_id">
+        <b-card v-if="!commentEmpty" style="text-align: center">There is no comment here yet.</b-card>
+        <div v-if="commentEmpty" v-for="comment in comments" :key="comment.comment_id">
+<!--          Child Component: Comment Card-->
+          <comment-card :comment-data="comment"
+                        :id="comment.comment_id"
+                        @reply-event="getComment"
+                        @comment-deleted="getComment"></comment-card>
+        </div>
+      </b-collapse>
+      </b-col>
+    </b-row>
   </b-card>
 </template>
 
@@ -39,24 +87,42 @@
 import moment from "moment";
 import {mapGetters} from "vuex";
 import axios from "axios";
+import CommentCard from "@/components/post/commentCard";
+import CommentInput from "@/components/post/commentInput";
 
 export default {
   name: "postCard",
+  components: {CommentInput, CommentCard},
   props: ['postContent'],
   data() {
     return{
       postTime: Date,
-      likeCount: 0
+      likeCount: 0, // Record like count without e2e communications
+      comments: [], // The content of comments
+      hasComments: false,  // Flag for judging whether comment content is empty
+      showPost: true
     }
   },
   computed: {
     ...mapGetters ({
       current_user: "loginInfo/getLUName",
-    })
+    }),
+    commentEmpty: function() {
+      if(this.comments.length === 0){
+        return false;
+      }
+      else{
+        return true;
+      }
+    },
+    comment_count: function() {
+      if(!this.hasComments) {return this.postContent.post_comments}
+      else {return this.comments.length}
+    }
   },
   methods: {
     likePost() {
-
+      // Alert component construction
       const crtEl = this.$createElement
       const errTitle = crtEl(
         'p',
@@ -67,6 +133,7 @@ export default {
         ]
       )
 
+      // Show alert when the like action is done by a visitor
       if(this.current_user === '')
         this.$bvToast.toast(
           'Please login before interacting with posts.',{
@@ -76,6 +143,7 @@ export default {
             solid: true
           }
         )
+      // Communication
       else{
         axios
           .post('/likepost', null, {params:{
@@ -98,20 +166,54 @@ export default {
             console.log(failResponse)
           })
       }
+    },
+    deletePost() {
+      axios
+        .post('/deletepost', null, {params:{post_id:this.postContent.post_id}})
+        .then(response=>{
+          console.log(response)
+          if(response.data.code === 200){
+            this.showPost = true
+            this.$nextTick()
+          }
+        })
+        .catch(failResponse=>{
+          console.log(failResponse)
+        })
+    },
+    getComment() {
+      // Communication
+      axios
+        .get('/getcomments',{params:{post_id:this.postContent.post_id}})
+        .then(response=>{
+          console.log(response)
+          if(response.data.code === 200){
+            this.comments = response.data.data
+            this.hasComments = true
+          }
+        })
+        .catch(failResponse=>{
+          console.log(failResponse)
+        })
     }
   },
   mounted() {
     this.likeCount = 0
-    this.postTime = moment(new Date(this.postContent.post_createtime))
+    // Transfer the form of Date
+    this.postTime = moment(new Date(this.postContent.post_createtime)).format("MMM Do YYYY, HH:mm")
   }
 }
 </script>
 
 <style scoped>
+  #header {
+
+  }
   #post-author {
-    font-size: larger;
+    font-size: x-large;
   }
   #post-time {
+    text-align: right;
     font-size: small;
     color: #888888;
   }
