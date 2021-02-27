@@ -5,7 +5,7 @@ import org.springframework.web.util.HtmlUtils;
 
 import java.util.List;
 
-//process the html from Rich Text Editor 
+//process the html from Rich Text Editor
 public class HTMLUtils {
     public static Post escape(Post post){
         String content = post.getPost_content();

@@ -1,5 +1,6 @@
 package com.example.project.entity;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CommentReply {
@@ -57,4 +58,24 @@ public class CommentReply {
     public void setTo_user(String to_user) {
         this.to_user = to_user;
     }
+
+    @Override
+    public boolean equals(Object obj){
+        CommentReply commentReply = (CommentReply) obj;
+        if(obj == null && this == null)
+            return true;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String s = format.format(commentReply.getCreply_time());
+        String s1 = format.format(this.creply_time);
+        if(commentReply.getComment_id() == this.comment_id &&
+            commentReply.getReply_id() == this.reply_id &&
+            (commentReply.getCreply_content()).equals(this.creply_content) &&
+            s.equals(s1) &&
+            (commentReply.getFrom_user()).equals(this.from_user)&&
+            (commentReply.getTo_user()).equals(this.to_user)
+        )
+            return true;
+        return false;
+    }
+
 }
