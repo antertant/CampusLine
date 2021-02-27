@@ -35,7 +35,7 @@ export default new Router({
       component: modulesPage
     },
     {
-      path: '/life-circle',
+      path: '/life',
       name: 'lifeCirclePage',
       component: lifeCirclePage
     },

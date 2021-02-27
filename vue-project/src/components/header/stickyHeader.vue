@@ -1,5 +1,5 @@
 <template>
-  <!--Fixed nav bar-->
+
   <div role="navigation">
     <b-navbar toggleable="lg" type="light" variant="light" fixed="top">
 
@@ -14,7 +14,7 @@
           <b-nav-item to="news">News</b-nav-item>
 
           <b-nav-dropdown text="Modules" lazy>
-            <b-dropdown-item to="/life-circle">Life Circle</b-dropdown-item>
+            <b-dropdown-item to="/life">Life Circle</b-dropdown-item>
             <b-dropdown-item to="/knowledge-modules">Knowledge Modules</b-dropdown-item>
           </b-nav-dropdown>
 
@@ -37,7 +37,7 @@
             placement="bottom"
             triggers="hover"
           >
-<!--            Visitor Login-->
+
             <b-button-group vertical v-show="!loginState">
               <b-button to="/login" variant="outline-secondary" style="text-align: left">
                 <b-icon icon="person-check" aria-hidden="true" variant="primary"></b-icon> Login
@@ -46,7 +46,7 @@
                 <b-icon icon="person-plus" aria-hidden="true" variant="success"></b-icon> Register
               </b-button>
             </b-button-group>
-<!--            After log in-->
+
             <b-button-group vertical v-show="loginState">
               <b-button :to="'/user_'+loginName+'/profile'" variant="outline-secondary" style="text-align: left">
                 <b-icon icon="person" aria-hidden="true" variant="primary"></b-icon> Profile

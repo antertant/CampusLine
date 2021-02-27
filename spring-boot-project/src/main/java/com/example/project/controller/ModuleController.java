@@ -4,6 +4,7 @@ import com.example.project.entity.HotModule;
 import com.example.project.entity.Module;
 import com.example.project.entity.Post;
 import com.example.project.entity.User;
+import com.example.project.mapper.PostMapper;
 import com.example.project.mapper.UserMapper;
 import com.example.project.result.Result;
 import com.example.project.service.IModuleService;
@@ -23,6 +24,8 @@ public class ModuleController {
     private IModuleService iModuleService;
     @Resource
     private UserMapper userMapper;
+    @Resource
+    private PostMapper postMapper;
 
     @CrossOrigin
     @ApiOperation("After click the dropdown menu of 'mudule' at the navbar" +
@@ -69,6 +72,16 @@ public class ModuleController {
     public Result searchmodule(@RequestParam("key")String key){
         List<Module> modules = iModuleService.searchModule(key);
         return Result.ok(modules);
+    }
+
+    @CrossOrigin
+    @ApiOperation("Get posts of a user at a module")
+    @RequestMapping(value = "/api/getselfposts",method = RequestMethod.GET)
+    @ResponseBody
+    public Result getselfposts(@RequestParam("module_name")String module_name,
+                               @RequestParam("username")String username){
+        List<Post> posts = postMapper.getPosts(username,module_name);
+        return Result.ok(posts);
     }
 
     @CrossOrigin
