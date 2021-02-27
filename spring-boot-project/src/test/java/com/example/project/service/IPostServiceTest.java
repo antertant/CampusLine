@@ -20,7 +20,7 @@ class IPostServiceTest {
 //        //delete post existing
 //        Assertions.assertEquals(1,iPostService.deletePost(13));
 //    }
-    
+
     @Test//delete post not existing
     void testdeletePost0() {
         Assertions.assertEquals(0,iPostService.deletePost(13));
