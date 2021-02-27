@@ -20,7 +20,8 @@ public class ICommentServiceImpl implements ICommentService{
     @Override
     public void commentpost(int post_id, String username, String content){
         commentMapper.insertComment(post_id,username,content);
-        postMapper.updateP(post_id,2);//post-->post_likes+1
+        postMapper.updateP(post_id,2);//post-->post_comments+1
+
     }
 
     @Override
@@ -48,7 +49,7 @@ public class ICommentServiceImpl implements ICommentService{
     @Override
     public void deletecomment(int comment_id){
         postMapper.updateP(commentMapper.getPost_id(comment_id),-2);
-        commentMapper.deleteComment(comment_id);//post-->post_likes-1
+        commentMapper.deleteComment(comment_id);//post-->post_comment-1
     }
 
     @Override

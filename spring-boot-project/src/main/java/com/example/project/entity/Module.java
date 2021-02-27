@@ -39,4 +39,17 @@ public class Module {
     public void setAdmins(List<String> admins) {
         this.admins = admins;
     }
+
+    @Override
+    public boolean equals(Object obj){
+        Module module = (Module) obj;
+        if(module == null && this == null)
+            return true;
+        if((module.getModule_name()).equals(this.module_name) &&
+            (module.getModule_intro()).equals(this.module_intro)  &&
+            module.getMax_adminNumber() == this.max_adminNumber
+        )
+            return true;
+        return false;
+    }
 }

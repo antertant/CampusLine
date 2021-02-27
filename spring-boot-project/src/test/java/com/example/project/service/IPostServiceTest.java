@@ -21,27 +21,19 @@ class IPostServiceTest {
 //        Assertions.assertEquals(1,iPostService.deletePost(13));
 //    }
 
-    @Test
+    @Test//delete post not existing
     void testdeletePost0() {
-        //delete post not existing
         Assertions.assertEquals(0,iPostService.deletePost(13));
     }
 
-    @Test
+    @Test//like or cancel like post
     void testlikepost1() {
-        //like post
         Assertions.assertEquals(1,iPostService.likepost(11,"meng"));
-    }
-
-    @Test
-    void testlikepost2() {
-        //cancel like post
         Assertions.assertEquals(2,iPostService.likepost(11,"meng"));
     }
 
-    @Test
+    @Test//get the like_user list of a post
     void testgetlikes() {
-        //get the like_user list of a post
         List<String> like_users = new ArrayList<>();
         like_users.add("meng");
         like_users.add("ppp");
@@ -49,15 +41,12 @@ class IPostServiceTest {
         Assertions.assertEquals(like_users,iPostService.getlikes(9));
     }
 
-    @Test
+    @Test//collect or cancel collect post
     void testcollect2() {
-        //cancel collect post
         Assertions.assertEquals(2,iPostService.collect(4,"Mao"));
-    }
-
-    @Test
-    void testcollect1() {
-        //collect post
         Assertions.assertEquals(1,iPostService.collect(4,"Mao"));
     }
+
+    
+
 }

@@ -1,5 +1,6 @@
 package com.example.project.entity;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Post {
@@ -74,5 +75,28 @@ public class Post {
 
     public void setPost_collections(int post_collections) {
         this.post_collections = post_collections;
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        if(obj == null && this == null)
+            return true;
+        Post post = (Post) obj;
+        Date createtime = this.post_createtime;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String postdateStr = format.format(post.getPost_createtime());
+        String dateStr = format.format(createtime);
+        if(post.getPost_id() == this.post_id &&
+            (post.getPost_content()).equals(this.post_content) &&
+            (post.getPost_author()).equals(this.post_author) &&
+            dateStr.equals(postdateStr) &&
+            post.getPost_likes() == this.post_likes &&
+            post.getPost_comments() == this.post_comments &&
+            post.getPost_collections() == this.post_collections &&
+            ((post.getModule_name()==null && this.module_name==null) ||
+             (post.getModule_name()).equals(this.module_name))
+        )
+            return true;
+        return false;
     }
 }

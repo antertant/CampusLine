@@ -7,7 +7,6 @@ import com.example.project.mapper.PostMapper;
 import com.example.project.service.IPostService;
 import com.example.project.utils.HTMLUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.web.util.HtmlUtils;
 
 import javax.annotation.Resource;
 import java.util.List;

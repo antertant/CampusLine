@@ -24,6 +24,7 @@
             or module_name is null
         </if>
         and post_author = #{username}
+        order by post_createtime desc
     </select>
 
     <delete id="deletePost">

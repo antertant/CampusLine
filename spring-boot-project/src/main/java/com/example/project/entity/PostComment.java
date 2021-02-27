@@ -1,5 +1,6 @@
 package com.example.project.entity;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -66,5 +67,22 @@ public class PostComment {
 
     public void setReplies(List<CommentReply> replies) {
         this.replies = replies;
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        PostComment postComment = (PostComment) obj;
+        if(obj == null && this == null)
+            return true;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String s = format.format(postComment.getComment_time());
+        String s1 = format.format(this.comment_time);
+        if(postComment.getComment_id() == this.comment_id &&
+            postComment.getPost_id() == this.post_id &&
+            (postComment.getComment_content()).equals(this.comment_content) &&
+            s.equals(s1)
+        )
+            return true;
+        return false;
     }
 }
