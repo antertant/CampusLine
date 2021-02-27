@@ -1,20 +1,22 @@
 <template>
   <b-card
     style="max-width: 50rem;"
-    class="mt-4 mx-auto bg-light shadow"
+    class="mt-4 mx-auto bg-light shadow-sm"
     footer-tag="footer"
     header-tag="header"
-    v-if="showPost">
+    v-if="showPost" no-body>
 <!--    Post author-->
-    <b-form-row class="mb-3 shadow-sm p-3 bg-light text-dark rounded-bottom" id="header" align-v="stretch">
-      <b-col cols="auto"><b-avatar size="lg"></b-avatar></b-col>
+    <b-form-row class="my-2 ml-2 p-3 text-dark rounded-bottom"
+                id="header"
+                align-v="stretch">
+      <b-col cols="auto"><b-avatar size="md"></b-avatar></b-col>
       <b-col cols="auto" id="post-author" align-self="center">
         <b>{{ postContent.post_author }}</b>
         <span id="post-time"><{{ postTime }}></span>
       </b-col>
     </b-form-row>
 <!--    Post content-->
-      <b-card-text style="position:relative; max-height:150px; overflow-y:auto">
+      <b-card-text class="ml-4" style="position:relative; max-height:150px; overflow-y:auto">
         {{ postContent.post_content }}
       </b-card-text>
       <b-img src="https://placekitten.com/380/200" class="border-secondary shadow" center></b-img>
@@ -24,12 +26,15 @@
       <b-list-group style="text-align: center" class="shadow-sm" horizontal>
 <!--        Collect Button-->
         <b-list-group-item button>
+          <b-icon icon="star"></b-icon>
           Collect
           <b-badge>{{ postContent.post_collections }}</b-badge>
         </b-list-group-item>
 
 <!--        Like Button-->
         <b-list-group-item  @click="likePost" button>
+          <b-icon icon="hand-thumbs-up" v-if="!likePress"></b-icon>
+          <b-icon icon="hand-thumbs-up" variant="info" v-if="likePress"></b-icon>
           Like
           <b-badge>{{ postContent.post_likes + likeCount }}</b-badge>
         </b-list-group-item>
@@ -39,6 +44,7 @@
                            v-b-toggle="'postComment-'+postContent.post_id"
                            @click="getComment"
                            button>
+          <b-icon icon="chat-left-text" size="sm"></b-icon>
           Comment
           <b-badge>{{ comment_count }}</b-badge>
         </b-list-group-item>
@@ -47,7 +53,7 @@
           <b-button variant="white"
                     size="sm"
                     v-b-modal="'comment-modal-'+postContent.post_id">
-            <b-icon icon="chat-left-text" size="sm"></b-icon> Do Comment
+            <b-icon icon="pencil-square" size="sm" variant="primary"></b-icon> Write Comment
           </b-button>
         </b-popover>
 <!--        Child Component: Comment input-->
@@ -56,6 +62,7 @@
 
 <!--        Repost Button-->
         <b-list-group-item button>
+          <b-icon icon="box-arrow-up-right"></b-icon>
           Repost
         </b-list-group-item>
 
@@ -97,10 +104,11 @@ export default {
   data() {
     return{
       postTime: Date,
-      likeCount: 0, // Record like count without e2e communications
+      likeCount: 0, // Like counter
       comments: [], // The content of comments
       hasComments: false,  // Flag for judging whether comment content is empty
-      showPost: true
+      showPost: true,
+      likePress: false  // Like pressed flag
     }
   },
   computed: {
@@ -156,9 +164,11 @@ export default {
             if(response.data.code === 200){
               if(response.data.data === 'like successfully'){
                 this.likeCount += 1
+                this.likePress = true
               }
               else if(response.data.data === 'cancel like successfully'){
                 this.likeCount -= 1
+                this.likePress = false
               }
             }
           })

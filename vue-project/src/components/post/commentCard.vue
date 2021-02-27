@@ -11,21 +11,22 @@
             <span><b>{{ comment_user }}</b></span>
             <span id="post-time"><{{ postTime }}></span>
           </b-col>
-          <!--likes & reply icon-->
+<!--          likes & reply icon-->
           <b-col cols="auto">
-            <!--Comment Button-->
+<!--            Comment Button-->
             <b-button variant="white" size="sm"
                       v-b-modal="'reply-modal-'+comment_id+0">
-              <b-icon icon="chat-left-text"></b-icon>
+              <b-icon icon="chat-left-text" variant="primary"></b-icon>
             </b-button>
 <!--            Child Component: reply input-->
             <reply-input :comment-id="comment_id"
                          :reply-id="0"
                          :from-user="comment_user"
                          @rreply="pushReplyQuest"></reply-input>
-            <!--Like Button-->
+<!--            Like Button-->
             <b-button variant="white" @click="likeComment">
-              <b-icon icon="hand-thumbs-up"></b-icon>
+              <b-icon icon="hand-thumbs-up" v-if="!likePress"></b-icon>
+              <b-icon variant="info" icon="hand-thumbs-up" v-if="likePress"></b-icon>
               <b-badge variant="light">{{ comment_likes + likeCount }}</b-badge>
             </b-button>
 
@@ -33,7 +34,7 @@
             <b-button v-b-modal="'delete-reply-modal-'+comment_id+0"
                       variant="white"
                       v-if="current_user===comment_user">
-              <b-icon icon="trash"></b-icon>
+              <b-icon icon="trash" variant="danger"></b-icon>
             </b-button>
             <b-modal :ref="'delete-reply-modal-'+comment_id+0"
                      :id="'delete-reply-modal-'+comment_id+0"
@@ -86,7 +87,8 @@ export default {
       // comment_replies: this.commentData.replies,
       postTime: Date,
       likeCount: 0,
-      showComment: true
+      showComment: true,
+      likePress: false  // Flag for like notation
     }
   },
   computed: {
@@ -106,6 +108,7 @@ export default {
       return this.commentData.comment_time
     },
     comment_likes() {
+      this.likeCount = 0  // Reset like counter when data has updated
       return this.commentData.comment_likes
     },
     comment_replies() {
@@ -149,9 +152,11 @@ export default {
             if(response.data.code === 200){
               if(response.data.data === 'like this comment successfully'){
                 this.likeCount += 1
+                this.likePress = true
               }
               else if(response.data.data === 'cancel successfully'){
                 this.likeCount -= 1
+                this.likePress = false
               }
             }
           })

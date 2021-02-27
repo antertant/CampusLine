@@ -6,16 +6,16 @@
     <!--main content-->
     <b-col cols='auto'>
       <b-row class="mb-1" align-h="between">
-        <!--author and post time-->
+<!--        author and post time-->
         <b-col cols="auto" id="post-author" align-self="center">
           <span><b>{{ reply_from_user }}</b></span>
           <span id="post-time"><{{ postTime }}></span>
         </b-col>
-        <!--Reply button-->
+<!--        Reply button-->
         <b-col cols="auto">
           <b-button variant="white" size="sm"
                     v-b-modal="'reply-modal-'+commentId+reply_id">
-            <b-icon icon="chat-left-text"></b-icon>
+            <b-icon icon="chat-left-text" variant="primary"></b-icon>
           </b-button>
 
 <!--          Child component: reply input-->
@@ -23,25 +23,25 @@
                        :reply-id="reply_id"
                        :from-user="reply_from_user"
                        @rreply="replyComment"></reply-input>
+<!--          Delete Button-->
+<!--          <b-button variant="white"-->
+<!--                    size="sm"-->
+<!--                    v-b-modal="'delete-reply-modal-'+commentId+reply_id"-->
+<!--                    v-if="current_user === reply_from_user">-->
+<!--            <b-icon icon="trash"></b-icon>-->
+<!--          </b-button>-->
+<!--          <b-modal :ref="'delete-reply-modal-'+commentId+reply_id"-->
+<!--                   :id="'delete-reply-modal-'+commentId+reply_id"-->
+<!--                   content-class="shadow"-->
+<!--                   title="Delete Reply"-->
+<!--                   centered>-->
+<!--            Are you sure to delete the reply?-->
 
-          <b-button variant="white"
-                    size="sm"
-                    v-b-modal="'delete-reply-modal-'+commentId+reply_id"
-                    v-if="current_user === reply_from_user">
-            <b-icon icon="trash"></b-icon>
-          </b-button>
-          <b-modal :ref="'delete-reply-modal-'+commentId+reply_id"
-                   :id="'delete-reply-modal-'+commentId+reply_id"
-                   content-class="shadow"
-                   title="Delete Reply"
-                   centered>
-            Are you sure to delete the reply?
-
-            <template #modal-footer>
-              <b-button @click="hideModal">No</b-button>
-              <b-button @click="deleteReply" variant="danger">Yes</b-button>
-            </template>
-          </b-modal>
+<!--            <template #modal-footer>-->
+<!--              <b-button @click="hideModal">No</b-button>-->
+<!--              <b-button @click="deleteReply" variant="danger">Yes</b-button>-->
+<!--            </template>-->
+<!--          </b-modal>-->
 
         </b-col>
       </b-row>
