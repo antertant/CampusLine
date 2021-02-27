@@ -14,7 +14,7 @@
           <b-nav-item to="news">News</b-nav-item>
 
           <b-nav-dropdown text="Modules" lazy>
-            <b-dropdown-item to="/life-circle">Life Circle</b-dropdown-item>
+            <b-dropdown-item to="/life">Life Circle</b-dropdown-item>
             <b-dropdown-item to="/knowledge-modules">Knowledge Modules</b-dropdown-item>
           </b-nav-dropdown>
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 style="text-align: center">{{modName}}</h1>
+    <h1 style="text-align: center">{{modName.toUpperCase()}}</h1>
     <div v-for="list in modulePostList">
       <post-card :post-content="list"></post-card>
     </div>

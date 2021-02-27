@@ -2,15 +2,15 @@
   <div>
     <div v-for="list in modulesList">
       <b-jumbotron
-      :header="list.module_name"
+      :header="list.module_name.toUpperCase()"
       :lead="list.module_intro"
       border-variant="secondary"
-      style="max-width: 60rem"
-      class="mx-auto">
+      style="max-width: 50rem"
+      class="mx-auto" bg-variant="info" text-variant="white">
         <b-button
-        variant="primary"
+        variant="secondary"
         :to="'knowledge-modules/'+list.module_name">
-          Join
+          JOIN
         </b-button>
       </b-jumbotron>
     </div>

@@ -1,7 +1,8 @@
 <template>
   <div>
-    <h1 style="text-align: center">Hello World!!!</h1>
+      <!--    <h1 style="text-align: center">Hello World!!!</h1>-->
 <!--    {{hotPosts}}-->
+    <hot-card :hot-data="hotPosts"></hot-card>
   </div>
 </template>
 
@@ -9,9 +10,10 @@
 import StickyHeader from "../components/header/stickyHeader";
 import PostCard from "../components/post/postCard";
 import axios from "axios";
+import HotCard from "@/components/home/hotCard";
 export default {
   name: "homePage",
-  components: {PostCard, StickyHeader},
+  components: {HotCard, PostCard, StickyHeader},
   data() {
     return {
       hotPosts: []
@@ -32,9 +34,9 @@ export default {
       })
     }
   },
-  // mounted() {
-  //   this.getHotPosts()
-  // }
+  mounted() {
+    this.getHotPosts()
+  }
 }
 </script>
 
