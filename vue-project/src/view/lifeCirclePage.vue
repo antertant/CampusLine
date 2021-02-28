@@ -7,6 +7,11 @@
         <post-card :post-content="list"></post-card>
       </div>
     </b-col>
+    <b-col cols="auto">
+      <b-row class="position-fixed">
+        <module-side-functions module-name="life"></module-side-functions>
+      </b-row>
+    </b-col>
   </b-row>
 </template>
 
@@ -14,9 +19,10 @@
 import PostCard from "../components/post/postCard";
 import {mapGetters} from "vuex";
 import PostInput from "@/components/post/postInput";
+import ModuleSideFunctions from "@/components/module/moduleSideFunctions";
 export default {
   name: "lifeCirclePage",
-  components: {PostInput, PostCard},
+  components: {ModuleSideFunctions, PostInput, PostCard},
   computed: {
     ...mapGetters({
       lifePostList: 'lifePostInfo/getLifePostList'

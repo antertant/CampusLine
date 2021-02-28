@@ -9,7 +9,7 @@
     </b-col>
     <b-col cols="auto">
       <b-row class="position-fixed">
-        <module-side-functions></module-side-functions>
+        <module-side-functions :module-name="modName"></module-side-functions>
       </b-row>
     </b-col>
   </b-row>
