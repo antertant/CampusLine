@@ -39,21 +39,45 @@ export default {
       this.postContent = ''
     },
     sendPost() {
-      axios
-        .post('/createpost', {
-          module_name: this.moduleName,
-          post_content: this.postContent,
-          post_author: this.currentUser
-        })
-        .then(response=>{
-          console.log(response)
-          if(response.data.code === 200){
-            this.resetPContent()
+      // Alert component construction
+      const crtEl = this.$createElement
+      const errTitle = crtEl(
+        'p',
+        { class: ['text-center', 'mb-0'] },
+        [
+          crtEl('b-icon', { props:{ icon: 'exclamation-diamond', small: true } }),
+          crtEl('strong', ' Error')
+        ]
+      )
+
+      // Show alert when the like action is done by a visitor
+      if(!this.postContent)
+        this.$bvToast.toast(
+          'Cannot post empty content.',{
+            title: [errTitle],
+            toaster: 'b-toaster-top-center',
+            variant: 'danger',
+            solid: true
           }
-        })
-        .catch(failResponse=>{
-          console.log(failResponse)
-        })
+        )
+      // Communication
+      else{
+        axios
+          .post('/createpost', {
+            module_name: this.moduleName,
+            post_content: this.postContent,
+            post_author: this.currentUser
+          })
+          .then(response=>{
+            console.log(response)
+            if(response.data.code === 200){
+              this.resetPContent()
+            }
+          })
+          .catch(failResponse=>{
+            console.log(failResponse)
+          })
+      }
     }
   }
 }

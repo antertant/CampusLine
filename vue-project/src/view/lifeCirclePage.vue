@@ -1,6 +1,6 @@
 <template>
   <b-row align-h="center">
-    <b-col lg="5" sm="9">
+    <b-col lg="5" sm="8">
       <h1 style="text-align: center">LIFE</h1>
       <post-input :module-name="null"></post-input>
       <div v-for="list in lifePostList">

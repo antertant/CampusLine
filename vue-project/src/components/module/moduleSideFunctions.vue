@@ -1,5 +1,7 @@
 <template>
-
+  <b-card>
+    test test
+  </b-card>
 </template>
 
 <script>

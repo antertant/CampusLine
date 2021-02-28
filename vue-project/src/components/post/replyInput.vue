@@ -66,7 +66,29 @@ export default {
       //   return
       // }
       // post comment to back-end
-      if(this.postReplyContent) {
+      // Alert component construction
+      const crtEl = this.$createElement
+      const errTitle = crtEl(
+        'p',
+        { class: ['text-center', 'mb-0'] },
+        [
+          crtEl('b-icon', { props:{ icon: 'exclamation-diamond', small: true } }),
+          crtEl('strong', ' Error')
+        ]
+      )
+
+      // Show alert when the like action is done by a visitor
+      if(!this.postReplyContent)
+        this.$bvToast.toast(
+          'Cannot post empty reply.',{
+            title: [errTitle],
+            toaster: 'b-toaster-top-center',
+            variant: 'danger',
+            solid: true
+          }
+        )
+      // Communication
+      else {
         axios
           .post('/commentreply', {
               'comment_id': this.commentId,
@@ -81,11 +103,11 @@ export default {
             console.log(failResponse)
           })
         this.$emit('rreply')
+        // after submitting, hide modal manually
+        this.$nextTick(() => {
+          this.$bvModal.hide('reply-modal-'+this.commentId+this.replyId)
+        })
       }
-      // after submitting, hide modal manually
-      this.$nextTick(() => {
-        this.$bvModal.hide('reply-modal-'+this.commentId+this.replyId)
-      })
     }
   }
 }

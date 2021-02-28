@@ -1,6 +1,6 @@
 <template>
   <b-row align-h="center">
-    <b-col lg="5" sm="9">
+    <b-col lg="5" sm="8">
       <h1 style="text-align: center">{{modName.toUpperCase()}}</h1>
       <post-input :module-name="modName"></post-input>
       <div v-for="list in modulePostList">
@@ -9,9 +9,7 @@
     </b-col>
     <b-col cols="auto">
       <b-row class="position-fixed">
-        <b-card>
-          test test
-        </b-card>
+        <module-side-functions></module-side-functions>
       </b-row>
     </b-col>
   </b-row>
@@ -21,10 +19,11 @@
 import {mapGetters} from "vuex";
 import PostCard from "../components/post/postCard";
 import PostInput from "@/components/post/postInput";
+import ModuleSideFunctions from "@/components/module/moduleSideFunctions";
 
 export default {
   name: "modulesContentPage",
-  components: {PostInput, PostCard},
+  components: {ModuleSideFunctions, PostInput, PostCard},
   props: ['modName'],
   computed: {
     ...mapGetters ({
