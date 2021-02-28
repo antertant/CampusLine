@@ -1,12 +1,10 @@
 <template>
-  <div>
-    Page Header
-  </div>
+
 </template>
 
 <script>
 export default {
-  name: "BlogHeader"
+name: "moduleSideFunctions"
 }
 </script>
 
