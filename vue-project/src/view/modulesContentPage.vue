@@ -1,19 +1,30 @@
 <template>
-  <div>
-    <h1 style="text-align: center">{{modName.toUpperCase()}}</h1>
-    <div v-for="list in modulePostList">
-      <post-card :post-content="list"></post-card>
-    </div>
-  </div>
+  <b-row align-h="center">
+    <b-col lg="5" sm="9">
+      <h1 style="text-align: center">{{modName.toUpperCase()}}</h1>
+      <post-input :module-name="modName"></post-input>
+      <div v-for="list in modulePostList">
+        <post-card :post-content="list"></post-card>
+      </div>
+    </b-col>
+    <b-col cols="auto">
+      <b-row class="position-fixed">
+        <b-card>
+          test test
+        </b-card>
+      </b-row>
+    </b-col>
+  </b-row>
 </template>
 
 <script>
 import {mapGetters} from "vuex";
 import PostCard from "../components/post/postCard";
+import PostInput from "@/components/post/postInput";
 
 export default {
   name: "modulesContentPage",
-  components: {PostCard},
+  components: {PostInput, PostCard},
   props: ['modName'],
   computed: {
     ...mapGetters ({

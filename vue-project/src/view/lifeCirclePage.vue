@@ -1,18 +1,22 @@
 <template>
-  <div>
-    <h1 style="text-align: center"> Life Circle</h1>
-    <div v-for="list in lifePostList">
-      <post-card :post-content="list"></post-card>
-    </div>
-  </div>
+  <b-row align-h="center">
+    <b-col lg="5" sm="9">
+      <h1 style="text-align: center">LIFE</h1>
+      <post-input :module-name="null"></post-input>
+      <div v-for="list in lifePostList">
+        <post-card :post-content="list"></post-card>
+      </div>
+    </b-col>
+  </b-row>
 </template>
 
 <script>
 import PostCard from "../components/post/postCard";
 import {mapGetters} from "vuex";
+import PostInput from "@/components/post/postInput";
 export default {
   name: "lifeCirclePage",
-  components: {PostCard},
+  components: {PostInput, PostCard},
   computed: {
     ...mapGetters({
       lifePostList: 'lifePostInfo/getLifePostList'

@@ -27,7 +27,7 @@
 <!--        Collect Button-->
         <b-list-group-item button>
           <b-icon icon="star"></b-icon>
-          Collect
+<!--          Collect-->
           <b-badge>{{ postContent.post_collections }}</b-badge>
         </b-list-group-item>
 
@@ -35,7 +35,7 @@
         <b-list-group-item  @click="likePost" button>
           <b-icon icon="hand-thumbs-up" v-if="!likePress"></b-icon>
           <b-icon icon="hand-thumbs-up" variant="info" v-if="likePress"></b-icon>
-          Like
+<!--          Like-->
           <b-badge>{{ postContent.post_likes + likeCount }}</b-badge>
         </b-list-group-item>
 
@@ -45,7 +45,7 @@
                            @click="getComment"
                            button>
           <b-icon icon="chat-left-text" size="sm"></b-icon>
-          Comment
+<!--          Comment-->
           <b-badge>{{ comment_count }}</b-badge>
         </b-list-group-item>
 <!--        Comment input trigger-->
@@ -63,15 +63,16 @@
 <!--        Repost Button-->
         <b-list-group-item button>
           <b-icon icon="box-arrow-up-right"></b-icon>
-          Repost
+<!--          Repost-->
         </b-list-group-item>
 
 <!--        Delete Button-->
-<!--        <b-list-group-item button-->
-<!--                           v-if="current_user===postContent.post_author"-->
-<!--                           @click="deletePost">-->
+        <b-list-group-item button
+                           v-if="current_user===postContent.post_author"
+                           @click="deletePost">
+          <b-icon icon="trash"></b-icon>
 <!--          Delete-->
-<!--        </b-list-group-item>-->
+        </b-list-group-item>
       </b-list-group>
 
 <!--      Comment Cards-->
@@ -183,7 +184,7 @@ export default {
         .then(response=>{
           console.log(response)
           if(response.data.code === 200){
-            this.showPost = true
+            this.showPost = false
             this.$nextTick()
           }
         })

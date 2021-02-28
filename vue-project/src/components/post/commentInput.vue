@@ -10,17 +10,17 @@
            centered>
     <form ref='commentform'
           class="mb-3"
-          @submit.stop.prevent="handleCSubmit">
+          @submit.prevent="handleCSubmit">
       <b-form-group label-for="comment-input"
                     invalid-feedback="Content is required"
                     :state="postCommentState">
-        <b-form-input placeholder="Enter your comment..."
+        <b-form-textarea rows="3" max-rows="6"
+                      placeholder="Enter your comment..."
                       id="comment-input"
                       type="text"
                       v-model="postCommentContent"
-                      :state="postCommentState"
-                      required >
-        </b-form-input>
+                      required autofocus>
+        </b-form-textarea>
       </b-form-group>
     </form>
   </b-modal>
@@ -41,20 +41,17 @@ export default {
   data () {
     return {
       postCommentContent: '',
-      postCommentState: null,
       hasComments: false
     }
   },
   methods: {
     resetCModal() {
       this.postCommentContent = ''
-      this.postCommentState = null
     },
-    checkFormValidity() {
-      let valid = this.$ref.commentform.checkFormValidity()
-      this.postCommentState = valid
-      return valid
-    },
+    // checkFormValidity() {
+    //   let valid = this.$ref.commentform.checkFormValidity()
+    //   return valid
+    // },
     handleCOk(bvModalEvt) {
       bvModalEvt.preventDefault()
       this.handleCSubmit()

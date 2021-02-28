@@ -1,7 +1,5 @@
 <template>
   <div>
-      <!--    <h1 style="text-align: center">Hello World!!!</h1>-->
-<!--    {{hotPosts}}-->
     <hot-card :hot-data="hotPosts"></hot-card>
   </div>
 </template>
