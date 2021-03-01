@@ -8,6 +8,7 @@ import lifeCirclePage from "../view/lifeCirclePage";
 import modulesContentPage from "../view/modulesContentPage";
 import searchModulePage from "@/view/searchModulePage";
 import searchPostPage from "@/view/searchPostPage";
+import moduleManagePage from "@/view/moduleManagePage";
 
 Vue.use(Router)
 
@@ -55,6 +56,12 @@ export default new Router({
       name: 'searchPostPage',
       component: searchPostPage,
       props:true
+    },
+    {
+      path: '/module_management=:modName',
+      name: 'moduleManagePage',
+      component: moduleManagePage,
+      props: true
     },
     {
       path:'*',

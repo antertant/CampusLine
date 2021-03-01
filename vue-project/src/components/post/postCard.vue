@@ -75,7 +75,7 @@
 
 <!--        Delete Button-->
         <b-list-group-item button
-                           v-if="current_user===postContent.post_author"
+                           v-if="current_user===postContent.post_author || admin"
                            @click="deletePost">
           <b-icon icon="trash"></b-icon>
         </b-list-group-item>
@@ -115,7 +115,7 @@ import CommentInput from "@/components/post/commentInput";
 export default {
   name: "postCard",
   components: {CommentInput, CommentCard},
-  props: ['postContent'],
+  props: ['postContent', 'adminCode'],
   data() {
     return{
       postTime: Date,
@@ -123,13 +123,14 @@ export default {
       comments: [], // The content of comments
       showPost: true,
       likePress: false,  // Like pressed flag
-      likes: [],  // Like lists
+      likes: []  // Like lists
     }
   },
   computed: {
     ...mapGetters ({
       current_user: "loginInfo/getLUName",
     }),
+    // Comment list empty detector
     commentEmpty: function() {
       if(this.comments.length === 0){
         return false;
@@ -138,6 +139,7 @@ export default {
         return true;
       }
     },
+    // Like list empty detector
     likeEmpty: function() {
       if(this.likes.length === 0){
         return false;
@@ -145,6 +147,13 @@ export default {
       else{
         return true;
       }
+    },
+    // flag for management page
+    admin: function (){
+      if(this.adminCode === 1)
+        return true
+      else
+        return false
     }
   },
   methods: {
