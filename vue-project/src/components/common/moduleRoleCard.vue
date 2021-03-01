@@ -1,12 +1,12 @@
 <template>
-  <div>
-    Page Header
-  </div>
+  <b-card no-body>
+
+  </b-card>
 </template>
 
 <script>
 export default {
-  name: "BlogHeader"
+name: "moduleRoleCard"
 }
 </script>
 

@@ -1,5 +1,5 @@
 <template>
- <b-card style="max-width: 50rem"
+ <b-card style="max-width: 46rem"
          class="mx-auto shadow"
          no-body>
   <b-card-header style="text-align: center; font-size: xx-large">
@@ -13,7 +13,7 @@
          <b-icon icon="tag" variant="info"></b-icon>
          <span style="color: black"><b>{{ singleModule.module_name.toUpperCase() }}</b></span>
        </template>
-<!--       Enter the module-->
+       <!--       Enter the module-->
        <b-button block :to="'/'+singleModule.module_name"
                  variant="primary"
                  v-if="singleModule.module_name === 'life'">

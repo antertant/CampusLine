@@ -27,17 +27,26 @@
 <!--        Collect Button-->
         <b-list-group-item button>
           <b-icon icon="star"></b-icon>
-          Collect
           <b-badge>{{ postContent.post_collections }}</b-badge>
         </b-list-group-item>
 
 <!--        Like Button-->
-        <b-list-group-item  @click="likePost" button>
+        <b-list-group-item :id="'pc-like-'+postContent.post_id"
+                           @click="likePost"
+                           button>
           <b-icon icon="hand-thumbs-up" v-if="!likePress"></b-icon>
           <b-icon icon="hand-thumbs-up" variant="info" v-if="likePress"></b-icon>
-          Like
           <b-badge>{{ postContent.post_likes + likeCount }}</b-badge>
         </b-list-group-item>
+<!--        Like list trigger-->
+        <b-popover :target="'pc-like-'+postContent.post_id" triggers="hover" placement="bottom">
+          <b-button variant="white"
+                    size="sm"
+                    v-b-toggle="'postLike-'+postContent.post_id"
+                    @click="getLike">
+            <b-icon icon="list-stars" size="sm" variant="primary"></b-icon> Like list
+          </b-button>
+        </b-popover>
 
 <!--        Comment button-->
         <b-list-group-item :id="'pc-comment-'+postContent.post_id"
@@ -45,8 +54,7 @@
                            @click="getComment"
                            button>
           <b-icon icon="chat-left-text" size="sm"></b-icon>
-          Comment
-          <b-badge>{{ comment_count }}</b-badge>
+          <b-badge>{{ comments.length }}</b-badge>
         </b-list-group-item>
 <!--        Comment input trigger-->
         <b-popover :target="'pc-comment-'+postContent.post_id" triggers="hover" placement="bottom">
@@ -63,15 +71,14 @@
 <!--        Repost Button-->
         <b-list-group-item button>
           <b-icon icon="box-arrow-up-right"></b-icon>
-          Repost
         </b-list-group-item>
 
 <!--        Delete Button-->
-<!--        <b-list-group-item button-->
-<!--                           v-if="current_user===postContent.post_author"-->
-<!--                           @click="deletePost">-->
-<!--          Delete-->
-<!--        </b-list-group-item>-->
+        <b-list-group-item button
+                           v-if="current_user===postContent.post_author || admin"
+                           @click="deletePost">
+          <b-icon icon="trash"></b-icon>
+        </b-list-group-item>
       </b-list-group>
 
 <!--      Comment Cards-->
@@ -84,6 +91,14 @@
                         @reply-event="getComment"
                         @comment-deleted="getComment"></comment-card>
         </div>
+      </b-collapse>
+
+<!--       Like list-->
+      <b-collapse :id="'postLike-'+postContent.post_id">
+        <b-card v-if="!likeEmpty" style="text-align: center">Nobody likes this post yet.</b-card>
+        <b-card v-if="likeEmpty" v-for="like in likes" :key="like.comment_id">
+          <div class="ml-1"><b-avatar size="sm"></b-avatar> <b>{{ like }}</b></div>
+        </b-card>
       </b-collapse>
       </b-col>
     </b-row>
@@ -100,21 +115,22 @@ import CommentInput from "@/components/post/commentInput";
 export default {
   name: "postCard",
   components: {CommentInput, CommentCard},
-  props: ['postContent'],
+  props: ['postContent', 'adminCode'],
   data() {
     return{
       postTime: Date,
       likeCount: 0, // Like counter
       comments: [], // The content of comments
-      hasComments: false,  // Flag for judging whether comment content is empty
       showPost: true,
-      likePress: false  // Like pressed flag
+      likePress: false,  // Like pressed flag
+      likes: []  // Like lists
     }
   },
   computed: {
     ...mapGetters ({
       current_user: "loginInfo/getLUName",
     }),
+    // Comment list empty detector
     commentEmpty: function() {
       if(this.comments.length === 0){
         return false;
@@ -123,9 +139,21 @@ export default {
         return true;
       }
     },
-    comment_count: function() {
-      if(!this.hasComments) {return this.postContent.post_comments}
-      else {return this.comments.length}
+    // Like list empty detector
+    likeEmpty: function() {
+      if(this.likes.length === 0){
+        return false;
+      }
+      else{
+        return true;
+      }
+    },
+    // flag for management page
+    admin: function (){
+      if(this.adminCode === 1)
+        return true
+      else
+        return false
     }
   },
   methods: {
@@ -162,6 +190,7 @@ export default {
           .then(response=>{
             console.log(response)
             if(response.data.code === 200){
+              this.getLike()
               if(response.data.data === 'like successfully'){
                 this.likeCount += 1
                 this.likePress = true
@@ -183,7 +212,7 @@ export default {
         .then(response=>{
           console.log(response)
           if(response.data.code === 200){
-            this.showPost = true
+            this.showPost = false
             this.$nextTick()
           }
         })
@@ -199,7 +228,19 @@ export default {
           console.log(response)
           if(response.data.code === 200){
             this.comments = response.data.data
-            this.hasComments = true
+          }
+        })
+        .catch(failResponse=>{
+          console.log(failResponse)
+        })
+    },
+    getLike() {
+      axios
+        .get('/getlikes', {params:{post_id:this.postContent.post_id}})
+        .then(response=>{
+          console.log(response)
+          if(response.data.code === 200){
+            this.likes = response.data.data
           }
         })
         .catch(failResponse=>{
@@ -209,6 +250,7 @@ export default {
   },
   mounted() {
     this.likeCount = 0
+    this.getComment()
     // Transfer the form of Date
     this.postTime = moment(new Date(this.postContent.post_createtime)).format("MMM Do YYYY, HH:mm")
   }

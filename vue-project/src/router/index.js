@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import HelloWorld from '@/components/HelloWorld'
-import BlogLogin from "../components/manage/BlogLogin";
-import BlogIndex from "../components/home/BlogIndex";
 import homePage from "../view/homePage";
 import loginPage from "../view/loginPage";
 import modulesPage from "../view/modulesIndexPage";
 import pageNotFound from "../view/pageNotFound";
 import lifeCirclePage from "../view/lifeCirclePage";
 import modulesContentPage from "../view/modulesContentPage";
+import searchModulePage from "@/view/searchModulePage";
+import searchPostPage from "@/view/searchPostPage";
+import moduleManagePage from "@/view/moduleManagePage";
 
 Vue.use(Router)
 
@@ -43,6 +43,24 @@ export default new Router({
       path: '/knowledge-modules/:modName',
       name: 'modulesContentPage',
       component: modulesContentPage,
+      props: true
+    },
+    {
+      path: '/module_search=:searchKey',
+      name: 'searchModulePage',
+      component: searchModulePage,
+      props: true
+    },
+    {
+      path: '/post_search=:searchKey',
+      name: 'searchPostPage',
+      component: searchPostPage,
+      props:true
+    },
+    {
+      path: '/module_management=:modName',
+      name: 'moduleManagePage',
+      component: moduleManagePage,
       props: true
     },
     {

@@ -1,26 +1,15 @@
 <template>
   <div>
-    <div v-for="list in modulesList">
-      <b-jumbotron
-      :header="list.module_name.toUpperCase()"
-      :lead="list.module_intro"
-      border-variant="secondary"
-      style="max-width: 50rem"
-      class="mx-auto" bg-variant="info" text-variant="white">
-        <b-button
-        variant="secondary"
-        :to="'knowledge-modules/'+list.module_name">
-          JOIN
-        </b-button>
-      </b-jumbotron>
-    </div>
+    <module-card :multi-modules="modulesList"></module-card>
   </div>
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
+import ModuleCard from "@/components/module/moduleCard";
 export default {
   name: "modulesPage",
+  components: {ModuleCard},
   data(){
     return {
     }

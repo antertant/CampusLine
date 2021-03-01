@@ -13,7 +13,7 @@ const store = new Vuex.Store({
       moduleList,
       loginInfo,
       lifePostInfo,
-      modulePostInfo,
+      modulePostInfo
   }
 })
 

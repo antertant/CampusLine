@@ -10,17 +10,17 @@
            centered>
     <form ref='commentform'
           class="mb-3"
-          @submit.stop.prevent="handleCSubmit">
+          @submit.prevent="handleCSubmit">
       <b-form-group label-for="comment-input"
                     invalid-feedback="Content is required"
                     :state="postCommentState">
-        <b-form-input placeholder="Enter your comment..."
+        <b-form-textarea rows="3" max-rows="6"
+                      placeholder="Enter your comment..."
                       id="comment-input"
                       type="text"
                       v-model="postCommentContent"
-                      :state="postCommentState"
-                      required >
-        </b-form-input>
+                      required autofocus>
+        </b-form-textarea>
       </b-form-group>
     </form>
   </b-modal>
@@ -41,20 +41,17 @@ export default {
   data () {
     return {
       postCommentContent: '',
-      postCommentState: null,
       hasComments: false
     }
   },
   methods: {
     resetCModal() {
       this.postCommentContent = ''
-      this.postCommentState = null
     },
-    checkFormValidity() {
-      let valid = this.$ref.commentform.checkFormValidity()
-      this.postCommentState = valid
-      return valid
-    },
+    // checkFormValidity() {
+    //   let valid = this.$ref.commentform.checkFormValidity()
+    //   return valid
+    // },
     handleCOk(bvModalEvt) {
       bvModalEvt.preventDefault()
       this.handleCSubmit()
@@ -65,7 +62,29 @@ export default {
       //   return
       // }
       // post comment to back-end
-      if(this.postCommentContent) {
+      // Alert component construction
+      const crtEl = this.$createElement
+      const errTitle = crtEl(
+        'p',
+        { class: ['text-center', 'mb-0'] },
+        [
+          crtEl('b-icon', { props:{ icon: 'exclamation-diamond', small: true } }),
+          crtEl('strong', ' Error')
+        ]
+      )
+
+      // Show alert when the like action is done by a visitor
+      if(!this.postCommentContent)
+        this.$bvToast.toast(
+          'Cannot post empty comment.',{
+            title: [errTitle],
+            toaster: 'b-toaster-top-center',
+            variant: 'danger',
+            solid: true
+          }
+        )
+      // Communication
+      else {
         axios
           .post('/comment', null, {params:{
               'post_id': this.commentId,
@@ -79,11 +98,11 @@ export default {
             console.log(failResponse)
           })
         this.$emit('rreply')
+        this.$nextTick(() => {
+          this.$bvModal.hide('comment-modal-'+this.commentId)
+        })
       }
       // after submitting, hide modal manually
-      this.$nextTick(() => {
-        this.$bvModal.hide('comment-modal-'+this.commentId)
-      })
     }
   }
 }
