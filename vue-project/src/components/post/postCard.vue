@@ -25,9 +25,8 @@
       <b-col>
       <b-list-group style="text-align: center" class="shadow-sm" horizontal>
 <!--        Collect Button-->
-        <b-list-group-item button>
+        <b-list-group-item @click="collectPost" button>
           <b-icon icon="star"></b-icon>
-          <b-badge>{{ postContent.post_collections }}</b-badge>
         </b-list-group-item>
 
 <!--        Like Button-->
@@ -157,6 +156,24 @@ export default {
     }
   },
   methods: {
+    collectPost() {
+      axios
+        .post('/collect', null, {params: {
+          post_id: this.postContent.post_id,
+          username: this.current_user}})
+        .then(response=>{
+          console.log(response)
+          if(response.data.code === 200){
+            if(response.data.data === "collect successfully")
+              this.constructSuccessToast('Collection added')
+            else if(response.data.data === "remove collection successfully")
+              this.constructSuccessToast('Collection removed')
+          }
+        })
+        .catch(failResponse=>{
+          console.log(failResponse)
+        })
+    },
     likePost() {
       // Alert component construction
       const crtEl = this.$createElement
@@ -246,6 +263,27 @@ export default {
         .catch(failResponse=>{
           console.log(failResponse)
         })
+    },
+    constructSuccessToast(action) {
+      // Alert component construction
+      const crtEl = this.$createElement
+      const errTitle = crtEl(
+        'p',
+        { class: ['text-center', 'mb-0'] },
+        [
+          crtEl('b-icon', { props:{ icon: 'exclamation-diamond', small: true } }),
+          crtEl('strong', ' Success')
+        ]
+      )
+      // Show alert
+      this.$bvToast.toast(
+        action+'!',{
+          title: [errTitle],
+          toaster: 'b-toaster-top-center',
+          variant: 'success',
+          solid: true
+        }
+      )
     }
   },
   mounted() {
