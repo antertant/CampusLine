@@ -1,5 +1,5 @@
 <template>
-  <b-row align-h="center">
+  <b-row align-h="center" style="margin-top: 5rem">
     <b-col lg="5" sm="8">
       <h1 style="text-align: center">LIFE</h1>
       <post-input :module-name="null"></post-input>

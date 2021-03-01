@@ -32,7 +32,7 @@
         <b-navbar-nav class="mx-auto">
 <!--          Login/Logout and Profile Button-->
           <b-nav-item id="navBar-user-popover" class="mr-3">
-            <b-avatar></b-avatar>
+            <b-avatar button></b-avatar>
 <!--            Show 'Visitor' when do not login yet-->
             <span v-show="!loginState">Visitor</span>
             <span v-show="loginState">{{ loginName }}</span>
@@ -55,7 +55,7 @@
             </b-button-group>
 <!--            Login popover for user-->
             <b-button-group vertical v-show="loginState">
-              <b-button :to="'/user_'+loginName+'/profile'" variant="outline-secondary" style="text-align: left">
+              <b-button :to="'/profile='+loginName" variant="outline-secondary" style="text-align: left">
                 <b-icon icon="person" aria-hidden="true" variant="primary"></b-icon>
                 Profile
               </b-button>
