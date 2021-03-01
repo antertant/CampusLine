@@ -39,6 +39,11 @@
         values(#{comment_id},#{reply_content},UTC_TIMESTAMP,#{from_user},#{to_user})
     </insert>
 
+    <delete id="deleteReply">
+        delete from comment_reply
+        where reply_id = #{reply_id}
+    </delete>
+
     <select id="existLike" resultType="java.lang.Integer">
         select count(1) from comment_like
         where comment_id = #{comment_id}

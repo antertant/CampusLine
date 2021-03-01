@@ -8,6 +8,7 @@ import com.example.project.mapper.ModuleMapper;
 import com.example.project.mapper.PostMapper;
 import com.example.project.mapper.UserMapper;
 import com.example.project.service.IModuleService;
+import com.example.project.utils.HTMLUtils;
 import com.example.project.utils.HashmapUtils;
 import org.springframework.stereotype.Service;
 
@@ -126,7 +127,7 @@ public class IModuleServiceImpl implements IModuleService {
         for(Map.Entry<Integer,Integer> m:list){
             hotposts.add(postMapper.getPost(m.getKey()));
         }
-        return hotposts;
+        return HTMLUtils.tohtmls(hotposts);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.example.project.controller;
 
 import com.example.project.entity.CommentReply;
 import com.example.project.entity.PostComment;
+import com.example.project.mapper.CommentMapper;
 import com.example.project.result.Result;
 import com.example.project.service.ICommentService;
 import io.swagger.annotations.ApiOperation;
@@ -9,12 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @Controller
 public class CommentController {
     @Autowired
     private ICommentService iCommentService;
+    @Resource
+    private CommentMapper commentMapper;
 
     @CrossOrigin
     @ApiOperation(value = "comment post")
@@ -48,6 +52,19 @@ public class CommentController {
         iCommentService.commentreply(reply);
         return Result.ok("reply successfully");
     }
+
+    @CrossOrigin
+    @ApiOperation(value = "reply comment/reply")
+    @RequestMapping(value = "/api/deletereply", method = RequestMethod.POST)
+    @ResponseBody
+    public Result deletereply(@RequestParam("reply_id")int reply_id){
+        int ret = commentMapper.deleteReply(reply_id);
+        if (ret==1)
+            return Result.ok("delete reply successfully");
+        else
+            return Result.fail("delete reply failed");
+    }
+
 
     @CrossOrigin
     @ApiOperation(value = "delete comment")

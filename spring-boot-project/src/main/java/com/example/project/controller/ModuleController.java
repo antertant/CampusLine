@@ -94,7 +94,7 @@ public class ModuleController {
     public Result getselfposts(@RequestParam("module_name")String module_name,
                                @RequestParam("username")String username){
         List<Post> posts = postMapper.getPosts(username,module_name);
-        return Result.ok(posts);
+        return Result.ok(HTMLUtils.tohtmls(posts));
     }
 
     @CrossOrigin
