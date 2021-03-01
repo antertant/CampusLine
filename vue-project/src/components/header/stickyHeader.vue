@@ -32,6 +32,7 @@
         <b-navbar-nav class="mx-auto">
 <!--          Login/Logout and Profile Button-->
           <b-nav-item id="navBar-user-popover" class="mr-3">
+            <b-avatar></b-avatar>
 <!--            Show 'Visitor' when do not login yet-->
             <span v-show="!loginState">Visitor</span>
             <span v-show="loginState">{{ loginName }}</span>

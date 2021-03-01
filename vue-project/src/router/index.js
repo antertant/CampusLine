@@ -9,6 +9,7 @@ import modulesContentPage from "../view/modulesContentPage";
 import searchModulePage from "@/view/searchModulePage";
 import searchPostPage from "@/view/searchPostPage";
 import moduleManagePage from "@/view/moduleManagePage";
+import registrationPage from "@/view/registrationPage";
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
       path:'/login',
       name: 'loginPage',
       component: loginPage
+    },
+    {
+      path: '/register',
+      name: 'registerPage',
+      component: registrationPage
     },
     {
       path: '/knowledge-modules',

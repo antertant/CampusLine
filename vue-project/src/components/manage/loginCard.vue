@@ -7,7 +7,10 @@
       </b-alert>
 
       <template #header>
-        <h5 class="mb-0">Login</h5>
+        <h5 class="mb-0">
+          <b-icon icon="card-checklist" variant="primary"></b-icon>
+          Login
+        </h5>
       </template>
       <b-form @submit="onSubmit" @reset="onReset" v-if="show">
         <b-form-group
@@ -34,8 +37,8 @@
           ></b-form-input>
         </b-form-group>
 
-        <b-button type="submit" variant="dark">Login</b-button>
-        <b-button type="reset" variant="secondary">Reset</b-button>
+        <b-button type="submit" variant="primary">Login</b-button>
+        <b-button type="reset" variant="warning">Reset</b-button>
         <b-button href="/register" variant="info" style="float:right;">Register</b-button>
       </b-form>
     </b-card>
