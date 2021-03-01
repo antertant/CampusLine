@@ -28,7 +28,8 @@
         Retire
       </b-button>
 <!--      Manage the module-->
-      <b-button block variant="primary" v-if="role === 'admin'">
+      <b-button block variant="primary" v-if="role === 'admin'"
+                :to="'/module_management=' + moduleName">
         Manage
       </b-button>
     </b-card>
