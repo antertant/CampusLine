@@ -32,22 +32,22 @@ public class IModuleServiceImpl implements IModuleService {
     @Override
     public List<Module> getModules(){
         List<Module> modules = moduleMapper.getModules();
-        for(int i=0;i<modules.size();i++){
-            Module m = modules.get(i);
-            List<String> admins = moduleMapper.getAdmins(m.getModule_name());
-            modules.get(i).setAdmins(admins);
-        }
+//        for(int i=0;i<modules.size();i++){
+//            Module m = modules.get(i);
+//            List<String> admins = moduleMapper.getAdmins(m.getModule_name());
+//            modules.get(i).setAdmins(admins);
+//        }
         return modules;
     }
 
     @Override
     public List<Module> searchModule(String key){
         List<Module> modules = moduleMapper.searchModule(key);
-        for(int i=0;i<modules.size();i++){
-            Module m = modules.get(i);
-            List<String> admins = moduleMapper.getAdmins(m.getModule_name());
-            modules.get(i).setAdmins(admins);
-        }
+//        for(int i=0;i<modules.size();i++){
+//            Module m = modules.get(i);
+//            List<String> admins = moduleMapper.getAdmins(m.getModule_name());
+//            modules.get(i).setAdmins(admins);
+//        }
         return modules;
     }
 

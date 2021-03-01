@@ -4,6 +4,7 @@ import com.example.project.entity.HotModule;
 import com.example.project.entity.Module;
 import com.example.project.entity.Post;
 import com.example.project.entity.User;
+import com.example.project.mapper.ModuleMapper;
 import com.example.project.mapper.PostMapper;
 import com.example.project.mapper.UserMapper;
 import com.example.project.result.Result;
@@ -26,6 +27,8 @@ public class ModuleController {
     private UserMapper userMapper;
     @Resource
     private PostMapper postMapper;
+    @Resource
+    private ModuleMapper moduleMapper;
 
     @CrossOrigin
     @ApiOperation("After click the dropdown menu of 'mudule' at the navbar" +
@@ -49,6 +52,16 @@ public class ModuleController {
         }
         return result;
     }
+
+    @CrossOrigin
+    @ApiOperation("get the admin list of a module")
+    @RequestMapping(value = "/api/getadmins",method = RequestMethod.GET)
+    @ResponseBody
+    public Result getAdmins(@RequestParam("module_name")String module_name){
+        List<String> admins = moduleMapper.getAdmins(module_name);
+        return Result.ok(admins);
+    }
+
 
     @CrossOrigin
     @ApiOperation("get user's role at a module")
