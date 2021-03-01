@@ -6,7 +6,6 @@ public class Module {
     private String module_name;
     private String module_intro;
     private int max_adminNumber;
-    private List<String> admins;
 
     public String getModule_name() {
         return module_name;
@@ -32,13 +31,13 @@ public class Module {
         this.max_adminNumber = max_adminNumber;
     }
 
-    public List<String> getAdmins() {
-        return admins;
-    }
-
-    public void setAdmins(List<String> admins) {
-        this.admins = admins;
-    }
+//    public List<String> getAdmins() {
+//        return admins;
+//    }
+//
+//    public void setAdmins(List<String> admins) {
+//        this.admins = admins;
+//    }
 
     @Override
     public boolean equals(Object obj){
