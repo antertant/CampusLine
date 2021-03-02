@@ -3,6 +3,7 @@ package com.example.project.controller;
 import com.example.project.entity.User;
 import com.example.project.result.Result;
 import com.example.project.service.IUserService;
+import com.example.project.service.Impl.IUserServiceImpl;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -67,5 +68,12 @@ public class UserController {
         return Result.ok(followers);
     }
 
-
+    @CrossOrigin
+    @ApiOperation("count the followers")
+    @RequestMapping(value="/api/countfollower", method = RequestMethod.GET)
+    @ResponseBody
+    public Result countfollower(@RequestParam("username")String username){
+        int countf = iUserService.countFollower(username);
+        return Result.ok(countf);
+    }
 }
