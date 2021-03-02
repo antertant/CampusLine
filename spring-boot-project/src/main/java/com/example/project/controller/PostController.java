@@ -40,6 +40,15 @@ public class PostController {
     }
 
     @CrossOrigin
+    @ApiOperation("get posts by their author")
+    @RequestMapping(value = "/api/getpostbyauthor", method = RequestMethod.GET)
+    @ResponseBody
+    public Result getpostsbyauthor(@RequestParam("username")String post_author){
+        List<Post> posts = postMapper.getPostsbyAuthor(post_author);
+        return Result.ok(HTMLUtils.tohtmls(posts));
+    }
+
+    @CrossOrigin
     @ApiOperation("get posts with search key")
     @RequestMapping(value = "/api/searchpost", method = RequestMethod.GET)
     @ResponseBody

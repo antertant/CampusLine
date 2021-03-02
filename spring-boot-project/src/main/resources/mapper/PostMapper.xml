@@ -17,6 +17,12 @@
         order by post_createtime desc
     </select>
 
+    <select id="getPostsbyAuthor" resultType="com.example.project.entity.Post">
+        select * from post
+        where post_author = #{post_author}
+        order by post_createtime desc
+    </select>
+
     <select id="getPosts" resultType="com.example.project.entity.Post">
         select * from post
         where module_name = #{module_name}
