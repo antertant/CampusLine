@@ -109,4 +109,13 @@ public class PostController {
         return Result.ok(msg);
     }
 
+    @CrossOrigin
+    @ApiOperation("get the collect_list of a user")
+    @RequestMapping(value = "/api/getcollects", method = RequestMethod.GET)
+    @ResponseBody
+    public Result getcollects(@RequestParam("username")String username){
+        List<String> collects = iPostService.getCollects(username);
+        return Result.ok(collects);
+    }
+
 }

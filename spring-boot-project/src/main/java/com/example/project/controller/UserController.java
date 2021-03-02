@@ -3,11 +3,13 @@ package com.example.project.controller;
 import com.example.project.entity.User;
 import com.example.project.result.Result;
 import com.example.project.service.IUserService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Objects;
 
 @Controller
@@ -40,4 +42,30 @@ public class UserController {
         }
         return Result.fail("fail");
     }
+
+    @CrossOrigin
+    @ApiOperation(value = "follow user or cancel follow")
+    @RequestMapping(value = "/api/follow", method = RequestMethod.POST)
+    @ResponseBody
+    public Result collect(@RequestParam("follower")String follower,
+                          @RequestParam("username")String username){
+        int flag = iUserService.follow(follower,username);
+        String msg;
+        if(flag == 1)
+            msg = "follow successfully";
+        else
+            msg = "cancel follow successfully";
+        return Result.ok(msg);
+    }
+
+    @CrossOrigin
+    @ApiOperation("get the follower_list of a user")
+    @RequestMapping(value = "/api/getfollower", method = RequestMethod.GET)
+    @ResponseBody
+    public Result getfollower(@RequestParam("username")String username){
+        List<String> followers = iUserService.getFollower(username);
+        return Result.ok(followers);
+    }
+
+    
 }
