@@ -20,6 +20,7 @@ public interface CommentMapper {
                             @Param(value = "from_user")String from_user,
                             @Param(value = "to_user")String to_user,
                             @Param(value = "reply_content")String reply_content);
+    int deleteReply(@Param(value = "reply_id")int reply_id);
 
     int existLike(@Param(value = "comment_id")int comment_id,
                   @Param(value = "clike_user")String clike_user);

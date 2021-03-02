@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : mydatabase
+ Source Server         : Mysql
  Source Server Type    : MySQL
- Source Server Version : 80011
+ Source Server Version : 50515
  Source Host           : localhost:3306
- Source Schema         : project
+ Source Schema         : ece651
 
  Target Server Type    : MySQL
- Target Server Version : 80011
+ Target Server Version : 50515
  File Encoding         : 65001
 
- Date: 19/02/2021 00:47:20
+ Date: 02/03/2021 11:23:12
 */
 
 SET NAMES utf8mb4;
@@ -24,12 +24,12 @@ DROP TABLE IF EXISTS `comment_like`;
 CREATE TABLE `comment_like`  (
   `comment_id` int(11) NOT NULL,
   `clike_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `clike_time` datetime(0) NULL DEFAULT NULL,
+  `clike_time` datetime NULL DEFAULT NULL,
   INDEX `like_user`(`clike_user`) USING BTREE,
   INDEX `comment_id`(`comment_id`) USING BTREE,
   CONSTRAINT `comment_like_ibfk_2` FOREIGN KEY (`clike_user`) REFERENCES `user_info` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `comment_like_ibfk_3` FOREIGN KEY (`comment_id`) REFERENCES `post_comment` (`comment_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of comment_like
@@ -44,7 +44,7 @@ CREATE TABLE `comment_reply`  (
   `reply_id` int(11) NOT NULL AUTO_INCREMENT,
   `comment_id` int(11) NOT NULL,
   `creply_content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `creply_time` datetime(0) NULL DEFAULT NULL,
+  `creply_time` datetime NULL DEFAULT NULL,
   `from_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `to_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`reply_id`) USING BTREE,
@@ -54,7 +54,7 @@ CREATE TABLE `comment_reply`  (
   CONSTRAINT `comment_reply_ibfk_2` FOREIGN KEY (`from_user`) REFERENCES `user_info` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `comment_reply_ibfk_3` FOREIGN KEY (`to_user`) REFERENCES `user_info` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `comment_reply_ibfk_4` FOREIGN KEY (`comment_id`) REFERENCES `post_comment` (`comment_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of comment_reply
@@ -74,7 +74,7 @@ CREATE TABLE `module`  (
   `module_intro` varchar(3000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `max_adminnumber` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`module_name`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of module
@@ -93,7 +93,7 @@ CREATE TABLE `post`  (
   `module_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `post_content` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   `post_author` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `post_createtime` datetime(0) NULL DEFAULT NULL,
+  `post_createtime` datetime NULL DEFAULT NULL,
   `post_likes` int(11) NULL DEFAULT 0 COMMENT 'number of like',
   `post_comments` int(11) NULL DEFAULT 0 COMMENT 'number of comment',
   `post_collections` int(11) NULL DEFAULT 0 COMMENT 'number of collection',
@@ -102,7 +102,7 @@ CREATE TABLE `post`  (
   INDEX `module_name`(`module_name`) USING BTREE,
   CONSTRAINT `post_ibfk_2` FOREIGN KEY (`post_author`) REFERENCES `user_info` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `post_ibfk_3` FOREIGN KEY (`module_name`) REFERENCES `module` (`module_name`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of post
@@ -130,7 +130,7 @@ CREATE TABLE `post_collect`  (
   INDEX `post_id`(`post_id`) USING BTREE,
   CONSTRAINT `post_collect_ibfk_2` FOREIGN KEY (`collect_user`) REFERENCES `user_info` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `post_collect_ibfk_3` FOREIGN KEY (`post_id`) REFERENCES `post` (`post_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of post_collect
@@ -146,13 +146,13 @@ CREATE TABLE `post_comment`  (
   `post_id` int(11) NOT NULL,
   `comment_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `comment_content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `comment_time` datetime(0) NULL DEFAULT NULL,
+  `comment_time` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`comment_id`) USING BTREE,
   INDEX `comment_user`(`comment_user`) USING BTREE,
   INDEX `post_id`(`post_id`) USING BTREE,
   CONSTRAINT `post_comment_ibfk_2` FOREIGN KEY (`comment_user`) REFERENCES `user_info` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `post_comment_ibfk_3` FOREIGN KEY (`post_id`) REFERENCES `post` (`post_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of post_comment
@@ -170,12 +170,12 @@ DROP TABLE IF EXISTS `post_like`;
 CREATE TABLE `post_like`  (
   `post_id` int(11) NOT NULL,
   `like_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'user that likes this post',
-  `like_time` datetime(0) NULL DEFAULT NULL,
+  `like_time` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`post_id`, `like_user`) USING BTREE,
   INDEX `like_user`(`like_user`) USING BTREE,
   CONSTRAINT `post_like_ibfk_2` FOREIGN KEY (`like_user`) REFERENCES `user_info` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `post_like_ibfk_3` FOREIGN KEY (`post_id`) REFERENCES `post` (`post_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of post_like
@@ -194,25 +194,6 @@ INSERT INTO `post_like` VALUES (9, 'ppp', '2021-02-18 16:18:55');
 INSERT INTO `post_like` VALUES (11, 'Mao', '2021-02-19 05:21:26');
 
 -- ----------------------------
--- Table structure for user_follow
--- ----------------------------
-DROP TABLE IF EXISTS `user_follow`;
-CREATE TABLE `user_follow`  (
-  `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `follow` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  INDEX `username`(`username`) USING BTREE,
-  INDEX `following`(`follow`) USING BTREE,
-  CONSTRAINT `user_follow_ibfk_1` FOREIGN KEY (`username`) REFERENCES `user_info` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `user_follow_ibfk_2` FOREIGN KEY (`follow`) REFERENCES `user_info` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of user_follow
--- ----------------------------
-INSERT INTO `user_follow` VALUES ('Mao', 'meng');
-INSERT INTO `user_follow` VALUES ('Mao', 'ppp');
-
--- ----------------------------
 -- Table structure for user_follower
 -- ----------------------------
 DROP TABLE IF EXISTS `user_follower`;
@@ -223,7 +204,7 @@ CREATE TABLE `user_follower`  (
   INDEX `follower`(`follower`) USING BTREE,
   CONSTRAINT `user_follower_ibfk_1` FOREIGN KEY (`username`) REFERENCES `user_info` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `user_follower_ibfk_2` FOREIGN KEY (`follower`) REFERENCES `user_info` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of user_follower
@@ -243,7 +224,7 @@ CREATE TABLE `user_info`  (
   PRIMARY KEY (`username`) USING BTREE,
   INDEX `module_admin`(`module_admin`) USING BTREE,
   CONSTRAINT `user_info_ibfk_2` FOREIGN KEY (`module_admin`) REFERENCES `module` (`module_name`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of user_info
