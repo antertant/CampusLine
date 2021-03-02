@@ -78,6 +78,12 @@
           and collect_user = #{username}
     </delete>
 
+    <select id="getCollects" resultType="java.lang.String">
+        select post_id from post_collect
+        where collect_user = #{username}
+        order by like_time desc
+    </select>
+
     <update id="updateP">
         update post set
         <if test="choice==1">

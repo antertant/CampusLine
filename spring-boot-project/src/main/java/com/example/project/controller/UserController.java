@@ -67,5 +67,5 @@ public class UserController {
         return Result.ok(followers);
     }
 
-    
+
 }
