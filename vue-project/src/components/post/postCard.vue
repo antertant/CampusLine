@@ -64,8 +64,7 @@
           </b-button>
         </b-popover>
 <!--        Child Component: Comment input-->
-        <comment-input :comment-id="postContent.post_id" @rreply="getComment">
-        </comment-input>
+        <comment-input :comment-id="postContent.post_id" @rreply="getComment"></comment-input>
 
 <!--        Repost Button-->
         <b-list-group-item button>
@@ -75,13 +74,25 @@
 <!--        Delete Button-->
         <b-list-group-item button
                            v-if="current_user===postContent.post_author || admin"
-                           @click="deletePost">
+                           v-b-modal="'delete-post-modal-'+postContent.post_id+0">
           <b-icon icon="trash"></b-icon>
         </b-list-group-item>
+        <b-modal :ref="'delete-post-modal-'+postContent.post_id+0"
+                 :id="'delete-post-modal-'+postContent.post_id+0"
+                 content-class="shadow"
+                 title="Delete Comment"
+                 centered>
+          Are you sure to delete the post?
+          <template #modal-footer>
+            <b-button @click="hideModal">No</b-button>
+            <b-button @click="deletePost" variant="danger">Yes</b-button>
+          </template>
+        </b-modal>
+
       </b-list-group>
 
 <!--      Comment Cards-->
-      <b-collapse :id="'postComment-'+postContent.post_id">
+      <b-collapse :id="'postComment-'+postContent.post_id" v-if="cCardFlag">
         <b-card v-if="!commentEmpty" style="text-align: center">There is no comment here yet.</b-card>
         <div v-if="commentEmpty" v-for="comment in comments" :key="comment.comment_id">
 <!--          Child Component: Comment Card-->
@@ -122,7 +133,8 @@ export default {
       comments: [], // The content of comments
       showPost: true,
       likePress: false,  // Like pressed flag
-      likes: []  // Like lists
+      likes: [],  // Like lists
+      cCardFlag: true
     }
   },
   computed: {
@@ -236,6 +248,8 @@ export default {
         .catch(failResponse=>{
           console.log(failResponse)
         })
+      this.hideModal()
+      this.$nextTick()
     },
     getComment() {
       // Communication
@@ -250,6 +264,8 @@ export default {
         .catch(failResponse=>{
           console.log(failResponse)
         })
+      this.cCardFlag = false
+      this.cCardFlag = true
     },
     getLike() {
       axios
@@ -263,6 +279,9 @@ export default {
         .catch(failResponse=>{
           console.log(failResponse)
         })
+    },
+    hideModal() {
+      this.$refs['delete-post-modal-'+this.postContent.post_id+0].hide()
     },
     constructSuccessToast(action) {
       // Alert component construction
