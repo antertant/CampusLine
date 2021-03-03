@@ -6,6 +6,7 @@
         Incorrect username/password.
       </b-alert>
 
+<!--      Card Header-->
       <template #header>
         <h5 class="mb-0">
           <b-icon icon="card-checklist" variant="primary"></b-icon>
@@ -18,6 +19,8 @@
           label="Username:"
           label-for="input-1"
         >
+
+<!--          Username/Email input-->
           <b-form-input
             id="input-1"
             v-model="loginInfo.username"
@@ -27,6 +30,7 @@
           ></b-form-input>
         </b-form-group>
 
+<!--        Password input-->
         <b-form-group id="input-group-2" label="Password" label-for="input-2">
           <b-form-input
             id="input-2"
@@ -37,6 +41,11 @@
           ></b-form-input>
         </b-form-group>
 
+        <div class="mb-2">
+          <a href="/forgetpw">Forget your password?</a>
+        </div>
+
+<!--        Buttons-->
         <b-button type="submit" variant="primary">Login</b-button>
         <b-button type="reset" variant="warning">Reset</b-button>
         <b-button href="/register" variant="info" style="float:right;">Register</b-button>

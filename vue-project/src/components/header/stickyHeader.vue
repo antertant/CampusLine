@@ -12,21 +12,37 @@
             <img src="./logo.svg" height="20" alt="logo">
           </b-navbar-brand>
 <!--          Homepage Button-->
-          <b-nav-item to="/">Home</b-nav-item>
+          <b-nav-item to="/">
+            <b-icon icon="house"></b-icon>
+            Home
+          </b-nav-item>
 <!--          New Posts Button-->
-          <b-nav-item to="news">News</b-nav-item>
+          <b-nav-item to="news">
+            <b-icon icon="newspaper"></b-icon>
+            News
+          </b-nav-item>
 <!--          Modules Button-->
-          <b-nav-dropdown text="Modules" lazy>
-            <b-dropdown-item to="/life">Life Circle</b-dropdown-item>
-            <b-dropdown-item to="/knowledge-modules">Knowledge Modules</b-dropdown-item>
-          </b-nav-dropdown>
+          <b-nav-item id="modules-popover">
+            <b-icon icon="box-seam"></b-icon> Modules
+          </b-nav-item>
+          <b-popover target="modules-popover" placement="buttom" triggers="focus">
+            <b-list-group style="font-size: medium; color: black">
+              <b-list-group-item to="/life" class="border-0 py-2">Life</b-list-group-item>
+              <b-list-group-item to="/knowledge-modules" class="border-0 py-2">Knowledge</b-list-group-item>
+            </b-list-group>
+          </b-popover>
 <!--          Message Button-->
-          <b-nav-dropdown text="Messenger" lazy>
-            <b-dropdown-item to="/comment">Comment</b-dropdown-item>
-            <b-dropdown-item to="#">Repost</b-dropdown-item>
-            <b-dropdown-item to="#">Like</b-dropdown-item>
-            <b-dropdown-item to="#">Message</b-dropdown-item>
-          </b-nav-dropdown>
+          <b-nav-item id="message-popover">
+            <b-icon icon="bell"></b-icon> Messages
+          </b-nav-item>
+          <b-popover target="message-popover" placement="buttom" triggers="focus">
+            <b-list-group style="font-size: medium; color: black">
+              <b-list-group-item to="/messages=comment" class="border-0 py-2">Comment</b-list-group-item>
+              <b-list-group-item to="/messages=repost" class="border-0 py-2">Repost</b-list-group-item>
+              <b-list-group-item to="/messages=like" class="border-0 py-2">Like</b-list-group-item>
+              <b-list-group-item to="/messages=message" class="border-0 py-2">Message</b-list-group-item>
+            </b-list-group>
+          </b-popover>
         </b-navbar-nav>
 
         <b-navbar-nav class="mx-auto">
@@ -40,7 +56,7 @@
           <b-popover
             target="navBar-user-popover"
             placement="bottom"
-            triggers="hover"
+            triggers="focus"
           >
 <!--            Login popover for visitor-->
             <b-button-group vertical v-show="!loginState">
@@ -67,15 +83,16 @@
           </b-popover>
 <!--          Search bar-->
           <b-nav-form @submit="searchAction">
-            <b-form-select v-model="searchSelect" required>
-              <b-form-select-option value="searchmodule">Module</b-form-select-option>
-              <b-form-select-option value="searchpost">Post</b-form-select-option>
-            </b-form-select>
             <b-form-input aria-label="Input"
-                          class="mr-sm-2"
                           v-model="searchKey"
                           placeholder="Search..."
                           required></b-form-input>
+
+            <b-form-select v-model="searchSelect" class="mr-2" required>
+              <b-form-select-option value="searchmodule">Module</b-form-select-option>
+              <b-form-select-option value="searchpost">Post</b-form-select-option>
+            </b-form-select>
+
             <b-button variant="outline-dark"
                       class="my-2 my-sm-0"
                       type="submit">

@@ -11,6 +11,7 @@ import searchPostPage from "@/view/searchPostPage";
 import moduleManagePage from "@/view/moduleManagePage";
 import registrationPage from "@/view/registrationPage";
 import profilePage from "@/view/profilePage";
+import messagePage from "@/view/messagePage";
 
 Vue.use(Router)
 
@@ -74,6 +75,12 @@ export default new Router({
       path: '/profile=:profileUser',
       name: 'profilePage',
       component: profilePage,
+      props: true
+    },
+    {
+      path: '/messages=:mType',
+      name: 'messagePage',
+      component: messagePage,
       props: true
     },
     {
