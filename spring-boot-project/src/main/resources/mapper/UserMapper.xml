@@ -51,7 +51,7 @@
     order by 1 desc
   </select>
 
-  <select id="countFollower" resultType="Java.lang.Integer">
+  <select id="countFollower" resultType="java.lang.Integer">
     select count(1) from user_follower
     where username=#{username}
   </select>
