@@ -9,7 +9,7 @@
     "start": "npm run dev",
     "build": "node build/build.js",
     "test": "mocha --require babel-core/register",
-    "test:unit": "vue-cli-service test:unit src/test/*.spec.js"
+    "test:unit": "vue-cli-service test:unit src/test/*.spec.js src/test/*/*.spec.js"
   },
   "dependencies": {
     "axios": "^0.21.1",

@@ -47,16 +47,12 @@ describe("stickyHeader.vue", () => {
     const loginName = wrapper.findAll('b-nav-item').at(4).findAll('span').at(1)
     const logout = wrapper.findAll('b-button-group').at(1).findAll('b-button').at(1)
     logState = true
+    expect(loginName.text()).not.to.be.empty
     logout.trigger('click')
     wrapper.vm.$nextTick(() => {
       expect(logState).to.be.equal(false)
-      expect(loginName.text()).to.equal('')
+      expect(loginName.text()).to.be.empty
     })
-  })
-
-  it("popover is correctly showed", () => {
-    const wrapper = shallowMount(stickyHeader, {store, localVue});
-
   })
 
 })

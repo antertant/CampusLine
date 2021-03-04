@@ -2,9 +2,7 @@
   <b-card no-body style="min-width: 9rem">
 <!--    Point info-->
     <b-card align="center">
-      <template #header>
-        POINT
-      </template>
+      <b-card-header>POINT</b-card-header>
       <b>{{ points }}</b>
     </b-card>
 <!--    Manager info-->
@@ -127,6 +125,7 @@ export default {
         'module has had enough admins ,or do not have enough points ' +
         'to become an admin',{
           title: [errTitle],
+          class: 'error-toast',
           toaster: 'b-toaster-top-center',
           variant: 'danger',
           solid: true
