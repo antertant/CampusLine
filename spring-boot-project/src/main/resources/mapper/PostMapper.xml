@@ -84,6 +84,11 @@
         order by like_time desc
     </select>
 
+    <select id="countCollect" resultType="java.lang.Integer">
+        select count(1) from post_collect
+        where collect_user = #{username}
+    </select>
+
     <update id="updateP">
         update post set
         <if test="choice==1">

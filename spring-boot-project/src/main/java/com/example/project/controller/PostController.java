@@ -118,4 +118,13 @@ public class PostController {
         return Result.ok(collects);
     }
 
+    @CrossOrigin
+    @ApiOperation("count the user's collections")
+    @RequestMapping(value = "/api/countcollects", method = RequestMethod.GET)
+    @ResponseBody
+    public int countcollect(@RequestParam("username")String username){
+        return iPostService.countCollect(username);
+
+    }
+
 }
