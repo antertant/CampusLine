@@ -38,9 +38,9 @@
           <b-popover target="message-popover" placement="buttom" triggers="focus">
             <b-list-group style="font-size: medium; color: black">
               <b-list-group-item to="/messages=comment" class="border-0 py-2">Comment</b-list-group-item>
-              <b-list-group-item to="/messages=repost" class="border-0 py-2">Repost</b-list-group-item>
+<!--              <b-list-group-item to="/messages=repost" class="border-0 py-2">Repost</b-list-group-item>-->
               <b-list-group-item to="/messages=like" class="border-0 py-2">Like</b-list-group-item>
-              <b-list-group-item to="/messages=message" class="border-0 py-2">Message</b-list-group-item>
+<!--              <b-list-group-item to="/messages=message" class="border-0 py-2">Message</b-list-group-item>-->
             </b-list-group>
           </b-popover>
         </b-navbar-nav>

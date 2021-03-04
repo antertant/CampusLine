@@ -1,23 +1,29 @@
 <template>
   <b-card class="shadow">
+<!--    header-->
+    <template #header>
+      <h5>Comment List</h5>
+    </template>
     <b-card v-for="comment in commentList" :key="comment.comment_id" no-body class="shadow-sm">
 <!--      avator, comment user and comment time-->
       <b-row class="p-3">
+<!--        comment user's avatar-->
         <b-col cols="auto">
           <b-avatar class="mr-2" size="md"></b-avatar>
         </b-col>
         <b-col>
+<!--          comment user-->
           <b-row><b>{{ comment.comment_user }}</b></b-row>
+<!--          comment time-->
           <b-row style="color: gray;font-size: small">
             <{{ timeTransfer(comment.comment_time) }}>
           </b-row>
+<!--          comment content-->
+          <b-row class="mt-3">
+            {{ comment.comment_content }}
+          </b-row>
         </b-col>
       </b-row>
-
-<!--      comment content-->
-      <b-card-text class="ml-3 mt-2">
-        {{ comment.comment_content }}
-      </b-card-text>
 
 <!--      the post commented-->
 <!--      <b-card no-body style="background-color: lightgray" text-variant="black" class="rounded-0 border-0 p-3">-->

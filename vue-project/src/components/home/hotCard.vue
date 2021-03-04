@@ -24,6 +24,7 @@
                  v-else>
          Enter the <{{ singleModule.module_name.toUpperCase() }}> Module
        </b-button>
+<!--       module post list-->
        <post-card v-for="singlePost in singleModule.posts"
                   :post-content="singlePost"
                   :key="singlePost.post_id"></post-card>

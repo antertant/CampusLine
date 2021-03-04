@@ -67,9 +67,9 @@
         <comment-input :comment-id="postContent.post_id" @rreply="getComment"></comment-input>
 
 <!--        Repost Button-->
-        <b-list-group-item button>
-          <b-icon icon="box-arrow-up-right"></b-icon>
-        </b-list-group-item>
+<!--        <b-list-group-item button>-->
+<!--          <b-icon icon="box-arrow-up-right"></b-icon>-->
+<!--        </b-list-group-item>-->
 
 <!--        Delete Button-->
         <b-list-group-item button
