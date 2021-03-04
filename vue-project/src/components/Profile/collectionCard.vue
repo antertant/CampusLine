@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div v-for="collection in collectList" key="1">
+    {{collectList}}
+    <div v-for="collection in collectPostList" key="1">
       <post-card :post-content="collection"></post-card>
     </div>
   </div>
@@ -21,13 +22,14 @@ export default {
   methods: {
     getCollection() {
       axios
-        .get('/getselfposts', {params:{
-          module_name: 'life',
-          username: this.profileUser}})
+        .get('/getcollects', {params:{username: this.profileUser}})
         .then(response=>{
           console.log(response)
           if(response.data.code === 200){
             this.collectList = response.data.data
+          }
+          else{
+            this.collectList = 'error'
           }
         })
         .catch(failResponse=>{

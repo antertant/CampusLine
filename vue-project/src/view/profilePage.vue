@@ -1,12 +1,12 @@
 <template>
   <b-row align-h="center" style="margin-top: 6rem">
-    <b-col sm="3" md="3" lg="1">
+    <b-col sm="3" md="3" lg="2">
       <b-row class="position-fixed">
         <user-info-card :profile-user="profileUser"></user-info-card>
       </b-row>
     </b-col>
 
-    <b-col class="float-right" sm="8" lg="4">
+    <b-col class="float-right" sm="8" lg="6">
       <b-card>
         <template #header>
           <h4>Self Posts</h4>

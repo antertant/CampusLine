@@ -1,6 +1,7 @@
 <template>
   <b-card align="center" class="shadow" bg-variant="light" style="min-width: 13rem">
 <!--    Avatar-->
+<!--    follow user-->
     <b-avatar :badge-variant="avColor"
               button
               @click="followUser"
@@ -17,18 +18,18 @@
 
 <!--    Own profile-->
     <div v-if="sameUser">
-<!--      Follower button-->
+<!--      Follower list button-->
       <div class="mb-2">
         <b-button variant="info" v-b-modal="'follower-modal'" block>
           Follower
-          <b-badge>5</b-badge>
+          <b-badge>{{followerCounter}}</b-badge>
         </b-button>
       </div>
-<!--      Follow button-->
+<!--      Follow list button-->
       <div class="mb-2">
         <b-button variant="info" v-b-modal="'following-modal'" block>
           Following
-          <b-badge>5</b-badge>
+          <b-badge>{{followingCounter}}</b-badge>
         </b-button>
       </div>
 <!--      Collection button-->
@@ -42,23 +43,24 @@
 
 <!--    Others profile-->
     <div v-if="!sameUser">
-<!--      Follow button-->
+<!--      Follower list button-->
       <div class="mb-2">
-        <b-button variant="info" v-b-modal="'following-modal'" block>
-          Follow
-          <b-badge>5</b-badge>
-        </b-button>
-      </div>
-<!--      Follower button-->
-      <div>
         <b-button variant="info" v-b-modal="'follower-modal'" block>
           Follower
-          <b-badge>5</b-badge>
+          <b-badge>{{followerCounter}}</b-badge>
+        </b-button>
+      </div>
+<!--      Follow list button-->
+      <div>
+        <b-button variant="info" v-b-modal="'following-modal'" block>
+          Following
+          <b-badge>{{followingCounter}}</b-badge>
         </b-button>
       </div>
     </div>
 
 <!--    Modals-->
+<!--    Follower List-->
     <b-modal id="follower-modal"
              hide-backdrop
              content-class="shadow"
@@ -66,8 +68,9 @@
       <template #modal-header>
         <h5>Follower List</h5>
       </template>
-      <follower-card @hideFollowerModal="hideFollowerModal"></follower-card>
+      <follower-card :profile-user="profileUser" @hideFollowerModal="hideModal('follower-modal')"></follower-card>
     </b-modal>
+<!--    Following List-->
     <b-modal id="following-modal"
              ref="following-modal"
              hide-backdrop
@@ -76,8 +79,9 @@
       <template #modal-header>
         <h5>Following List</h5>
       </template>
-      <following-card @hideFollowingModal="hideFollowingModal"></following-card>
+      <following-card :profile-user="profileUser" @hideFollowingModal="hideModal('following-modal')"></following-card>
     </b-modal>
+<!--    Collection List-->
     <b-modal id="collection-modal"
              hide-backdrop
              content-class="shadow"
@@ -106,7 +110,9 @@ export default {
   data() {
     return{
       followed: false,
-      avColor: "primary"
+      avColor: "primary",
+      followerCounter: 0,
+      followingCounter: 0
     }
   },
   computed: {
@@ -117,44 +123,79 @@ export default {
       return this.profileUser === this.currentUser
     }
   },
+  watch: {
+    profileUser() {
+      this.getFollowingCount()
+      this.getFollowerCount()
+    }
+  },
   methods: {
     followUser() {
-      // not followed, then follow
-      if(this.followed === false){
-        this.followed = true
-        this.avColor = "success"
-      }
-      // followed, then cancel follow
-      else{
-        this.followed = false
-        this.avColor = "primary"
-      }
+      axios
+        .post('/follow', null, {params:{
+          follower: this.currentUser,
+          username: this.profileUser}})
+        .then(response=>{
+          console.log(response)
+          if(response.data.code === 200){
+            if(response.data.data === "follow successfully"){
+              this.followed = true
+              this.avColor = "success"
+            }
+            if(response.data.data === "cancel follow successfully"){
+              this.followed = false
+              this.avColor = "primary"
+            }
+          }
+        })
+        .catch(failResponse=>{
+          console.log = failResponse
+        })
     },
-    hideFollowerModal() {
+    getFollowingCount() {
+      axios
+        .get('/countfollow', {params:{username: this.profileUser}})
+        .then(response=>{
+          console.log(response)
+          if(response.data.code === 200)
+            this.followingCounter = response.data.data
+        })
+        .catch(failResponse=>{
+          console.log(failResponse)
+        })
+    },
+    getFollowerCount() {
+      axios
+        .get('/countfollower', {params:{username: this.profileUser}})
+        .then(response=>{
+          console.log(response)
+          if(response.data.code === 200)
+            this.followerCounter = response.data.data
+        })
+        .catch(failResponse=>{
+          console.log(failResponse)
+        })
+    },
+    hideModal(ref) {
       this.$nextTick(()=>{
-        this.$bvModal.hide('follower-modal')
+        this.$bvModal.hide(ref)
       })
       this.followed = false
       this.avColor = "primary"
     },
-    hideFollowingModal() {
-      this.$nextTick(()=>{
-        this.$bvModal.hide('following-modal')
-      })
-      this.followed = false
-      this.avColor = "primary"
-    },
-    hideCollectionModal() {
-      this.$nextTick(()=>{
-        this.$bvModal.hide('collection-modal')
-      })
-      this.followed = false
-      this.avColor = "primary"
-    }
+    // hideCollectionModal() {
+    //   this.$nextTick(()=>{
+    //     this.$bvModal.hide('collection-modal')
+    //   })
+    //   this.followed = false
+    //   this.avColor = "primary"
+    // }
   },
   mounted() {
     this.followed = false
     this.avColor = "primary"
+    this.getFollowingCount()
+    this.getFollowerCount()
   }
 }
 </script>

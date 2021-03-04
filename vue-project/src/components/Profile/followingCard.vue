@@ -8,21 +8,38 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "followingCard",
-  // props: ['followingList'],
+  props: ['profileUser'],
   data() {
     return {
-      followingList: ['Mao', 'meng', 'zhao']
+      followingList: []
     }
   },
   methods: {
+    getFollowing() {
+      axios
+        .get('/getfollow', {params:{username: this.profileUser}})
+        .then(response=>{
+          console.log(response)
+          if(response.data.code === 200)
+            this.followingList = response.data.data
+        })
+        .catch(failResponse=>{
+          console.log(failResponse)
+        })
+    },
     goProfile(following) {
       this.$emit('hideFollowingModal')
       this.$nextTick(()=>{
         this.$router.replace('/profile='+following)
       })
     }
+  },
+  mounted() {
+    this.getFollowing()
   }
 }
 </script>
