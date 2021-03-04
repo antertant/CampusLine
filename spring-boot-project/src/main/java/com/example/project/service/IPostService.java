@@ -15,6 +15,7 @@ public interface IPostService {
 
     int collect(int post_id,String username);
     List<String> getCollects(String username);
+    int countCollect(String username);
 
 
 }

@@ -18,6 +18,8 @@ public interface UserMapper {
     void deleteFollower(@Param(value = "follower")String follower,@Param(value = "username")String username);
     List<String> getFollower(@Param(value = "username")String username);
     int countFollower(@Param(value = "username")String username);
+    List<String> getFollow(@Param(value = "username")String username);
+    int countFollow(@Param(value ="username")String username);
     //void updateF(@Param(value = "post_id")int post_id,@Param(value = "choice")int choice);
     //int insert(User record);
     //int insertSelective(User record);

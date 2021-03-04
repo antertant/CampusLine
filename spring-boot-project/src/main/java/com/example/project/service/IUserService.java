@@ -10,6 +10,8 @@ public interface IUserService {
     int follow(String follower,String username);
     List<String> getFollower(String username);
     int countFollower(String username);
+    List<String> getFollow(String username);
+    int countFollow(String username);
 
     User getuser(String username);
 

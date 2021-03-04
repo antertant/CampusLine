@@ -29,6 +29,7 @@ public interface PostMapper {
     void insertCollect(@Param(value = "post_id")int post_id,@Param(value = "username")String username);
     void deleteCollect(@Param(value = "post_id")int post_id,@Param(value = "username")String username);
     List<String> getCollects(@Param(value="username")String username);
+    int countCollect(@Param(value="username")String username);
 
     //update table post
     void updateP(@Param(value = "post_id")int post_id,@Param(value = "choice")int choice);
