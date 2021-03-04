@@ -7,6 +7,7 @@ import com.example.project.result.Result;
 import com.example.project.service.IPostService;
 import com.example.project.utils.HTMLUtils;
 import io.swagger.annotations.ApiOperation;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -126,6 +127,15 @@ public class PostController {
         int countcollect=iPostService.countCollect(username);
         return Result.ok(countcollect);
 
+    }
+
+    @CrossOrigin
+    @ApiOperation("get followed users' 10 newest post")
+    @RequestMapping(value = "/api/getfollowpost", method = RequestMethod.GET)
+    @ResponseBody
+    public Result getfollowpost(@RequestParam("follower")String follower){
+        List<Post> followposts = postMapper.getFollowPost(follower);
+        return Result.ok(HTMLUtils.tohtmls(followposts));
     }
 
 }

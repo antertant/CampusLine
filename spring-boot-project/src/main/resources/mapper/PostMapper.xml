@@ -23,6 +23,13 @@
         order by post_createtime desc
     </select>
 
+    <select id="getFollowPost" resultType="com.example.project.entity.Post">
+        select * from post
+        where post_author in (select username from user_follower
+                              where  follower = #{follower})
+        order by post_createtime desc LIMIT 10
+    </select>
+
     <select id="getPosts" resultType="com.example.project.entity.Post">
         select * from post
         where module_name = #{module_name}
