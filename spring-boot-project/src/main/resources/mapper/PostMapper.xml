@@ -17,6 +17,12 @@
         order by post_createtime desc
     </select>
 
+    <select id="getPostsbyAuthor" resultType="com.example.project.entity.Post">
+        select * from post
+        where post_author = #{post_author}
+        order by post_createtime desc
+    </select>
+
     <select id="getPosts" resultType="com.example.project.entity.Post">
         select * from post
         where module_name = #{module_name}
@@ -71,6 +77,12 @@
         where post_id = #{post_id}
           and collect_user = #{username}
     </delete>
+
+    <select id="getCollects" resultType="java.lang.String">
+        select post_id from post_collect
+        where collect_user = #{username}
+        order by like_time desc
+    </select>
 
     <update id="updateP">
         update post set

@@ -27,6 +27,35 @@
     where username = #{username}
   </delete>
 
+  <select id="existFollower" resultType="java.lang.Integer">
+    select count(1) from user_follower
+    where username = #{username}
+      and follower = #{follower}
+  </select>
+
+
+  <insert id="insertFollower">
+    insert into user_follower
+    values (#{follower},#{username})
+  </insert>
+
+  <delete id="deleteFollower">
+    delete from user_follower
+    where follower = #{follower}
+      and username = #{username}
+  </delete>
+
+  <select id="getFollower" resultType="java.lang.String">
+    select follower from user_follower
+    where  username = #{username}
+    order by 1 desc
+  </select>
+
+  <select id="countFollower" resultType="java.lang.Integer">
+    select count(1) from user_follower
+    where username=#{username}
+  </select>
+
 <!--  <insert id="insert" parameterType="com.example.project.entity.User">-->
 <!--    insert into user_info (username, password)-->
 <!--    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR})-->

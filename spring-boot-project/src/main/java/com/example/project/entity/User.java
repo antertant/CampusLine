@@ -8,7 +8,7 @@ public class User {
     private String email;
     private int permission_id;
     private String module_admin;
-    private List<String> follows;
+    //private List<String> follows;
     private List<String> followers;
     private List<Integer> collections;
 
@@ -34,13 +34,13 @@ public class User {
         this.permission_id = permission_id;
     }
 
-    public List<String> getFollows() {
+    /*public List<String> getFollows() {
         return follows;
-    }
+    }*/
 
-    public void setFollows(List<String> follows) {
+    /*public void setFollows(List<String> follows) {
         this.follows = follows;
-    }
+    }*/
 
     public List<String> getFollowers() {
         return followers;
