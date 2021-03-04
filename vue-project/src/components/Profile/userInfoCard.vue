@@ -36,7 +36,7 @@
       <div>
         <b-button variant="success" v-b-modal="'collection-modal'" block>
           Collection
-          <b-badge>5</b-badge>
+          <b-badge>{{collectCounter}}</b-badge>
         </b-button>
       </div>
     </div>
@@ -112,7 +112,8 @@ export default {
       followed: false,
       avColor: "primary",
       followerCounter: 0,
-      followingCounter: 0
+      followingCounter: 0,
+      collectCounter: 0
     }
   },
   computed: {
@@ -127,6 +128,7 @@ export default {
     profileUser() {
       this.getFollowingCount()
       this.getFollowerCount()
+      this.getCollectCount()
     }
   },
   methods: {
@@ -176,6 +178,18 @@ export default {
           console.log(failResponse)
         })
     },
+    getCollectCount() {
+      axios
+        .get('/countcollects', {params:{username: this.profileUser}})
+        .then(response=>{
+          console.log(response)
+          if(response.data.code === 200)
+            this.collectCounter = response.data.data
+        })
+        .catch(failResponse=>{
+          console.log(failResponse)
+        })
+    },
     hideModal(ref) {
       this.$nextTick(()=>{
         this.$bvModal.hide(ref)
@@ -196,6 +210,7 @@ export default {
     this.avColor = "primary"
     this.getFollowingCount()
     this.getFollowerCount()
+    this.getCollectCount()
   }
 }
 </script>

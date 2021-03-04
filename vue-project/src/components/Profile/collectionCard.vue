@@ -1,7 +1,6 @@
 <template>
   <div>
-    {{collectList}}
-    <div v-for="collection in collectPostList" key="1">
+    <div v-for="collection in collectList" key="1">
       <post-card :post-content="collection"></post-card>
     </div>
   </div>

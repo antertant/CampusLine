@@ -26,8 +26,7 @@ export default {
   methods: {
     getselfPostList() {
       axios
-        .get('/getselfposts', {params:{
-            module_name: 'life',
+        .get('/getpostbyauthor', {params:{
             username: this.profileUser}})
         .then(response=>{
           console.log(response)
