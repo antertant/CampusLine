@@ -94,4 +94,13 @@ public class UserController {
         int countfollow = iUserService.countFollow(username);
         return Result.ok(countfollow);
     }
+
+    @CrossOrigin
+    @ApiOperation("whether followed")
+    @RequestMapping(value="/api/isfollowed", method = RequestMethod.GET)
+    @ResponseBody
+    public Result isfollowed(@RequestParam("username")String username,@RequestParam("follower")String follower){
+        int isfollowed = iUserService.isFollowed(username,follower);
+        return Result.ok(isfollowed);
+    }
 }
