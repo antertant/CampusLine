@@ -31,13 +31,13 @@
             </b-button>
 
 <!--            Delete Button-->
-            <b-button v-b-modal="'delete-reply-modal-'+comment_id+0"
+            <b-button v-b-modal="'delete-comment-modal-'+comment_id+0"
                       variant="white"
                       v-if="current_user===comment_user">
               <b-icon icon="trash" variant="danger"></b-icon>
             </b-button>
-            <b-modal :ref="'delete-reply-modal-'+comment_id+0"
-                     :id="'delete-reply-modal-'+comment_id+0"
+            <b-modal :ref="'delete-comment-modal-'+comment_id+0"
+                     :id="'delete-comment-modal-'+comment_id+0"
                      content-class="shadow"
                      title="Delete Comment"
                      centered>
@@ -187,7 +187,7 @@ export default {
       this.$nextTick()
     },
     hideModal() {
-      this.$refs['delete-reply-modal-'+this.comment_id+0].hide()
+      this.$refs['delete-comment-modal-'+this.comment_id+0].hide()
     }
   }
 }

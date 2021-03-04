@@ -1,12 +1,5 @@
 <template>
-  <b-card no-body style="min-width: 8rem">
-<!--    Role info-->
-    <b-card align="center">
-      <template #header>
-        ROLE
-      </template>
-      <b>{{ role }}</b>
-    </b-card>
+  <b-card no-body style="min-width: 9rem">
 <!--    Point info-->
     <b-card align="center">
       <template #header>
@@ -17,7 +10,7 @@
 <!--    Manager info-->
     <b-card align="center">
       <template #header>
-        MANAGER
+        ADMIN
       </template>
 <!--      Apply for manager-->
       <b-button block variant="info" v-if="role === 'user'" @click="applyAdmin">
@@ -25,7 +18,7 @@
       </b-button>
 <!--      Retire from manager-->
       <b-button block variant="danger" v-if="role === 'admin'" @click="retireAdmin">
-        Retire
+        Quit
       </b-button>
 <!--      Manage the module-->
       <b-button block variant="primary" v-if="role === 'admin'"
@@ -130,7 +123,9 @@ export default {
       )
       // Show alert
       this.$bvToast.toast(
-        'Apply for admin authentication failed.',{
+        'You have been an admin of certain module ,or the ' +
+        'module has had enough admins ,or do not have enough points ' +
+        'to become an admin',{
           title: [errTitle],
           toaster: 'b-toaster-top-center',
           variant: 'danger',
@@ -140,8 +135,10 @@ export default {
     }
   },
   mounted() {
-    this.getRole()
-    this.getPoints()
+    if(this.currentUser !== ''){
+      this.getRole()
+      this.getPoints()
+    }
   }
 }
 </script>

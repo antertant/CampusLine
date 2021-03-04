@@ -1,12 +1,12 @@
 <template>
-  <b-card no-body>
+  <b-card>
 
   </b-card>
 </template>
 
 <script>
 export default {
-name: "moduleRoleCard"
+  name: "messageRepostCard"
 }
 </script>
 
