@@ -114,8 +114,8 @@ public class PostController {
     @RequestMapping(value = "/api/getcollects", method = RequestMethod.GET)
     @ResponseBody
     public Result getcollects(@RequestParam("username")String username){
-        List<String> collects = iPostService.getCollects(username);
-        return Result.ok(collects);
+        List<Post> collects = iPostService.getCollects(username);
+        return Result.ok(HTMLUtils.tohtmls(collects));
     }
 
     @CrossOrigin

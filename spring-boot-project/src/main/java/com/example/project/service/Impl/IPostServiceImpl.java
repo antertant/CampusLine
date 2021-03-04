@@ -105,8 +105,8 @@ public class IPostServiceImpl implements IPostService {
     }
 
     @Override
-    public List<String> getCollects(String username){
-        List<String> collects= postMapper.getCollects(username);
+    public List<Post> getCollects(String username){
+        List<Post> collects= postMapper.getCollects(username);
         return collects;
     }
 
