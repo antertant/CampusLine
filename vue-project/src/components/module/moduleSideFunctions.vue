@@ -135,8 +135,10 @@ export default {
     }
   },
   mounted() {
-    this.getRole()
-    this.getPoints()
+    if(this.currentUser !== ''){
+      this.getRole()
+      this.getPoints()
+    }
   }
 }
 </script>
