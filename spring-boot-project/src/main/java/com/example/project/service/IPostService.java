@@ -14,6 +14,7 @@ public interface IPostService {
     List<String> getlikes(int post_id);
 
     int collect(int post_id,String username);
+    List<String> getCollects(String username);
 
 
 }

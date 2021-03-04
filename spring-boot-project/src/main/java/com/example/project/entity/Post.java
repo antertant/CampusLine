@@ -37,9 +37,7 @@ public class Post {
         this.post_content = post_content;
     }
 
-    public String getPost_author() {
-        return post_author;
-    }
+    public String getPost_author() { return post_author; }
 
     public void setPost_author(String post_author) {
         this.post_author = post_author;
