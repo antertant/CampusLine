@@ -122,8 +122,9 @@ public class PostController {
     @ApiOperation("count the user's collections")
     @RequestMapping(value = "/api/countcollects", method = RequestMethod.GET)
     @ResponseBody
-    public int countcollect(@RequestParam("username")String username){
-        return iPostService.countCollect(username);
+    public Result countcollect(@RequestParam("username")String username){
+        int countcollect=iPostService.countCollect(username);
+        return Result.ok(countcollect);
 
     }
 

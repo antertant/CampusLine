@@ -73,7 +73,25 @@ public class UserController {
     @RequestMapping(value="/api/countfollower", method = RequestMethod.GET)
     @ResponseBody
     public Result countfollower(@RequestParam("username")String username){
-        int countf = iUserService.countFollower(username);
-        return Result.ok(countf);
+        int countfollower = iUserService.countFollower(username);
+        return Result.ok(countfollower);
+    }
+
+    @CrossOrigin
+    @ApiOperation("get the follow_list of a user")
+    @RequestMapping(value = "/api/getfollow", method = RequestMethod.GET)
+    @ResponseBody
+    public Result getfollow(@RequestParam("username")String username){
+        List<String> follow = iUserService.getFollow(username);
+        return Result.ok(follow);
+    }
+
+    @CrossOrigin
+    @ApiOperation("count the follow")
+    @RequestMapping(value="/api/countfollow", method = RequestMethod.GET)
+    @ResponseBody
+    public Result countfollow(@RequestParam("username")String username){
+        int countfollow = iUserService.countFollow(username);
+        return Result.ok(countfollow);
     }
 }

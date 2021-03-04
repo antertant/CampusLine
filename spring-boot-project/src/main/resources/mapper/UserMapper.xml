@@ -53,7 +53,17 @@
 
   <select id="countFollower" resultType="java.lang.Integer">
     select count(1) from user_follower
-    where username=#{username}
+    where username = #{username}
+  </select>
+
+  <select id="getFollow" resultType="java.lang.String">
+    select username from user_follower
+    where follower = #{username}
+  </select>
+
+  <select id="countFollow" resultType="java.lang.Integer">
+    select count(1) from user_follower
+    where follower = #{username}
   </select>
 
 <!--  <insert id="insert" parameterType="com.example.project.entity.User">-->

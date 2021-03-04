@@ -49,4 +49,14 @@ public class IUserServiceImpl implements IUserService {
     public int countFollower(String username){
         return userMapper.countFollower(username);
     }
+
+    @Override
+    public List<String> getFollow(String username){
+        return userMapper.getFollow(username);
+    }
+
+    @Override
+    public int countFollow(String username){
+        return userMapper.countFollow(username);
+    }
 }
