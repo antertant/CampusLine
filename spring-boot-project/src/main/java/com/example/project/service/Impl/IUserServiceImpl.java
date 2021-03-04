@@ -31,11 +31,10 @@ public class IUserServiceImpl implements IUserService {
     public int follow(String follower, String username) {
         int existfollower = userMapper.existFollower(follower, username);
         if (existfollower == 0) {
-            userMapper.insertFollower(follower, username);//and like time
+            userMapper.insertFollower(follower, username);
             return 1;
         } else {
-            userMapper.deleteFollower(follower, username);//delete record at post_like table
-//            postMapper.updatePoint(author,module_name,-eachlikepoint);
+            userMapper.deleteFollower(follower, username);
             return 2;
         }
     }
@@ -58,5 +57,10 @@ public class IUserServiceImpl implements IUserService {
     @Override
     public int countFollow(String username){
         return userMapper.countFollow(username);
+    }
+
+    @Override
+    public int isFollowed(String username, String follower){
+        return userMapper.existFollower(username,follower);
     }
 }

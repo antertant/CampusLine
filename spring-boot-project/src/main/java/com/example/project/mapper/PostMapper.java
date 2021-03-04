@@ -10,7 +10,7 @@ public interface PostMapper {
 
     Post getPost(@Param(value = "post_id")int post_id);
 
-    List<Post> getPostsbyAuthor(@Param(value = "username")String post_author);
+    List<Post> getPostsbyAuthor(@Param(value = "username")String username);
 
     List<Post> searchPosts(@Param(value = "key")String key);
 
@@ -28,7 +28,7 @@ public interface PostMapper {
     int existCollect(@Param(value = "post_id")int post_id,@Param(value = "username")String username);
     void insertCollect(@Param(value = "post_id")int post_id,@Param(value = "username")String username);
     void deleteCollect(@Param(value = "post_id")int post_id,@Param(value = "username")String username);
-    List<String> getCollects(@Param(value="username")String username);
+    List<Post> getCollects(@Param(value="username")String username);
     int countCollect(@Param(value="username")String username);
 
     //update table post

@@ -2,6 +2,7 @@ package com.example.project.mapper;
 
 import com.example.project.entity.User;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ public interface UserMapper {
     int countFollower(@Param(value = "username")String username);
     List<String> getFollow(@Param(value = "username")String username);
     int countFollow(@Param(value ="username")String username);
+    //int isFollowed(@Param(value="username")String username,@Param(value="follower")String follower);
     //void updateF(@Param(value = "post_id")int post_id,@Param(value = "choice")int choice);
     //int insert(User record);
     //int insertSelective(User record);

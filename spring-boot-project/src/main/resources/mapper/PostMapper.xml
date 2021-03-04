@@ -19,7 +19,7 @@
 
     <select id="getPostsbyAuthor" resultType="com.example.project.entity.Post">
         select * from post
-        where post_author = #{post_author}
+        where post_author = #{username}
         order by post_createtime desc
     </select>
 
@@ -78,9 +78,10 @@
           and collect_user = #{username}
     </delete>
 
-    <select id="getCollects" resultType="java.lang.String">
-        select post_id from post_collect
-        where collect_user = #{username}
+    <select id="getCollects" resultType="com.example.project.entity.Post">
+        select * from post
+        where post_id in (select post_id from post_collect
+                          where collect_user = #{username})
     </select>
 
     <select id="countCollect" resultType="java.lang.Integer">

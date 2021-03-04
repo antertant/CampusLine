@@ -75,24 +75,11 @@ public class IPostServiceImpl implements IPostService {
     @Override
     public int collect(int post_id,String username){
         int choice;//collect or remove collect
-//        int eachcollectpoint = 3;
-//        Post post = postMapper.getPost(post_id);
-//        String module_name = post.getModule_name();
-//        String author = post.getPost_author();
-//        if(module_name == null)
-//            module_name = "life";
         int existcollect = postMapper.existCollect(post_id,username);
         if(existcollect == 0){
             choice = 3;
             postMapper.insertCollect(post_id,username);
             postMapper.updateP(post_id,choice);
-//            int existpoint = moduleMapper.existPoint(author,module_name);
-//            if(existpoint == 0){
-//                moduleMapper.insertPoint(author,module_name,eachcollectpoint);
-//            }
-//            else{
-//                postMapper.updatePoint(author,module_name,eachcollectpoint);
-//            }
             return 1;
         }
         else{
@@ -105,8 +92,8 @@ public class IPostServiceImpl implements IPostService {
     }
 
     @Override
-    public List<String> getCollects(String username){
-        List<String> collects= postMapper.getCollects(username);
+    public List<Post> getCollects(String username){
+        List<Post> collects= postMapper.getCollects(username);
         return collects;
     }
 

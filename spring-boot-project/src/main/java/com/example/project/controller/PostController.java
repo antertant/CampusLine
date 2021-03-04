@@ -43,8 +43,8 @@ public class PostController {
     @ApiOperation("get posts by their author")
     @RequestMapping(value = "/api/getpostbyauthor", method = RequestMethod.GET)
     @ResponseBody
-    public Result getpostsbyauthor(@RequestParam("username")String post_author){
-        List<Post> posts = postMapper.getPostsbyAuthor(post_author);
+    public Result getpostsbyauthor(@RequestParam("username")String username){
+        List<Post> posts = postMapper.getPostsbyAuthor(username);
         return Result.ok(HTMLUtils.tohtmls(posts));
     }
 
@@ -114,8 +114,8 @@ public class PostController {
     @RequestMapping(value = "/api/getcollects", method = RequestMethod.GET)
     @ResponseBody
     public Result getcollects(@RequestParam("username")String username){
-        List<String> collects = iPostService.getCollects(username);
-        return Result.ok(collects);
+        List<Post> collects = iPostService.getCollects(username);
+        return Result.ok(HTMLUtils.tohtmls(collects));
     }
 
     @CrossOrigin

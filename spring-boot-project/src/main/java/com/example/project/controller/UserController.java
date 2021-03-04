@@ -48,7 +48,7 @@ public class UserController {
     @ApiOperation(value = "follow user or cancel follow")
     @RequestMapping(value = "/api/follow", method = RequestMethod.POST)
     @ResponseBody
-    public Result collect(@RequestParam("follower")String follower,
+    public Result follow(@RequestParam("follower")String follower,
                           @RequestParam("username")String username){
         int flag = iUserService.follow(follower,username);
         String msg;
@@ -93,5 +93,14 @@ public class UserController {
     public Result countfollow(@RequestParam("username")String username){
         int countfollow = iUserService.countFollow(username);
         return Result.ok(countfollow);
+    }
+
+    @CrossOrigin
+    @ApiOperation("whether followed")
+    @RequestMapping(value="/api/isfollowed", method = RequestMethod.GET)
+    @ResponseBody
+    public Result isfollowed(@RequestParam("username")String username,@RequestParam("follower")String follower){
+        int isfollowed = iUserService.isFollowed(username,follower);
+        return Result.ok(isfollowed);
     }
 }
