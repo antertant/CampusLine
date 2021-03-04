@@ -10,7 +10,7 @@ public interface PostMapper {
 
     Post getPost(@Param(value = "post_id")int post_id);
 
-    List<Post> getPostsbyAuthor(@Param(value = "username")String post_author);
+    List<Post> getPostsbyAuthor(@Param(value = "username")String username);
 
     List<Post> searchPosts(@Param(value = "key")String key);
 

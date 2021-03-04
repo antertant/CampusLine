@@ -43,8 +43,8 @@ public class PostController {
     @ApiOperation("get posts by their author")
     @RequestMapping(value = "/api/getpostbyauthor", method = RequestMethod.GET)
     @ResponseBody
-    public Result getpostsbyauthor(@RequestParam("username")String post_author){
-        List<Post> posts = postMapper.getPostsbyAuthor(post_author);
+    public Result getpostsbyauthor(@RequestParam("username")String username){
+        List<Post> posts = postMapper.getPostsbyAuthor(username);
         return Result.ok(HTMLUtils.tohtmls(posts));
     }
 

@@ -19,7 +19,7 @@
 
     <select id="getPostsbyAuthor" resultType="com.example.project.entity.Post">
         select * from post
-        where post_author = #{post_author}
+        where post_author = #{username}
         order by post_createtime desc
     </select>
 
