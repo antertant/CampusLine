@@ -110,4 +110,9 @@ public class IPostServiceImpl implements IPostService {
         return collects;
     }
 
+    @Override
+    public int countCollect(String username){
+        return postMapper.countCollect(username);
+    }
+
 }
