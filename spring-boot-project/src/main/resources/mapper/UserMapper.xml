@@ -7,6 +7,12 @@
     where username = #{username}
   </select>
 
+  <update id="updatePassword">
+    update user_info
+    set password=#{password}
+    where username=#{username}
+  </update>
+
   <select id="selectFollow" resultType="java.lang.String">
     select follow from user_follow
     where username = #{username}
@@ -36,7 +42,7 @@
 
   <insert id="insertFollower">
     insert into user_follower
-    values (#{follower},#{username})
+    values (#{username},#{follower})
   </insert>
 
   <delete id="deleteFollower">

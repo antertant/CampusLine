@@ -19,6 +19,11 @@ public class IUserServiceImpl implements IUserService {
     }
 
     @Override
+    public void updatePassword(String username, String password){
+        userMapper.updatePassword(username,password);
+    }
+
+    @Override
     public User getuser(String username) {
         User user = userMapper.selectByPrimaryKey(username);
         //user.setFollows(userMapper.selectFollow(username));
@@ -33,7 +38,8 @@ public class IUserServiceImpl implements IUserService {
         if (existfollower == 0) {
             userMapper.insertFollower(follower, username);
             return 1;
-        } else {
+        }
+        else {
             userMapper.deleteFollower(follower, username);
             return 2;
         }

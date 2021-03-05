@@ -45,6 +45,16 @@ public class UserController {
     }
 
     @CrossOrigin
+    @ApiOperation(value = "update password")
+    @RequestMapping(value = "/api/updatepassword", method = RequestMethod.POST)
+    @ResponseBody
+    public Result updatepassword(@RequestParam("username")String username,
+                         @RequestParam("password")String password){
+        iUserService.updatePassword(username,password);
+        return Result.ok("update password successfully");
+    }
+
+    @CrossOrigin
     @ApiOperation(value = "follow user or cancel follow")
     @RequestMapping(value = "/api/follow", method = RequestMethod.POST)
     @ResponseBody
