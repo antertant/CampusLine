@@ -129,9 +129,29 @@ export default {
       this.getFollowingCount()
       this.getFollowerCount()
       this.getCollectCount()
+      this.isFollowed()
     }
   },
   methods: {
+    isFollowed() {
+      axios
+        .get('/isfollowed', {params:{
+            username: this.currentUser,
+            follower: this.profileUser
+          }})
+        .then(response=>{
+          console.log(response)
+          if(response.data.code === 200)
+            if(response.data.data === 1){
+              this.followed = true
+              this.avColor = "success"
+            }
+            else {
+              this.followed = false
+              this.avColor = "primary"
+            }
+        })
+    },
     followUser() {
       axios
         .post('/follow', null, {params:{
@@ -211,6 +231,7 @@ export default {
     this.getFollowingCount()
     this.getFollowerCount()
     this.getCollectCount()
+    this.isFollowed()
   }
 }
 </script>

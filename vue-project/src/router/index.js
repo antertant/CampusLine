@@ -12,6 +12,7 @@ import moduleManagePage from "@/view/moduleManagePage";
 import registrationPage from "@/view/registrationPage";
 import profilePage from "@/view/profilePage";
 import messagePage from "@/view/messagePage";
+import newsPage from "@/view/newsPage";
 
 Vue.use(Router)
 
@@ -46,6 +47,11 @@ export default new Router({
       path: '/life',
       name: 'lifeCirclePage',
       component: lifeCirclePage
+    },
+    {
+      path: '/news',
+      name: 'newsPage',
+      component: newsPage
     },
     {
       path: '/knowledge-modules/:modName',
