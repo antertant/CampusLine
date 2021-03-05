@@ -78,6 +78,7 @@ export default {
         this.$bvToast.toast(
           'Cannot post empty comment.',{
             title: [errTitle],
+            class: 'comment-input-error-toast',
             toaster: 'b-toaster-top-center',
             variant: 'danger',
             solid: true

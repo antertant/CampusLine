@@ -148,6 +148,7 @@ export default {
             }
           })
           .then(response=>{
+            this.likePress = true
             console.log(response)
             if(response.data.code === 200){
               if(response.data.data === 'like this comment successfully'){
@@ -161,6 +162,8 @@ export default {
             }
           })
           .catch(failResponse=>{
+            this.likePress = true
+
             console.log(failResponse)
           })
       }

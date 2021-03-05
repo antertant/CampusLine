@@ -38,7 +38,7 @@
           <b-badge>{{ postContent.post_likes + likeCount }}</b-badge>
         </b-list-group-item>
 <!--        Like list trigger-->
-        <b-popover :target="'pc-like-'+postContent.post_id" triggers="hover" placement="bottom">
+        <b-popover class="like-popover" :target="'pc-like-'+postContent.post_id" triggers="hover" placement="bottom">
           <b-button variant="white"
                     size="sm"
                     v-b-toggle="'postLike-'+postContent.post_id"
@@ -92,7 +92,7 @@
       </b-list-group>
 
 <!--      Comment Cards-->
-      <b-collapse :id="'postComment-'+postContent.post_id" v-if="cCardFlag">
+      <b-collapse class="comment-collapse" :id="'postComment-'+postContent.post_id" v-if="cCardFlag">
         <b-card v-if="!commentEmpty" style="text-align: center">There is no comment here yet.</b-card>
         <div v-if="commentEmpty" v-for="comment in comments" :key="comment.comment_id">
 <!--          Child Component: Comment Card-->
@@ -104,7 +104,7 @@
       </b-collapse>
 
 <!--       Like list-->
-      <b-collapse :id="'postLike-'+postContent.post_id">
+      <b-collapse class="like-collapse" :id="'postLike-'+postContent.post_id">
         <b-card v-if="!likeEmpty" style="text-align: center">Nobody likes this post yet.</b-card>
         <b-card v-if="likeEmpty" v-for="like in likes" :key="like.comment_id">
           <div class="ml-1"><b-avatar size="sm"></b-avatar> <b>{{ like }}</b></div>
