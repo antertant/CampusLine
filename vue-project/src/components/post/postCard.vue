@@ -169,22 +169,49 @@ export default {
   },
   methods: {
     collectPost() {
-      axios
-        .post('/collect', null, {params: {
-          post_id: this.postContent.post_id,
-          username: this.current_user}})
-        .then(response=>{
-          console.log(response)
-          if(response.data.code === 200){
-            if(response.data.data === "collect successfully")
-              this.constructSuccessToast('Collection added')
-            else if(response.data.data === "remove collection successfully")
-              this.constructSuccessToast('Collection removed')
+      // Alert component construction
+      const crtEl = this.$createElement
+      const errTitle = crtEl(
+        'p',
+        { class: ['text-center', 'mb-0'] },
+        [
+          crtEl('b-icon', { props:{ icon: 'exclamation-diamond', small: true } }),
+          crtEl('strong', ' Error')
+        ]
+      )
+
+      // Show alert when the like action is done by a visitor
+      if(this.current_user === '')
+        this.$bvToast.toast(
+          'Please login before interacting with posts.',{
+            title: [errTitle],
+            toaster: 'b-toaster-top-center',
+            variant: 'danger',
+            solid: true
           }
-        })
-        .catch(failResponse=>{
-          console.log(failResponse)
-        })
+        )
+      // Communication
+      else {
+        axios
+          .post('/collect', null, {
+            params: {
+              post_id: this.postContent.post_id,
+              username: this.current_user
+            }
+          })
+          .then(response => {
+            console.log(response)
+            if (response.data.code === 200) {
+              if (response.data.data === "collect successfully")
+                this.constructSuccessToast('Collection added')
+              else if (response.data.data === "remove collection successfully")
+                this.constructSuccessToast('Collection removed')
+            }
+          })
+          .catch(failResponse => {
+            console.log(failResponse)
+          })
+      }
     },
     likePost() {
       // Alert component construction

@@ -17,7 +17,11 @@
             Home
           </b-nav-item>
 <!--          New Posts Button-->
-          <b-nav-item to="news">
+          <b-nav-item to="news" v-if="loginName!==''">
+            <b-icon icon="newspaper"></b-icon>
+            News
+          </b-nav-item>
+          <b-nav-item to="/login" v-if="loginName===''">
             <b-icon icon="newspaper"></b-icon>
             News
           </b-nav-item>
@@ -32,7 +36,10 @@
             </b-list-group>
           </b-popover>
 <!--          Message Button-->
-          <b-nav-item id="message-popover">
+          <b-nav-item to="/login" v-if="loginName===''">
+            <b-icon icon="bell"></b-icon> Messages
+          </b-nav-item>
+          <b-nav-item id="message-popover" v-if="loginName!==''">
             <b-icon icon="bell"></b-icon> Messages
           </b-nav-item>
           <b-popover target="message-popover" placement="buttom" triggers="focus">

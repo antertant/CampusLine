@@ -1,7 +1,14 @@
 <template>
   <div style="margin-top: 6rem">
     <h3 style="text-align: center;">Current Following Posts</h3>
-    <post-card v-for="newsPost in newsPostList" :post-content="newsPost" :key="newsPost.post_id"></post-card>
+    <b-card v-if="currentUser===''" align="center">
+      <b-icon icon="exclamation-diamond" variant="danger"></b-icon>
+      Please login before browsing current following posts.
+    </b-card>
+    <post-card v-for="newsPost in newsPostList"
+               :post-content="newsPost"
+               :key="newsPost.post_id"
+               v-if="currentUser!==''"></post-card>
   </div>
 </template>
 

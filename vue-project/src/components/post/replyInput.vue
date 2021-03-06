@@ -8,9 +8,13 @@
            @hidden="resetCModal"
            @ok="handleCOk"
            centered>
+    <div v-if="current_user===''">
+      <b-icon icon="exclamation-diamond" variant="danger"></b-icon> Please login before make replies!
+    </div>
     <form ref='replyform'
           class="mb-3"
-          @submit.prevent="handleCSubmit">
+          @submit.prevent="handleCSubmit"
+          v-if="current_user!==''">
       <b-form-group label-for="reply-input"
                     invalid-feedback="Content is required"
                     :state="postReplyState">
