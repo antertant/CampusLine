@@ -1,6 +1,7 @@
 package com.example.project.service.Impl;
 
 import com.example.project.entity.CommentReply;
+import com.example.project.entity.CommentLike;
 import com.example.project.entity.PostComment;
 import com.example.project.mapper.CommentMapper;
 import com.example.project.mapper.PostMapper;
@@ -63,6 +64,10 @@ public class ICommentServiceImpl implements ICommentService{
             c.setReplies(replies);
         }
         return comments;
+    }
+    @Override
+    public List<CommentLike> getlikedcomment(String username){
+        return commentMapper.getLikedComment(username);
     }
 
 }

@@ -8,6 +8,7 @@ public class CommentLike {
     private int comment_id;
     //user:""
     // like_date:""
+    private int post_id;
     private List<HashMap<String, String>> clike_list;
 
     public int getComment_id() {

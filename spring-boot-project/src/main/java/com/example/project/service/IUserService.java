@@ -1,5 +1,6 @@
 package com.example.project.service;
 
+import com.example.project.entity.PostLike;
 import com.example.project.entity.User;
 
 import java.util.List;
@@ -18,5 +19,6 @@ public interface IUserService {
 
     User getuser(String username);
     User getuser_email(String email);
+
 
 }

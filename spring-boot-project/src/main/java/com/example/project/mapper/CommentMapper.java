@@ -1,6 +1,8 @@
 package com.example.project.mapper;
 
+import com.example.project.entity.CommentLike;
 import com.example.project.entity.CommentReply;
+import com.example.project.entity.Post;
 import com.example.project.entity.PostComment;
 import org.apache.ibatis.annotations.Param;
 
@@ -28,4 +30,7 @@ public interface CommentMapper {
                            @Param(value = "clike_user")String clike_user);
     void deleteCommentLike(@Param(value = "comment_id")int comment_id,
                            @Param(value = "clike_user")String clike_user);
+    List<CommentLike> getLikedComment(@Param(value = "username")String username);
+    List<PostComment> getPostComment(@Param(value = "username")String username);
+    List<CommentReply> getCommentRely(@Param(value = "username")String username);
 }

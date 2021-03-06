@@ -1,6 +1,7 @@
 package com.example.project.mapper;
 
 import com.example.project.entity.Post;
+import com.example.project.entity.PostLike;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -32,8 +33,11 @@ public interface PostMapper {
     List<Post> getCollects(@Param(value="username")String username);
     int countCollect(@Param(value="username")String username);
 
+    List<PostLike> getLikedPost(@Param(value = "username")String username);
+
     //update table post
     void updateP(@Param(value = "post_id")int post_id,@Param(value = "choice")int choice);
+    void updateV(@Param(value="username")String username,@Param(value = "choice")int choice);
     //update point at table module_point
 //    void updatePoint(@Param(value = "username")String username,
 //                     @Param(value = "module_name")String module_name,
