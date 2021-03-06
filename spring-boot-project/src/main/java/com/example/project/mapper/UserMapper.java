@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface UserMapper {
     User selectByPrimaryKey(@Param(value = "username")String username);
+    String usernameByEmail(@Param(value = "email")String email);
     int updatePassword(@Param(value = "username")String username,@Param(value = "password")String password);
     List<String> selectFollow(@Param(value = "username")String username);
     List<Integer> selectCollection(@Param(value = "username")String username);

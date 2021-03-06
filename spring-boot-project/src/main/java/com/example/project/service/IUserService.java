@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface IUserService {
     String getpassword(String username);
+    String getpassword_email(String email);
     void updatePassword(String uername,String password);
 
     int follow(String follower,String username);
@@ -16,5 +17,6 @@ public interface IUserService {
     int isFollowed(String username, String follower);
 
     User getuser(String username);
+    User getuser_email(String email);
 
 }
