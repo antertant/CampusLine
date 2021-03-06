@@ -36,17 +36,19 @@
             </b-list-group>
           </b-popover>
 <!--          Message Button-->
-          <b-nav-item to="/login" v-if="loginName===''">
+          <b-nav-item id="message-popover">
             <b-icon icon="bell"></b-icon> Messages
-          </b-nav-item>
-          <b-nav-item id="message-popover" v-if="loginName!==''">
-            <b-icon icon="bell"></b-icon> Messages
+            <b-badge variant="danger">{{ counter }}</b-badge>
           </b-nav-item>
           <b-popover target="message-popover" placement="buttom" triggers="focus">
             <b-list-group style="font-size: medium; color: black">
-              <b-list-group-item to="/messages=comment" class="border-0 py-2">Comment</b-list-group-item>
+              <b-list-group-item to="/messages=comment" class="border-0 py-2">
+                Comment <b-badge variant="danger">1</b-badge>
+              </b-list-group-item>
 <!--              <b-list-group-item to="/messages=repost" class="border-0 py-2">Repost</b-list-group-item>-->
-              <b-list-group-item to="/messages=like" class="border-0 py-2">Like</b-list-group-item>
+              <b-list-group-item to="/messages=like" class="border-0 py-2">
+                Like <b-badge variant="danger">1</b-badge>
+              </b-list-group-item>
 <!--              <b-list-group-item to="/messages=message" class="border-0 py-2">Message</b-list-group-item>-->
             </b-list-group>
           </b-popover>
@@ -117,12 +119,15 @@ import {mapGetters} from 'vuex'
 import axios from "axios";
 
 export default {
+
   name: "stickyHeader",
   data() {
     return {
       searchSelect: 'searchmodule',
       searchKey: null,
-      searchResult: []
+      searchResult: [],
+      counter: 0,
+      interval: ''
     }
   },
   computed: {
@@ -143,6 +148,12 @@ export default {
       else if(this.searchSelect === 'searchpost')
         this.$router.push('/post_search='+this.searchKey)
     }
+  },
+  mounted() {
+    //this.interval = setInterval(()=>{this.counter++}, 1000)
+  },
+  destroyed() {
+    //this.clearInterval(this.interval)
   }
 }
 </script>

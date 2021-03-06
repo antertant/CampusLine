@@ -1,5 +1,7 @@
 <template>
   <div>
+    {{newMessageCount}}
+    {{counter}}
     <b-card v-if="currentUser===''" align="center">
       <b-icon icon="exclamation-diamond" variant="danger"></b-icon>
       Please login before browsing message box.
@@ -15,11 +17,11 @@
         <!--      comment list card-->
         <message-comment-card v-if="mType === 'comment'"></message-comment-card>
         <!--      repost list card-->
-        <message-repost-card v-if="mType === 'repost'"></message-repost-card>
+<!--        <message-repost-card v-if="mType === 'repost'"></message-repost-card>-->
         <!--      like list card-->
         <mesage-like-card v-if="mType === 'like'"></mesage-like-card>
         <!--      messager card-->
-        <message-m-card v-if="mType === 'message'"></message-m-card>
+<!--        <message-m-card v-if="mType === 'message'"></message-m-card>-->
       </b-col>
     </b-row>
   </div>
@@ -32,14 +34,19 @@ import MessageRepostCard from "@/components/messages/messageRepostCard";
 import MesageLikeCard from "@/components/messages/mesageLikeCard";
 import MessageMCard from "@/components/messages/messageMCard";
 import {mapGetters} from "vuex";
+import axios from "axios";
 export default {
   name: "messagePage",
   components: {MessageMCard, MesageLikeCard, MessageRepostCard, MessageCommentCard, MessageSideBar},
   props: ['mType'],
   computed:{
     ...mapGetters({
-      currentUser: "loginInfo/getLUName"
+      currentUser: "loginInfo/getLUName",
+      newMessageCount: "newMessage/getNewMessageCount"
     })
+  },
+  mounted() {
+    this.$store.dispatch("newMessage/getNewMessageCountFS", this.currentUser)
   }
 }
 </script>
