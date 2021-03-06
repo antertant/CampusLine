@@ -5,11 +5,42 @@ import java.util.HashMap;
 import java.util.List;
 
 public class CommentLike {
-    private int comment_id;
-    //user:""
-    // like_date:""
     private int post_id;
+    private int comment_id;
+    private String clikeuser;
+    private Date like_time;
+    private int viewed;
+
     private List<HashMap<String, String>> clike_list;
+    public int getPost_id(){return post_id;}
+
+    public void setPost_id(int post_id) {
+        this.post_id = post_id;
+    }
+
+    public Date getLike_time() {
+        return like_time;
+    }
+
+    public String getClikeuser() {
+        return clikeuser;
+    }
+
+    public void setClikeuser(String clikeuser) {
+        this.clikeuser = clikeuser;
+    }
+
+    public void setLike_time(Date like_time) {
+        this.like_time = like_time;
+    }
+
+    public int getViewed() {
+        return viewed;
+    }
+
+    public void setViewed(int viewed) {
+        this.viewed = viewed;
+    }
 
     public int getComment_id() {
         return comment_id;

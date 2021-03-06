@@ -10,6 +10,15 @@ public class CommentReply {
     private Date creply_time;
     private String from_user;
     private String to_user;
+    private int viewed;
+
+    public int getViewed() {
+        return viewed;
+    }
+
+    public void setViewed(int viewed) {
+        this.viewed = viewed;
+    }
 
     public int getReply_id() {
         return reply_id;
