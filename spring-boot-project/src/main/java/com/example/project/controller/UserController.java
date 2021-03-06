@@ -45,6 +45,24 @@ public class UserController {
     }
 
     @CrossOrigin
+    @RequestMapping(value = "/api/login_mail", method = RequestMethod.POST,
+            produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Result login_mail(@RequestBody User loginInfo) {
+        User user = iUserService.getuser_email(loginInfo.getEmail());
+
+        String email = loginInfo.getEmail();
+        String password_ = loginInfo.getPassword();
+        if (iUserService.getuser_email(email)!=null) {
+            String password = iUserService.getpassword_email(email);
+            if (Objects.equals(password_,password)) {
+                return Result.ok(user);
+            }
+        }
+        return Result.fail("fail");
+    }
+
+    @CrossOrigin
     @ApiOperation(value = "update password")
     @RequestMapping(value = "/api/updatepassword", method = RequestMethod.POST)
     @ResponseBody

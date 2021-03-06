@@ -1,9 +1,14 @@
 package com.example.project.controller;
 
 import com.example.project.entity.Post;
+import com.example.project.entity.PostLike;
 import com.example.project.entity.PostComment;
+import com.example.project.entity.CommentLike;
+import com.example.project.entity.CommentReply;
+import com.example.project.mapper.CommentMapper;
 import com.example.project.mapper.PostMapper;
 import com.example.project.result.Result;
+import com.example.project.service.ICommentService;
 import com.example.project.service.IPostService;
 import com.example.project.utils.HTMLUtils;
 import io.swagger.annotations.ApiOperation;
@@ -21,6 +26,10 @@ public class PostController {
     private IPostService iPostService;
     @Resource
     private PostMapper postMapper;
+    @Autowired
+    private ICommentService iCommentService;
+    @Resource
+    private CommentMapper commentMapper;
 
     @CrossOrigin
     @ApiOperation("post a new post")
@@ -93,6 +102,38 @@ public class PostController {
     public Result getlikes(@RequestParam("post_id")int post_id){
         List<String> likes = iPostService.getlikes(post_id);
         return Result.ok(likes);
+    }
+
+    @CrossOrigin
+    @ApiOperation("get the new message of a user")
+    @RequestMapping(value = "/api/getnewlist", method = RequestMethod.GET)
+    @ResponseBody
+    public Result getnewlist(@RequestParam("username")String username,@RequestParam("choice")Integer choice){
+        if (choice==1){
+            //choice=1, get the newest list of PostLike
+            List<PostLike> likedpost = iPostService.getlikedpost(username);
+            postMapper.updateV(username,choice);
+            return Result.ok(likedpost);
+        }
+        else if (choice==2){
+            //choice=2, get the newest list of CommentLike
+            List<CommentLike> likedcomment=iCommentService.getlikedcomment(username);
+            postMapper.updateV(username,choice);
+            return Result.ok(likedcomment);
+        }
+        else if (choice==3){
+            //choice=3, get the newest list of PostComment
+            List<PostComment> postcomment=commentMapper.getPostComment(username);
+            postMapper.updateV(username,choice);
+            return Result.ok(postcomment);
+        }
+        else if (choice==4){
+            //choice=4, get the newest list of CommentReply
+            List<CommentReply> commentReplie=commentMapper.getCommentRely(username);
+            postMapper.updateV(username,choice);
+            return Result.ok(commentReplie);
+        }
+        return Result.ok(0);
     }
 
     @CrossOrigin

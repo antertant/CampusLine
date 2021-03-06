@@ -2,6 +2,7 @@ package com.example.project.service.Impl;
 
 import com.example.project.entity.Post;
 import com.example.project.entity.PostComment;
+import com.example.project.entity.PostLike;
 import com.example.project.mapper.ModuleMapper;
 import com.example.project.mapper.PostMapper;
 import com.example.project.service.IPostService;
@@ -101,5 +102,8 @@ public class IPostServiceImpl implements IPostService {
     public int countCollect(String username){
         return postMapper.countCollect(username);
     }
+
+    @Override
+    public List<PostLike> getlikedpost(String username) { return postMapper.getLikedPost(username);}
 
 }

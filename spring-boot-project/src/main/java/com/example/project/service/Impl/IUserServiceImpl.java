@@ -19,12 +19,27 @@ public class IUserServiceImpl implements IUserService {
     }
 
     @Override
+    public String getpassword_email(String email) {
+        return userMapper.selectByPrimaryKey(userMapper.usernameByEmail(email)).getPassword();
+    }
+
+    @Override
     public void updatePassword(String username, String password){
         userMapper.updatePassword(username,password);
     }
 
     @Override
     public User getuser(String username) {
+        User user = userMapper.selectByPrimaryKey(username);
+        //user.setFollows(userMapper.selectFollow(username));
+        user.setFollowers(userMapper.selectFollower(username));
+        user.setCollections(userMapper.selectCollection(username));
+        return user;
+    }
+
+    @Override
+    public User getuser_email(String email) {
+        String username=userMapper.usernameByEmail(email);
         User user = userMapper.selectByPrimaryKey(username);
         //user.setFollows(userMapper.selectFollow(username));
         user.setFollowers(userMapper.selectFollower(username));

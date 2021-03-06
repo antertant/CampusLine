@@ -7,6 +7,11 @@
     where username = #{username}
   </select>
 
+  <select id="usernameByEmail" resultType="java.lang.String">
+    select username from user_info
+    where email = #{email}
+  </select>
+
   <update id="updatePassword">
     update user_info
     set password=#{password}

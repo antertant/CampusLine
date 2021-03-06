@@ -96,6 +96,30 @@
         where collect_user = #{username}
     </select>
 
+    <select id="getLikedPost" resultType="com.example.project.entity.PostLike">
+        select * from post_like
+        where post_id in (select post_id from post where post_author=#{username})
+    </select>
+
+
+    <update id="updateV">
+        <if test="choice==1">
+            update post_like set viewed=1 where post_id in
+            (select post_id from post where post_author=#{username})
+        </if>
+        <if test="choice==2">
+            update comment_like set viewed=1 where comment_id in
+            (select comment_id from post_comment where comment_user=#{username})
+        </if>
+        <if test="choice==3">
+            update post_comment set viewed=1 where post_id in
+            (select post_id from post where post_author=#{username})
+        </if>
+        <if test="choice==4">
+            update comment_reply set viewed=1 where to_user=#{username}
+        </if>
+    </update>
+
     <update id="updateP">
         update post set
         <if test="choice==1">

@@ -1,7 +1,9 @@
 package com.example.project.service;
 
+import com.example.project.entity.CommentLike;
 import com.example.project.entity.CommentReply;
 import com.example.project.entity.PostComment;
+import com.example.project.entity.PostLike;
 
 import java.util.List;
 
@@ -14,5 +16,6 @@ public interface ICommentService {
 
     void deletecomment(int comment_id);
     List<PostComment> getcomments(int post_id);
+    List<CommentLike> getlikedcomment(String username);
 
 }
