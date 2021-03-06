@@ -101,6 +101,24 @@
         where post_id in (select post_id from post where post_author=#{username})
     </select>
 
+    <select id="getNew1" resultType="java.lang.Integer">
+        select count(*) from post_like
+        where post_id in (select post_id from post where post_author=#{username}) and viewed=0
+    </select>
+
+    <select id="getNew2" resultType="java.lang.Integer">
+        select count(*) from (comment_like left join post_comment on comment_like.comment_id=post_comment.comment_id) where comment_user=#{username} and comment_like.viewed=0
+    </select>
+
+    <select id="getNew3" resultType="java.lang.Integer">
+        select count(*) from post_comment where post_id in (select post_id from post where post_author=#{username}) and viewed=0
+    </select>
+
+    <select id="getNew4" resultType="java.lang.Integer">
+        select count(*) from comment_reply where to_user=#{username} and viewed=0
+    </select>
+
+
 
     <update id="updateV">
         <if test="choice==1">

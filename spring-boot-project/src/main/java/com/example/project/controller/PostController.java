@@ -3,6 +3,7 @@ package com.example.project.controller;
 import com.example.project.entity.Post;
 import com.example.project.entity.PostLike;
 import com.example.project.entity.PostComment;
+import com.example.project.entity.NewMsg;
 import com.example.project.entity.CommentLike;
 import com.example.project.entity.CommentReply;
 import com.example.project.mapper.CommentMapper;
@@ -102,6 +103,19 @@ public class PostController {
     public Result getlikes(@RequestParam("post_id")int post_id){
         List<String> likes = iPostService.getlikes(post_id);
         return Result.ok(likes);
+    }
+
+    @CrossOrigin
+    @ApiOperation("get counts of 4 unviewed message:likedpost,likedcomment,postccomment,commentreply")
+    @RequestMapping(value = "/api/getcountnew", method = RequestMethod.GET)
+    @ResponseBody
+    public Result getcountnew(@RequestParam("username")String username){
+        NewMsg countnew = new NewMsg();
+        countnew.setcnewlpost(postMapper.getNew1(username));
+        countnew.setcnewlcomment(postMapper.getNew2(username));
+        countnew.setcnewpostcomment(postMapper.getNew3(username));
+        countnew.setcnewcommentreply(postMapper.getNew4(username));
+        return Result.ok(countnew);
     }
 
     @CrossOrigin
