@@ -7,8 +7,8 @@ import java.util.List;
 public class CommentLike {
     private int post_id;
     private int comment_id;
-    private String clikeuser;
-    private Date like_time;
+    private String clike_user;
+    private Date clike_time;
     private int viewed;
 
     private List<HashMap<String, String>> clike_list;
@@ -18,20 +18,20 @@ public class CommentLike {
         this.post_id = post_id;
     }
 
-    public Date getLike_time() {
-        return like_time;
+    public Date getClike_time() {
+        return clike_time;
     }
 
-    public String getClikeuser() {
-        return clikeuser;
+    public String getClike_user() {
+        return clike_user;
     }
 
-    public void setClikeuser(String clikeuser) {
-        this.clikeuser = clikeuser;
+    public void setClike_user(String clikeuser) {
+        this.clike_user = clikeuser;
     }
 
-    public void setLike_time(Date like_time) {
-        this.like_time = like_time;
+    public void setClike_time(Date like_time) {
+        this.clike_time = like_time;
     }
 
     public int getViewed() {
