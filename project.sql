@@ -5,13 +5,13 @@
  Source Server Type    : MySQL
  Source Server Version : 50515
  Source Host           : localhost:3306
- Source Schema         : ece651
+ Source Schema         : project
 
  Target Server Type    : MySQL
  Target Server Version : 50515
  File Encoding         : 65001
 
- Date: 02/03/2021 11:23:12
+ Date: 07/03/2021 00:16:46
 */
 
 SET NAMES utf8mb4;
@@ -25,6 +25,7 @@ CREATE TABLE `comment_like`  (
   `comment_id` int(11) NOT NULL,
   `clike_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `clike_time` datetime NULL DEFAULT NULL,
+  `viewed` int(11) NULL DEFAULT 0,
   INDEX `like_user`(`clike_user`) USING BTREE,
   INDEX `comment_id`(`comment_id`) USING BTREE,
   CONSTRAINT `comment_like_ibfk_2` FOREIGN KEY (`clike_user`) REFERENCES `user_info` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -34,7 +35,7 @@ CREATE TABLE `comment_like`  (
 -- ----------------------------
 -- Records of comment_like
 -- ----------------------------
-INSERT INTO `comment_like` VALUES (5, 'Mao', '2021-02-17 08:56:47');
+INSERT INTO `comment_like` VALUES (5, 'Mao', '2021-02-17 08:56:47', 0);
 
 -- ----------------------------
 -- Table structure for comment_reply
@@ -47,6 +48,7 @@ CREATE TABLE `comment_reply`  (
   `creply_time` datetime NULL DEFAULT NULL,
   `from_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `to_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `viewed` int(11) NULL DEFAULT 0,
   PRIMARY KEY (`reply_id`) USING BTREE,
   INDEX `from_user`(`from_user`) USING BTREE,
   INDEX `to_user`(`to_user`) USING BTREE,
@@ -59,11 +61,11 @@ CREATE TABLE `comment_reply`  (
 -- ----------------------------
 -- Records of comment_reply
 -- ----------------------------
-INSERT INTO `comment_reply` VALUES (1, 3, 'I agree', '2021-02-17 05:25:47', 'meng', 'Mao');
-INSERT INTO `comment_reply` VALUES (2, 4, 'no', '2021-02-17 05:29:57', 'meng', 'ppp');
-INSERT INTO `comment_reply` VALUES (4, 3, 'hahahaha', '2021-02-17 12:48:34', 'Mao', 'meng');
-INSERT INTO `comment_reply` VALUES (5, 8, 'reply test', '2021-02-18 16:27:17', 'Mao', 'Mao');
-INSERT INTO `comment_reply` VALUES (7, 8, 'string,,,', '2021-02-18 16:29:33', 'ppp', 'Mao');
+INSERT INTO `comment_reply` VALUES (1, 3, 'I agree', '2021-02-17 05:25:47', 'meng', 'Mao', 0);
+INSERT INTO `comment_reply` VALUES (2, 4, 'no', '2021-02-17 05:29:57', 'meng', 'ppp', 0);
+INSERT INTO `comment_reply` VALUES (4, 3, 'hahahaha', '2021-02-17 12:48:34', 'Mao', 'meng', 0);
+INSERT INTO `comment_reply` VALUES (5, 8, 'reply test', '2021-02-18 16:27:17', 'Mao', 'Mao', 0);
+INSERT INTO `comment_reply` VALUES (7, 8, 'string,,,', '2021-02-18 16:29:33', 'ppp', 'Mao', 0);
 
 -- ----------------------------
 -- Table structure for module
@@ -147,6 +149,7 @@ CREATE TABLE `post_comment`  (
   `comment_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `comment_content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `comment_time` datetime NULL DEFAULT NULL,
+  `viewed` int(11) NULL DEFAULT 0,
   PRIMARY KEY (`comment_id`) USING BTREE,
   INDEX `comment_user`(`comment_user`) USING BTREE,
   INDEX `post_id`(`post_id`) USING BTREE,
@@ -157,11 +160,11 @@ CREATE TABLE `post_comment`  (
 -- ----------------------------
 -- Records of post_comment
 -- ----------------------------
-INSERT INTO `post_comment` VALUES (3, 2, 'Mao', 'good post', '2021-02-17 05:18:44');
-INSERT INTO `post_comment` VALUES (4, 2, 'ppp', 'what a bad post!', '2021-02-17 05:19:20');
-INSERT INTO `post_comment` VALUES (5, 2, 'meng', 'I like my post', '2021-02-17 10:36:07');
-INSERT INTO `post_comment` VALUES (8, 8, 'Mao', 'like like like', '2021-02-18 16:22:14');
-INSERT INTO `post_comment` VALUES (9, 8, 'ppp', 'like like like', '2021-02-18 16:24:12');
+INSERT INTO `post_comment` VALUES (3, 2, 'Mao', 'good post', '2021-02-17 05:18:44', 0);
+INSERT INTO `post_comment` VALUES (4, 2, 'ppp', 'what a bad post!', '2021-02-17 05:19:20', 0);
+INSERT INTO `post_comment` VALUES (5, 2, 'meng', 'I like my post', '2021-02-17 10:36:07', 0);
+INSERT INTO `post_comment` VALUES (8, 8, 'Mao', 'like like like', '2021-02-18 16:22:14', 0);
+INSERT INTO `post_comment` VALUES (9, 8, 'ppp', 'like like like', '2021-02-18 16:24:12', 0);
 
 -- ----------------------------
 -- Table structure for post_like
@@ -171,6 +174,7 @@ CREATE TABLE `post_like`  (
   `post_id` int(11) NOT NULL,
   `like_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'user that likes this post',
   `like_time` datetime NULL DEFAULT NULL,
+  `viewed` int(11) NULL DEFAULT 0,
   PRIMARY KEY (`post_id`, `like_user`) USING BTREE,
   INDEX `like_user`(`like_user`) USING BTREE,
   CONSTRAINT `post_like_ibfk_2` FOREIGN KEY (`like_user`) REFERENCES `user_info` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -180,18 +184,18 @@ CREATE TABLE `post_like`  (
 -- ----------------------------
 -- Records of post_like
 -- ----------------------------
-INSERT INTO `post_like` VALUES (2, 'Mao', '2021-02-16 22:56:25');
-INSERT INTO `post_like` VALUES (2, 'meng', '2021-02-16 22:56:41');
-INSERT INTO `post_like` VALUES (3, 'meng', '2021-02-18 05:02:39');
-INSERT INTO `post_like` VALUES (7, 'Mao', '2021-02-18 05:33:07');
-INSERT INTO `post_like` VALUES (7, 'meng', '2021-02-18 05:32:58');
-INSERT INTO `post_like` VALUES (7, 'ppp', '2021-02-18 05:32:45');
-INSERT INTO `post_like` VALUES (8, 'Mao', '2021-02-18 11:16:17');
-INSERT INTO `post_like` VALUES (8, 'meng', '2021-02-18 11:16:34');
-INSERT INTO `post_like` VALUES (9, 'Mao', '2021-02-18 16:18:39');
-INSERT INTO `post_like` VALUES (9, 'meng', '2021-02-18 16:19:14');
-INSERT INTO `post_like` VALUES (9, 'ppp', '2021-02-18 16:18:55');
-INSERT INTO `post_like` VALUES (11, 'Mao', '2021-02-19 05:21:26');
+INSERT INTO `post_like` VALUES (2, 'Mao', '2021-02-16 22:56:25', 0);
+INSERT INTO `post_like` VALUES (2, 'meng', '2021-02-16 22:56:41', 0);
+INSERT INTO `post_like` VALUES (3, 'meng', '2021-02-18 05:02:39', 0);
+INSERT INTO `post_like` VALUES (7, 'Mao', '2021-02-18 05:33:07', 0);
+INSERT INTO `post_like` VALUES (7, 'meng', '2021-02-18 05:32:58', 0);
+INSERT INTO `post_like` VALUES (7, 'ppp', '2021-02-18 05:32:45', 0);
+INSERT INTO `post_like` VALUES (8, 'Mao', '2021-02-18 11:16:17', 0);
+INSERT INTO `post_like` VALUES (8, 'meng', '2021-02-18 11:16:34', 0);
+INSERT INTO `post_like` VALUES (9, 'Mao', '2021-02-18 16:18:39', 0);
+INSERT INTO `post_like` VALUES (9, 'meng', '2021-02-18 16:19:14', 0);
+INSERT INTO `post_like` VALUES (9, 'ppp', '2021-02-18 16:18:55', 0);
+INSERT INTO `post_like` VALUES (11, 'Mao', '2021-02-19 05:21:26', 0);
 
 -- ----------------------------
 -- Table structure for user_follower
@@ -210,7 +214,8 @@ CREATE TABLE `user_follower`  (
 -- Records of user_follower
 -- ----------------------------
 INSERT INTO `user_follower` VALUES ('Mao', 'meng');
-INSERT INTO `user_follower` VALUES ('Mao', 'ppp');
+INSERT INTO `user_follower` VALUES ('ppp', 'Mao');
+INSERT INTO `user_follower` VALUES ('ppp', 'Mao');
 
 -- ----------------------------
 -- Table structure for user_info
@@ -229,7 +234,7 @@ CREATE TABLE `user_info`  (
 -- ----------------------------
 -- Records of user_info
 -- ----------------------------
-INSERT INTO `user_info` VALUES ('Mao', '123', '', NULL);
+INSERT INTO `user_info` VALUES ('Mao', '1234', '', NULL);
 INSERT INTO `user_info` VALUES ('meng', '123', '', 'life');
 INSERT INTO `user_info` VALUES ('ppp', '123', ' ', NULL);
 
