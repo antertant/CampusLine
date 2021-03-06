@@ -62,7 +62,7 @@
     </delete>
 
     <select id="getLikedComment" resultType="com.example.project.entity.CommentLike">
-        select post_id,clike_user,clike_time from (comment_like left join post_comment on comment_like.comment_id=post_comment.comment_id) where comment_user=#{username}
+        select post_comment.post_id,comment_like.comment_id,comment_like.clike_user,clike_time from comment_like,post_comment where post_comment.comment_user=#{username}
     </select>
 
     <select id="getPostComment" resultType="com.example.project.entity.PostComment">

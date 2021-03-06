@@ -11,7 +11,16 @@ public class PostComment {
     private String comment_content;
     private Date comment_time;
     private int comment_likes;
+    private int viewed;
     private List<CommentReply> replies;
+
+    public void setViewed(int viewed) {
+        this.viewed = viewed;
+    }
+
+    public int getViewed() {
+        return viewed;
+    }
 
     public int getComment_id() {
         return comment_id;

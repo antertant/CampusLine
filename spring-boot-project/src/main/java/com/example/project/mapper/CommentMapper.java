@@ -32,5 +32,5 @@ public interface CommentMapper {
                            @Param(value = "clike_user")String clike_user);
     List<CommentLike> getLikedComment(@Param(value = "username")String username);
     List<PostComment> getPostComment(@Param(value = "username")String username);
-    List<CommentReply> getCommentRely(@Param(value = "username")String username);
+    List<CommentReply> getCommentReply(@Param(value = "username")String username);
 }

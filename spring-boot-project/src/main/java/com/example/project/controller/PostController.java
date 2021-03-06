@@ -143,9 +143,9 @@ public class PostController {
         }
         else if (choice==4){
             //choice=4, get the newest list of CommentReply
-            List<CommentReply> commentReplie=commentMapper.getCommentRely(username);
+            List<CommentReply> commentReply=commentMapper.getCommentReply(username);
             postMapper.updateV(username,choice);
-            return Result.ok(commentReplie);
+            return Result.ok(commentReply);
         }
         return Result.ok(0);
     }
