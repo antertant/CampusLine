@@ -24,24 +24,23 @@
                        :from-user="reply_from_user"
                        @rreply="replyComment"></reply-input>
 <!--          Delete Button-->
-<!--          <b-button variant="white"-->
-<!--                    size="sm"-->
-<!--                    v-b-modal="'delete-reply-modal-'+commentId+reply_id"-->
-<!--                    v-if="current_user === reply_from_user">-->
-<!--            <b-icon icon="trash"></b-icon>-->
-<!--          </b-button>-->
-<!--          <b-modal :ref="'delete-reply-modal-'+commentId+reply_id"-->
-<!--                   :id="'delete-reply-modal-'+commentId+reply_id"-->
-<!--                   content-class="shadow"-->
-<!--                   title="Delete Reply"-->
-<!--                   centered>-->
-<!--            Are you sure to delete the reply?-->
-
-<!--            <template #modal-footer>-->
-<!--              <b-button @click="hideModal">No</b-button>-->
-<!--              <b-button @click="deleteReply" variant="danger">Yes</b-button>-->
-<!--            </template>-->
-<!--          </b-modal>-->
+          <b-button variant="white"
+                    size="sm"
+                    v-b-modal="'delete-reply-modal-'+commentId+reply_id"
+                    v-if="current_user === reply_from_user">
+            <b-icon icon="trash"></b-icon>
+          </b-button>
+          <b-modal :ref="'delete-reply-modal-'+commentId+reply_id"
+                   :id="'delete-reply-modal-'+commentId+reply_id"
+                   content-class="shadow"
+                   title="Delete Reply"
+                   centered>
+            Are you sure to delete the reply?
+            <template #modal-footer>
+              <b-button @click="hideModal">No</b-button>
+              <b-button @click="deleteReply" variant="danger">Yes</b-button>
+            </template>
+          </b-modal>
 
         </b-col>
       </b-row>
@@ -58,6 +57,7 @@ import {mapGetters} from "vuex";
 import moment from "moment";
 import CommentInput from "@/components/post/commentInput";
 import ReplyInput from "@/components/post/replyInput";
+import axios from "axios";
 
 export default {
   name: "commentReplyCard",
@@ -107,10 +107,13 @@ export default {
           if(response.data.code === 200){
             this.showReply = false
             this.$nextTick()
-            this.hideModal()
-            this.$nextTick()
           }
         })
+        .catch(failResponse=>{
+          console.log(failResponse)
+        })
+      this.hideModal()
+      this.$nextTick()
     },
     hideModal() {
       this.$refs['delete-reply-modal-'+this.commentId+this.reply_id].hide()

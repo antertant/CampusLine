@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="margin-top: 6rem">
     <module-card :multi-modules="modulesList"></module-card>
   </div>
 </template>

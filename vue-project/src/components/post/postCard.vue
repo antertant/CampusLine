@@ -25,9 +25,8 @@
       <b-col>
       <b-list-group style="text-align: center" class="shadow-sm" horizontal>
 <!--        Collect Button-->
-        <b-list-group-item button>
+        <b-list-group-item @click="collectPost" button>
           <b-icon icon="star"></b-icon>
-          <b-badge>{{ postContent.post_collections }}</b-badge>
         </b-list-group-item>
 
 <!--        Like Button-->
@@ -65,24 +64,35 @@
           </b-button>
         </b-popover>
 <!--        Child Component: Comment input-->
-        <comment-input :comment-id="postContent.post_id" @rreply="getComment">
-        </comment-input>
+        <comment-input :comment-id="postContent.post_id" @rreply="getComment"></comment-input>
 
 <!--        Repost Button-->
-        <b-list-group-item button>
-          <b-icon icon="box-arrow-up-right"></b-icon>
-        </b-list-group-item>
+<!--        <b-list-group-item button>-->
+<!--          <b-icon icon="box-arrow-up-right"></b-icon>-->
+<!--        </b-list-group-item>-->
 
 <!--        Delete Button-->
         <b-list-group-item button
                            v-if="current_user===postContent.post_author || admin"
-                           @click="deletePost">
+                           v-b-modal="'delete-post-modal-'+postContent.post_id+0">
           <b-icon icon="trash"></b-icon>
         </b-list-group-item>
+        <b-modal :ref="'delete-post-modal-'+postContent.post_id+0"
+                 :id="'delete-post-modal-'+postContent.post_id+0"
+                 content-class="shadow"
+                 title="Delete Comment"
+                 centered>
+          Are you sure to delete the post?
+          <template #modal-footer>
+            <b-button @click="hideModal">No</b-button>
+            <b-button @click="deletePost" variant="danger">Yes</b-button>
+          </template>
+        </b-modal>
+
       </b-list-group>
 
 <!--      Comment Cards-->
-      <b-collapse :id="'postComment-'+postContent.post_id">
+      <b-collapse :id="'postComment-'+postContent.post_id" v-if="cCardFlag">
         <b-card v-if="!commentEmpty" style="text-align: center">There is no comment here yet.</b-card>
         <div v-if="commentEmpty" v-for="comment in comments" :key="comment.comment_id">
 <!--          Child Component: Comment Card-->
@@ -123,7 +133,8 @@ export default {
       comments: [], // The content of comments
       showPost: true,
       likePress: false,  // Like pressed flag
-      likes: []  // Like lists
+      likes: [],  // Like lists
+      cCardFlag: true
     }
   },
   computed: {
@@ -157,6 +168,24 @@ export default {
     }
   },
   methods: {
+    collectPost() {
+      axios
+        .post('/collect', null, {params: {
+          post_id: this.postContent.post_id,
+          username: this.current_user}})
+        .then(response=>{
+          console.log(response)
+          if(response.data.code === 200){
+            if(response.data.data === "collect successfully")
+              this.constructSuccessToast('Collection added')
+            else if(response.data.data === "remove collection successfully")
+              this.constructSuccessToast('Collection removed')
+          }
+        })
+        .catch(failResponse=>{
+          console.log(failResponse)
+        })
+    },
     likePost() {
       // Alert component construction
       const crtEl = this.$createElement
@@ -219,6 +248,8 @@ export default {
         .catch(failResponse=>{
           console.log(failResponse)
         })
+      this.hideModal()
+      this.$nextTick()
     },
     getComment() {
       // Communication
@@ -233,6 +264,8 @@ export default {
         .catch(failResponse=>{
           console.log(failResponse)
         })
+      this.cCardFlag = false
+      this.cCardFlag = true
     },
     getLike() {
       axios
@@ -246,6 +279,30 @@ export default {
         .catch(failResponse=>{
           console.log(failResponse)
         })
+    },
+    hideModal() {
+      this.$refs['delete-post-modal-'+this.postContent.post_id+0].hide()
+    },
+    constructSuccessToast(action) {
+      // Alert component construction
+      const crtEl = this.$createElement
+      const errTitle = crtEl(
+        'p',
+        { class: ['text-center', 'mb-0'] },
+        [
+          crtEl('b-icon', { props:{ icon: 'exclamation-diamond', small: true } }),
+          crtEl('strong', ' Success')
+        ]
+      )
+      // Show alert
+      this.$bvToast.toast(
+        action+'!',{
+          title: [errTitle],
+          toaster: 'b-toaster-top-center',
+          variant: 'success',
+          solid: true
+        }
+      )
     }
   },
   mounted() {
