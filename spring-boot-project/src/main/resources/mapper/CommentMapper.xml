@@ -70,6 +70,7 @@
     </select>
 
     <select id="getCommentReply" resultType="com.example.project.entity.CommentReply">
-        select * from comment_reply where to_user=#{username}
+        select post_comment.post_id,comment_reply.reply_id,comment_reply.comment_id,comment_reply.creply_content,comment_reply.creply_time,comment_reply.from_user,comment_reply.to_user,comment_reply.viewed
+        from comment_reply,post_comment where to_user=#{username} and post_comment.comment_id=comment_reply.comment_id
     </select>
 </mapper>
