@@ -51,8 +51,8 @@
     </select>
 
     <insert id="insertCommentLike">
-        insert into comment_like values
-        (#{comment_id},#{clike_user},UTC_TIMESTAMP)
+        insert into comment_like (comment_id,clike_user,clike_time)
+        values (#{comment_id},#{clike_user},UTC_TIMESTAMP)
     </insert>
 
     <delete id="deleteCommentLike">
