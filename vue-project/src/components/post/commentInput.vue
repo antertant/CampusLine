@@ -45,7 +45,8 @@ export default {
   data () {
     return {
       postCommentContent: '',
-      hasComments: false
+      hasComments: false,
+      comments: []
     }
   },
   methods: {
@@ -88,7 +89,7 @@ export default {
             solid: true
           }
         )
-      // Communication
+      // Communication: submit the comment
       else {
         axios
           .post('/comment', null, {params:{
@@ -102,12 +103,14 @@ export default {
           .catch(failResponse=>{
             console.log(failResponse)
           })
-        this.$nextTick(() => {
-          this.$emit('emitComment')
+
+        this.$nextTick(()=>{
+          // send message back to post card
+          this.$emit('emit-comment', this.comments)
+          // after submitting, hide modal manually
           this.$bvModal.hide('comment-modal-'+this.commentId)
         })
       }
-      // after submitting, hide modal manually
     }
   }
 }

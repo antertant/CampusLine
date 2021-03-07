@@ -167,7 +167,7 @@ export default {
     // update message notifications every 5 minutes
     this.interval = setInterval(()=>{
       this.$store.dispatch("newMessage/getNewMessageCountFS", this.loginName)
-    }, 1000)
+    }, 1000*60*5)
   },
   destroyed() {
     this.clearInterval(this.interval)
