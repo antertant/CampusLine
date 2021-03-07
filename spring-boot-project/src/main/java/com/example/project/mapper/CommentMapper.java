@@ -21,7 +21,8 @@ public interface CommentMapper {
     int insertCommentReply(@Param(value = "comment_id")int comment_id,
                             @Param(value = "from_user")String from_user,
                             @Param(value = "to_user")String to_user,
-                            @Param(value = "reply_content")String reply_content);
+                            @Param(value = "reply_content")String reply_content,
+                           @Param(value = "viewed")int viewed);
     int deleteReply(@Param(value = "reply_id")int reply_id);
 
     int existLike(@Param(value = "comment_id")int comment_id,

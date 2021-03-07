@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CommentReply {
+    private int post_id;
     private int reply_id;
     private int comment_id;
     private String creply_content;
@@ -11,6 +12,14 @@ public class CommentReply {
     private String from_user;
     private String to_user;
     private int viewed;
+
+    public void setPost_id(int post_id) {
+        this.post_id = post_id;
+    }
+
+    public int getPost_id() {
+        return post_id;
+    }
 
     public int getViewed() {
         return viewed;
