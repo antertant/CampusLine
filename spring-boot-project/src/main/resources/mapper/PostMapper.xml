@@ -52,7 +52,7 @@
     </select>
 
     <insert id="insertLike">
-        insert into post_like
+        insert into post_like(post_id,like_user,like_time)
         values (#{post_id},#{username},UTC_TIMESTAMP)
     </insert>
 
