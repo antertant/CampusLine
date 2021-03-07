@@ -64,7 +64,7 @@
           </b-button>
         </b-popover>
 <!--        Child Component: Comment input-->
-        <comment-input :comment-id="postContent.post_id" @rreply="getComment"></comment-input>
+        <comment-input :comment-id="postContent.post_id" @emitComment="getComment"></comment-input>
 
 <!--        Repost Button-->
 <!--        <b-list-group-item button>-->
@@ -92,7 +92,7 @@
       </b-list-group>
 
 <!--      Comment Cards-->
-      <b-collapse class="comment-collapse" :id="'postComment-'+postContent.post_id" v-if="cCardFlag">
+      <b-collapse class="comment-collapse" :id="'postComment-'+postContent.post_id">
         <b-card v-if="!commentEmpty" style="text-align: center">There is no comment here yet.</b-card>
         <div v-if="commentEmpty" v-for="comment in comments" :key="comment.comment_id">
 <!--          Child Component: Comment Card-->
@@ -134,7 +134,6 @@ export default {
       showPost: true,
       likePress: false,  // Like pressed flag
       likes: [],  // Like lists
-      cCardFlag: true
     }
   },
   computed: {
@@ -285,14 +284,14 @@ export default {
         .then(response=>{
           console.log(response)
           if(response.data.code === 200){
-            this.comments = response.data.data
+            this.$nextTick(()=>{
+              this.comments = response.data.data
+            })
           }
         })
         .catch(failResponse=>{
           console.log(failResponse)
         })
-      this.cCardFlag = false
-      this.cCardFlag = true
     },
     getLike() {
       axios

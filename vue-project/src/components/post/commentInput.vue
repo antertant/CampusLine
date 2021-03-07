@@ -102,8 +102,8 @@ export default {
           .catch(failResponse=>{
             console.log(failResponse)
           })
-        this.$emit('rreply')
         this.$nextTick(() => {
+          this.$emit('emitComment')
           this.$bvModal.hide('comment-modal-'+this.commentId)
         })
       }

@@ -3,11 +3,11 @@
     <template #header><h5>MESSAGE BOX</h5></template>
     <b-list-group>
       <b-list-group-item to="/messages=comment" :active="mType === 'comment'">
-        <b>Comment</b> <b-badge variant="danger">1</b-badge>
+        <b>Comment</b> <b-badge variant="danger" v-if="commentCount!==0">{{ commentCount }}</b-badge>
       </b-list-group-item>
 <!--      <b-list-group-item to="/messages=repost" :active="mType === 'repost'"><b>Repost</b></b-list-group-item>-->
       <b-list-group-item to="/messages=like" :active="mType === 'like'">
-        <b>Like</b> <b-badge variant="danger">1</b-badge>
+        <b>Like</b> <b-badge variant="danger" v-if="likeCount!==0">{{ likeCount }}</b-badge>
       </b-list-group-item>
 <!--      <b-list-group-item to="/messages=message" :active="mType === 'message'"><b>Message</b></b-list-group-item>-->
     </b-list-group>
@@ -17,7 +17,7 @@
 <script>
 export default {
   name: "messageSideBar",
-  props: ['mType']
+  props: ['mType', 'commentCount', 'likeCount']
 }
 </script>
 

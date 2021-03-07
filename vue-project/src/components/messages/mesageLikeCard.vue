@@ -9,9 +9,8 @@
         <template #title>
           <b-icon icon="tag" variant="info"></b-icon>
           <span style="color: black"><b>Post Likes</b></span>
-          <b-badge variant="danger">1</b-badge>
+          <b-badge variant="danger" v-if="postL!==0">{{postL}}</b-badge>
         </template>
-        {{postLikeList}}
         <b-card v-for="like in postLikeList" :key="like.post_id+like.like_user" no-body class="shadow-sm">
           <!--      avator, comment user and comment time-->
           <b-row class="p-3">
@@ -33,7 +32,9 @@
           </b-row>
 
           <b-list-group horizontal class="rounded-0" style="text-align: center">
-            <b-list-group-item variant="light" button>Origin Post</b-list-group-item>
+            <b-list-group-item @click="getPostByID(like.post_id)" v-b-modal="'origin-post-modal'" variant="light" button>
+              Origin Post
+            </b-list-group-item>
           </b-list-group>
 
         </b-card>
@@ -43,10 +44,9 @@
         <template #title>
           <b-icon icon="tag" variant="info"></b-icon>
           <span style="color: black"><b>Comment Likes</b></span>
-          <b-badge variant="danger">1</b-badge>
+          <b-badge variant="danger" v-if="commentL!==0">{{commentL}}</b-badge>
         </template>
-        {{commentLikeList}}
-        <b-card v-for="like in commentLikeList" :key="like.comment_id+like.like_user" no-body class="shadow-sm">
+        <b-card v-for="like in commentLikeList" :key="like.comment_id+like.clike_user" no-body class="shadow-sm">
           <!--      avator, comment user and comment time-->
           <b-row class="p-3">
             <b-col cols="auto">
@@ -54,25 +54,36 @@
             </b-col>
             <b-col>
               <!--          like user-->
-              <b-row><b>{{ like.like_user }}</b></b-row>
+              <b-row><b>{{ like.clike_user }}</b></b-row>
               <!--          like time-->
               <b-row style="color: gray;font-size: small">
-                <{{ timeTransfer(like.like_time) }}>
+                <{{ timeTransfer(like.clike_time) }}>
               </b-row>
               <!--          like message-->
               <b-row class="mt-3">
-                <b-icon icon="hand-thumbs-up"></b-icon> This person likes your post.
+                <b-icon icon="hand-thumbs-up"></b-icon> This person likes your comment.
               </b-row>
             </b-col>
           </b-row>
 
           <b-list-group horizontal class="rounded-0" style="text-align: center">
-            <b-list-group-item variant="light" button>Origin Post</b-list-group-item>
+            <b-list-group-item @click="getPostByID(like.post_id)" v-b-modal="'origin-post-modal'" variant="light" button>
+              Origin Post
+            </b-list-group-item>
           </b-list-group>
 
         </b-card>
       </b-tab>
     </b-tabs>
+
+<!--    origin post modal-->
+    <b-modal id="origin-post-modal" centered hide-footer>
+      <template #modal-header>
+        <h4>Origin Post</h4>
+      </template>
+      <post-card :post-content="originPost"></post-card>
+    </b-modal>
+
   </b-card>
 </template>
 
@@ -80,9 +91,12 @@
 import moment from "moment";
 import axios from "axios";
 import {mapGetters} from "vuex";
+import PostCard from "@/components/post/postCard";
 
 export default {
   name: "mesageLikeCard",
+  components: {PostCard},
+  props: ['postL', 'commentL'],
   computed:{
     ...mapGetters({
       currentUser: "loginInfo/getLUName"
@@ -91,7 +105,8 @@ export default {
   data() {
     return {
       postLikeList:[],
-      commentLikeList: []
+      commentLikeList: [],
+      originPost: []
     }
   },
   methods: {
@@ -107,6 +122,9 @@ export default {
         .catch(failResponse=>{
           console.log(failResponse)
         })
+      this.$nextTick(()=>{
+        this.$store.dispatch("newMessage/getNewMessageCountFS", this.currentUser)
+      })
     },
     getCommentLikeList() {
       axios
@@ -115,6 +133,22 @@ export default {
           console.log(response)
           if(response.data.code === 200){
             this.commentLikeList = response.data.data
+          }
+        })
+        .catch(failResponse=>{
+          console.log(failResponse)
+        })
+      this.$nextTick(()=>{
+        this.$store.dispatch("newMessage/getNewMessageCountFS", this.currentUser)
+      })
+    },
+    getPostByID(ID) {
+      axios
+        .get('/getpost', {params:{post_id: ID}})
+        .then(response=>{
+          console.log(response)
+          if(response.data.code === 200){
+            this.originPost = response.data.data
           }
         })
         .catch(failResponse=>{

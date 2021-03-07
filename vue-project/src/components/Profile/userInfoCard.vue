@@ -39,6 +39,10 @@
           <b-badge>{{collectCounter}}</b-badge>
         </b-button>
       </div>
+<!--      Change password-->
+      <div>
+        <a :href="'change_password='+currentUser">Change Password</a>
+      </div>
     </div>
 
 <!--    Others profile-->
@@ -102,10 +106,11 @@ import axios from "axios";
 import FollowerCard from "@/components/Profile/followerCard";
 import FollowingCard from "@/components/Profile/followingCard";
 import CollectionCard from "@/components/Profile/collectionCard";
+import UpdatePasswordCard from "@/components/manage/updatePasswordCard";
 
 export default {
   name: "userInfoCard",
-  components: {CollectionCard, FollowingCard, FollowerCard},
+  components: {UpdatePasswordCard, CollectionCard, FollowingCard, FollowerCard},
   props: ['profileUser'],
   data() {
     return{

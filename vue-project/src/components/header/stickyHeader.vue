@@ -38,16 +38,22 @@
 <!--          Message Button-->
           <b-nav-item id="message-popover">
             <b-icon icon="bell"></b-icon> Messages
-            <b-badge variant="danger">{{ counter }}</b-badge>
+            <b-badge variant="danger" v-if="overallCounter!==0">{{ overallCounter }}</b-badge>
           </b-nav-item>
           <b-popover target="message-popover" placement="buttom" triggers="focus">
             <b-list-group style="font-size: medium; color: black">
               <b-list-group-item to="/messages=comment" class="border-0 py-2">
-                Comment <b-badge variant="danger">1</b-badge>
+                Comment
+                <b-badge variant="danger" v-if="newsCounter.cnewpostcomment+newsCounter.cnewcommentreply!==0">
+                {{newsCounter.cnewpostcomment+newsCounter.cnewcommentreply}}
+                </b-badge>
               </b-list-group-item>
 <!--              <b-list-group-item to="/messages=repost" class="border-0 py-2">Repost</b-list-group-item>-->
               <b-list-group-item to="/messages=like" class="border-0 py-2">
-                Like <b-badge variant="danger">1</b-badge>
+                Like
+                <b-badge variant="danger" v-if="newsCounter.cnewlpost+newsCounter.cnewlcomment!==0">
+                  {{newsCounter.cnewlpost+newsCounter.cnewlcomment}}
+                </b-badge>
               </b-list-group-item>
 <!--              <b-list-group-item to="/messages=message" class="border-0 py-2">Message</b-list-group-item>-->
             </b-list-group>
@@ -133,8 +139,15 @@ export default {
   computed: {
     ...mapGetters({
       loginName: "loginInfo/getLUName",
-      loginState: "loginInfo/getLoginState"
-    })
+      loginState: "loginInfo/getLoginState",
+      newsCounter: "newMessage/getNewMessageCount"
+    }),
+    overallCounter: function () {
+      return this.newsCounter.cnewlpost+
+      this.newsCounter.cnewlcomment+
+      this.newsCounter.cnewpostcomment+
+      this.newsCounter.cnewcommentreply
+    }
   },
   methods: {
     logout(event){
@@ -150,10 +163,14 @@ export default {
     }
   },
   mounted() {
-    //this.interval = setInterval(()=>{this.counter++}, 1000)
+    this.$store.dispatch("newMessage/getNewMessageCountFS", this.loginName)
+    // update message notifications every 5 minutes
+    this.interval = setInterval(()=>{
+      this.$store.dispatch("newMessage/getNewMessageCountFS", this.loginName)
+    }, 1000)
   },
   destroyed() {
-    //this.clearInterval(this.interval)
+    this.clearInterval(this.interval)
   }
 }
 </script>

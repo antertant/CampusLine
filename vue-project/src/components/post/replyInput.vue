@@ -106,9 +106,9 @@ export default {
           .catch(failResponse=>{
             console.log(failResponse)
           })
-        this.$emit('rreply')
         // after submitting, hide modal manually
         this.$nextTick(() => {
+          this.$emit('rreply')
           this.$bvModal.hide('reply-modal-'+this.commentId+this.replyId)
         })
       }
