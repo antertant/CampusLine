@@ -284,9 +284,9 @@ export default {
     },
     cButtonGetCommentHook() {
       if(this.visible === false){
-        this.getCommentHook()
         this.visible = true
       }
+      this.getCommentHook()
     },
     async getCommentHook() {
       let res = await this.getComment()

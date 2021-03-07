@@ -4,6 +4,7 @@
     <template #header>
       <h5>Comment List</h5>
     </template>
+<!--    post comment list-->
     <b-tabs card>
       <b-tab @click="getCommentList">
         <template #title>
@@ -54,6 +55,7 @@
         </b-card>
       </b-tab>
 
+<!--      comment reply list-->
       <b-tab @click="getReplyList">
         <template #title>
           <b-icon icon="tag" variant="info"></b-icon>
