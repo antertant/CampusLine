@@ -18,8 +18,8 @@ class ModuleMapperTest {
         Assertions.assertEquals(1,moduleMapper.deleteAdmin("Mao"));
     }
 
-    @Test
-    void gethotmodules() {
-    }
+//    @Test
+//    void gethotmodules() {
+//    }
 
 }
