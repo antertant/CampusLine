@@ -28,7 +28,7 @@ describe('commentInput.vue', () => {
   })
 
   it('reset button works well', ()=>{
-    const wrapper = shallowMount(commentInput, {store})
+    const wrapper = shallowMount(commentInput, {store, localVue, propsData:{commentId:2}})
     wrapper.vm.postCommentContent = 'testContent'
 
     wrapper.vm.resetCModal()

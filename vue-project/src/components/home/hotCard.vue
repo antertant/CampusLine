@@ -11,18 +11,18 @@
             lazy>
        <template #title>
          <b-icon icon="tag" variant="info"></b-icon>
-         <span style="color: black"><b>{{ singleModule.module_name.toUpperCase() }}</b></span>
+         <span style="color: black"><b>{{ String(singleModule.module_name).toUpperCase() }}</b></span>
        </template>
        <!--       Enter the module-->
        <b-button block :to="'/'+singleModule.module_name"
                  variant="primary"
                  v-if="singleModule.module_name === 'life'">
-         Enter the <{{ singleModule.module_name.toUpperCase() }}> Module
+         Enter the <{{ String(singleModule.module_name).toUpperCase() }}> Module
        </b-button>
        <b-button block :to="'/knowledge-modules/'+singleModule.module_name"
                  variant="primary"
                  v-else>
-         Enter the <{{ singleModule.module_name.toUpperCase() }}> Module
+         Enter the <{{ String(singleModule.module_name).toUpperCase() }}> Module
        </b-button>
 <!--       module post list-->
        <post-card v-for="singlePost in singleModule.posts"
@@ -47,7 +47,7 @@ export default {
       if(this.hotData.module_name === 'life')
         return 'LIFE CIRCLE'
       else
-        return this.hotData.module_name.toUpperCase()
+        return String(this.hotData.module_name).toUpperCase()
     },
     hotPosts() {
       return this.hotData.posts

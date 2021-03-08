@@ -38,7 +38,12 @@
 <!--          Message Button-->
           <b-nav-item id="message-popover">
             <b-icon icon="bell"></b-icon> Messages
-            <b-badge variant="danger" v-if="overallCounter!==0">{{ overallCounter }}</b-badge>
+            <b-badge variant="danger"
+                     v-if="newsCounter.cnewpostcomment+newsCounter.cnewcommentreply
+            +newsCounter.cnewlpost+newsCounter.cnewlcomment!==0">
+              {{ newsCounter.cnewpostcomment+newsCounter.cnewcommentreply
+            +newsCounter.cnewlpost+newsCounter.cnewlcomment }}
+            </b-badge>
           </b-nav-item>
           <b-popover target="message-popover" placement="buttom" triggers="focus">
             <b-list-group style="font-size: medium; color: black">
@@ -141,13 +146,7 @@ export default {
       loginName: "loginInfo/getLUName",
       loginState: "loginInfo/getLoginState",
       newsCounter: "newMessage/getNewMessageCount"
-    }),
-    overallCounter: function () {
-      return this.newsCounter.cnewlpost+
-      this.newsCounter.cnewlcomment+
-      this.newsCounter.cnewpostcomment+
-      this.newsCounter.cnewcommentreply
-    }
+    })
   },
   methods: {
     logout(event){
@@ -163,6 +162,10 @@ export default {
     }
   },
   mounted() {
+    this.newsCounter.newsCounter = 0
+    this.newsCounter.cnewlcomment = 0
+    this.newsCounter.cnewpostcomment = 0
+    this.newsCounter.cnewcommentreply = 0
     this.$store.dispatch("newMessage/getNewMessageCountFS", this.loginName)
     // update message notifications every 5 minutes
     this.interval = setInterval(()=>{

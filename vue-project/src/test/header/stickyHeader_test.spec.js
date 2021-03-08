@@ -14,12 +14,14 @@ describe("stickyHeader.vue", () => {
   let store;
   let name = 'testName'
   let logState = true
+  let newsCounter = {newsCounter:0, cnewlcomment:0, cnewpostcomment:0, cnewcommentreply:0}
 
   beforeEach(() => {
     // Contruct virtual vuex
     getters = {
       "loginInfo/getLUName": () => name,
-      "loginInfo/getLoginState": () => logState
+      "loginInfo/getLoginState": () => logState,
+      "newMessage/getNewMessageCount": () => newsCounter
     }
 
     actions = {
