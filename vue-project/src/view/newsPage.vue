@@ -44,6 +44,9 @@ export default {
         })
     }
   },
+  created() {
+    document.title = 'UWSK - News Posts'
+  },
   mounted() {
     this.getFollowPost()
   }

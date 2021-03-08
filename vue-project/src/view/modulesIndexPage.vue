@@ -19,6 +19,9 @@ export default {
       modulesList: 'moduleList/getModuleList'
     })
   },
+  created() {
+    document.title = 'UWSK - Modules List'
+  },
   mounted() {
     this.$store.dispatch('moduleList/getModulefromServer')
   }

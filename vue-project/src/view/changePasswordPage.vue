@@ -25,6 +25,9 @@ export default {
     ...mapGetters({
       currentUser: "loginInfo/getLUName"
     })
+  },
+  created() {
+    document.title = 'UWSK - Password Modification'
   }
 }
 </script>

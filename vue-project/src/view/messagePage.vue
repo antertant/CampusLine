@@ -50,6 +50,9 @@ export default {
       newMessageCount: "newMessage/getNewMessageCount"
     })
   },
+  created() {
+    document.title = 'UWSK - Message Box'
+  },
   mounted() {
     this.$store.dispatch("newMessage/getNewMessageCountFS", this.currentUser)
   }

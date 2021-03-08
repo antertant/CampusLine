@@ -107,6 +107,9 @@ export default {
         })
     }
   },
+  created() {
+    document.title = 'UWSK - Knowledge_' + String(this.modName).toUpperCase()
+  },
   mounted() {
     this.$store.dispatch("modulePostInfo/getModulePostfromServer", this.modName)
     this.getOwnPosts()

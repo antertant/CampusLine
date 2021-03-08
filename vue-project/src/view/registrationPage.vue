@@ -6,7 +6,10 @@
 import RegisterCard from "@/components/manage/registerCard";
 export default {
   name: "registrationPage",
-  components: {RegisterCard}
+  components: {RegisterCard},
+  created() {
+    document.title = 'UWSK - Registration'
+  },
 }
 </script>
 

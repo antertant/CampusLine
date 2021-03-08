@@ -7,7 +7,10 @@
 
 <script>
 export default {
-name: "pageNotFound"
+  name: "pageNotFound",
+  created() {
+    document.title = 'UWSK - 404_Page_Not_Found'
+  },
 }
 </script>
 

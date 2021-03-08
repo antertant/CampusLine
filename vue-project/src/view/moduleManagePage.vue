@@ -61,6 +61,9 @@ export default {
         })
     }
   },
+  created() {
+    document.title = 'UWSK - Module Management'
+  },
   mounted() {
     this.$store.dispatch("modulePostInfo/getModulePostfromServer", this.modName)
     this.$store.dispatch('moduleList/getModulefromServer')

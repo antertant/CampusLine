@@ -23,7 +23,10 @@ import SelfPostCard from "@/components/Profile/selfPostCard";
 export default {
   name: "profilePage",
   components: {SelfPostCard, UserInfoCard},
-  props: ['profileUser']
+  props: ['profileUser'],
+  created() {
+    document.title = 'UWSK - Profile_' + this.profileUser
+  },
 }
 </script>
 

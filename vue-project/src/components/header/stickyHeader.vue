@@ -161,12 +161,14 @@ export default {
         this.$router.push('/post_search='+this.searchKey)
     }
   },
-  mounted() {
+  created() {
     this.newsCounter.newsCounter = 0
     this.newsCounter.cnewlcomment = 0
     this.newsCounter.cnewpostcomment = 0
     this.newsCounter.cnewcommentreply = 0
     this.$store.dispatch("newMessage/getNewMessageCountFS", this.loginName)
+  },
+  mounted() {
     // update message notifications every 5 minutes
     this.interval = setInterval(()=>{
       this.$store.dispatch("newMessage/getNewMessageCountFS", this.loginName)

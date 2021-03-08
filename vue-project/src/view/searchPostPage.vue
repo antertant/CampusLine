@@ -41,6 +41,9 @@ export default {
         })
     }
   },
+  created() {
+    document.title = 'UWSK - SearchPost_' + this.searchKey
+  },
   mounted() {
     this.getSearchResult()
   }

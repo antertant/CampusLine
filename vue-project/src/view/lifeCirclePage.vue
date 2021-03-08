@@ -105,6 +105,9 @@ export default {
         })
     }
   },
+  created() {
+    document.title = 'UWSK - Life Circle'
+  },
   mounted() {
     this.$store.dispatch("lifePostInfo/getlifePostfromServer")
     this.getAdminList()
