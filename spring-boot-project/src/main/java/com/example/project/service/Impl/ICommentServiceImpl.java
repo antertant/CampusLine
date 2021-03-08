@@ -31,7 +31,8 @@ public class ICommentServiceImpl implements ICommentService{
         String from_user = reply.getFrom_user();
         String to_user = reply.getTo_user();
         String reply_content = reply.getCreply_content();
-        commentMapper.insertCommentReply(comment_id,from_user,to_user,reply_content);
+        int viewed=reply.getViewed();
+        commentMapper.insertCommentReply(comment_id,from_user,to_user,reply_content,viewed);
     }
 
     @Override
