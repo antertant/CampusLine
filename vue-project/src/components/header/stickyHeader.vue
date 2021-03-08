@@ -12,27 +12,32 @@
             <img src="./logo.svg" height="20" alt="logo">
           </b-navbar-brand>
 <!--          Homepage Button-->
-          <b-nav-item to="/">
+          <b-nav-item to="/" id="headerHome">
             <b-icon icon="house"></b-icon>
             Home
           </b-nav-item>
 <!--          New Posts Button-->
-          <b-nav-item to="news" v-if="loginName!==''">
+          <b-nav-item to="news" v-if="loginState" id="SignInNews">
             <b-icon icon="newspaper"></b-icon>
             News
           </b-nav-item>
-          <b-nav-item to="/login" v-if="loginName===''">
+          <b-nav-item to="/login" v-if="!loginState" id="VisitorNews">
             <b-icon icon="newspaper"></b-icon>
             News
           </b-nav-item>
 <!--          Modules Button-->
           <b-nav-item id="modules-popover">
-            <b-icon icon="box-seam"></b-icon> Modules
+            <b-icon icon="box-seam"></b-icon>
+            Modules
           </b-nav-item>
           <b-popover target="modules-popover" placement="buttom" triggers="focus">
             <b-list-group style="font-size: medium; color: black">
-              <b-list-group-item to="/life" class="border-0 py-2">Life</b-list-group-item>
-              <b-list-group-item to="/knowledge-modules" class="border-0 py-2">Knowledge</b-list-group-item>
+              <b-list-group-item to="/life" class="border-0 py-2" id="modulePopLife">
+                Life
+              </b-list-group-item>
+              <b-list-group-item to="/knowledge-modules" class="border-0 py-2" id="modulePopKnow">
+                Knowledge
+              </b-list-group-item>
             </b-list-group>
           </b-popover>
 <!--          Message Button-->
@@ -40,7 +45,7 @@
             <b-icon icon="bell"></b-icon> Messages
             <b-badge variant="danger"
                      v-if="newsCounter.cnewpostcomment+newsCounter.cnewcommentreply
-            +newsCounter.cnewlpost+newsCounter.cnewlcomment!==0">
+            +newsCounter.cnewlpost+newsCounter.cnewlcomment!==0 && loginState">
               {{ newsCounter.cnewpostcomment+newsCounter.cnewcommentreply
             +newsCounter.cnewlpost+newsCounter.cnewlcomment }}
             </b-badge>
@@ -70,8 +75,8 @@
           <b-nav-item id="navBar-user-popover" class="mr-3">
             <b-avatar button></b-avatar>
 <!--            Show 'Visitor' when do not login yet-->
-            <span v-show="!loginState">Visitor</span>
-            <span v-show="loginState">{{ loginName }}</span>
+            <span v-if="!loginState">Visitor</span>
+            <span v-if="loginState">{{ loginName }}</span>
           </b-nav-item>
           <b-popover
             target="navBar-user-popover"
@@ -166,16 +171,25 @@ export default {
     this.newsCounter.cnewlcomment = 0
     this.newsCounter.cnewpostcomment = 0
     this.newsCounter.cnewcommentreply = 0
-    this.$store.dispatch("newMessage/getNewMessageCountFS", this.loginName)
   },
   mounted() {
-    // update message notifications every 5 minutes
-    this.interval = setInterval(()=>{
+    if(this.loginState){
       this.$store.dispatch("newMessage/getNewMessageCountFS", this.loginName)
-    }, 1000*60*5)
+      // update message notifications every 5 minutes
+      this.interval = setInterval(()=>{
+        this.$store.dispatch("newMessage/getNewMessageCountFS", this.loginName)
+      }, 1000*60*5)
+    }
+    else{
+      this.newsCounter.newsCounter = 0
+      this.newsCounter.cnewlcomment = 0
+      this.newsCounter.cnewpostcomment = 0
+      this.newsCounter.cnewcommentreply = 0
+    }
   },
   destroyed() {
-    this.clearInterval(this.interval)
+    if(this.loginName !== '')
+      this.clearInterval(this.interval)
   }
 }
 </script>

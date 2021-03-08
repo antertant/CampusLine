@@ -6,7 +6,7 @@ module.exports = {
   webdriver: {
     start_process: true,
     port: 4444,
-    server_path: require('geckodriver').path,
+    server_path: require('chromedriver').path,
     cli_args: [
       // very verbose geckodriver logs
       // '-vv'
@@ -17,11 +17,11 @@ module.exports = {
     default: {
       launch_url: 'https://nightwatchjs.org',
       desiredCapabilities : {
-        browserName : 'firefox',
+        browserName : 'chrome',
         alwaysMatch: {
           // Enable this if you encounter unexpected SSL certificate errors in Firefox
           // acceptInsecureCerts: true,
-          'moz:firefoxOptions': {
+          'chromeOptions': {
             args: [
               // '-headless',
               // '-verbose'

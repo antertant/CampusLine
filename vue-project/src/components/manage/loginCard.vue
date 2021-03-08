@@ -81,6 +81,9 @@ name: "loginCard",
             //this.responseResult = JSON.stringify(successResponse.data)
             this.$router.replace({path:'/home'})
             this.$store.commit('loginInfo/setLUName', this.loginInfo.username)
+            this.$nextTick(()=>{
+              this.$store.dispatch("newMessage/getNewMessageCountFS", this.loginInfo.username)
+            })
           }
           else{
             this.showLoginError = true

@@ -5,9 +5,45 @@
 
   <testsuite name="test"
     errors="0" failures="0" hostname="" id="" package="test" skipped="0"
-    tests="1" time="8.824" timestamp="">
+    tests="1" time="6.278" timestamp="">
   
-    <testcase name="Demo test ecosia.org" classname="test" time="8.824" assertions="5">
+    <testcase name="Correctly change hot posts tabs" classname="test" time="6.278" assertions="23">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
 
     
 

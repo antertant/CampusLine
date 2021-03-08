@@ -16,8 +16,7 @@
           @submit.prevent="handleCSubmit"
           v-if="current_user!==''">
       <b-form-group label-for="comment-input"
-                    invalid-feedback="Content is required"
-                    :state="postCommentState">
+                    invalid-feedback="Content is required">
         <b-form-textarea rows="3" max-rows="6"
                       placeholder="Enter your comment..."
                       id="comment-input"

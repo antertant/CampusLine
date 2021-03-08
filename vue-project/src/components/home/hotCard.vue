@@ -7,6 +7,7 @@
   </b-card-header>
    <b-tabs card>
      <b-tab v-for="singleModule in hotData"
+            :id="'tab_'+singleModule.module_name"
             :key="singleModule.module_name"
             lazy>
        <template #title>
@@ -15,11 +16,13 @@
        </template>
        <!--       Enter the module-->
        <b-button block :to="'/'+singleModule.module_name"
+                 id="lifeEnterButton"
                  variant="primary"
                  v-if="singleModule.module_name === 'life'">
          Enter the <{{ String(singleModule.module_name).toUpperCase() }}> Module
        </b-button>
        <b-button block :to="'/knowledge-modules/'+singleModule.module_name"
+                 :id="singleModule.module_name+'EnterButton'"
                  variant="primary"
                  v-else>
          Enter the <{{ String(singleModule.module_name).toUpperCase() }}> Module
