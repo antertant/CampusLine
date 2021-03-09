@@ -9,7 +9,7 @@
     <b-form-row class="my-2 ml-2 p-3 text-dark rounded-bottom"
                 id="header"
                 align-v="stretch">
-      <b-col cols="auto"><b-avatar size="md"></b-avatar></b-col>
+      <b-col cols="auto"><b-avatar :to="'/profile='+postContent.post_author" size="md"></b-avatar></b-col>
       <b-col cols="auto" id="post-author" align-self="center">
         <b>{{ postContent.post_author }}</b>
         <span id="post-time"><{{ postTime }}></span>

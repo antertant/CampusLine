@@ -137,7 +137,7 @@ module.exports = {
       .click('[aria-label=newspaper]')
       .waitForElementNotPresent('#lifeEnterButton')
       .assert.urlContains('/news')
-      .assert.containsText('#newsTitle', 'Current Following Posts')
+      .assert.containsText('#newsTitle', 'New Posts from Following List')
       .assert.visible('#postCard_12')
       .assert.visible('#postCard_9')
       .assert.visible('#postCard_3')

@@ -5,9 +5,9 @@
 
   <testsuite name="homePage_test"
     errors="0" failures="0" hostname="" id="" package="homePage_test" skipped="0"
-    tests="3" time="22.45" timestamp="">
+    tests="3" time="22.75" timestamp="">
   
-    <testcase name="Correctly change hot posts tabs and enter the corresponding module page" classname="homePage_test" time="6.137" assertions="23">
+    <testcase name="Correctly change hot posts tabs and enter the corresponding module page" classname="homePage_test" time="6.377" assertions="23">
 
     
 
@@ -56,7 +56,7 @@
     
     </testcase>
   
-    <testcase name="Sticky header routing test" classname="homePage_test" time="9.608" assertions="66">
+    <testcase name="Sticky header routing test" classname="homePage_test" time="9.564" assertions="66">
 
     
 
@@ -191,7 +191,7 @@
     
     </testcase>
   
-    <testcase name=" Search function test " classname="homePage_test" time="6.708" assertions="22">
+    <testcase name=" Search function test " classname="homePage_test" time="6.804" assertions="22">
 
     
 

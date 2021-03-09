@@ -2,7 +2,7 @@
   <b-row class="ml-5 mt-3" align-h="start" v-if="showReply">
     <b-icon icon="arrow-return-right"></b-icon>
     <!--avatar-->
-    <b-col cols="auto"><b-avatar size="md"></b-avatar></b-col>
+    <b-col cols="auto"><b-avatar :to="'/profile='+reply_from_user" size="md"></b-avatar></b-col>
     <!--main content-->
     <b-col cols='auto'>
       <b-row class="mb-1" align-h="between">

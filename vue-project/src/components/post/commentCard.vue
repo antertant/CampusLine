@@ -2,7 +2,7 @@
   <b-card v-if="showComment">
     <b-row class="mb-4">
       <!--avatar-->
-      <b-col cols="auto"><b-avatar size="md"></b-avatar></b-col>
+      <b-col cols="auto"><b-avatar :to="'/profile='+comment_user" size="md"></b-avatar></b-col>
       <!--main content-->
       <b-col cols="auto">
         <b-row class="mb-1" align-h="start">
