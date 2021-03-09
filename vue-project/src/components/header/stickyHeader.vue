@@ -42,8 +42,9 @@
           </b-popover>
 <!--          Message Button-->
           <b-nav-item id="message-popover">
-            <b-icon icon="bell"></b-icon> Messages
-            <b-badge variant="danger"
+            <b-icon icon="bell"></b-icon>
+            Messages
+            <b-badge variant="danger" id="message-badge"
                      v-if="newsCounter.cnewpostcomment+newsCounter.cnewcommentreply
             +newsCounter.cnewlpost+newsCounter.cnewlcomment!==0 && loginState">
               {{ newsCounter.cnewpostcomment+newsCounter.cnewcommentreply
@@ -52,16 +53,16 @@
           </b-nav-item>
           <b-popover target="message-popover" placement="buttom" triggers="focus">
             <b-list-group style="font-size: medium; color: black">
-              <b-list-group-item to="/messages=comment" class="border-0 py-2">
+              <b-list-group-item id="message-comment-popover" to="/messages=comment" class="border-0 py-2">
                 Comment
-                <b-badge variant="danger" v-if="newsCounter.cnewpostcomment+newsCounter.cnewcommentreply!==0">
+                <b-badge id="message-comment-badge" variant="danger" v-if="newsCounter.cnewpostcomment+newsCounter.cnewcommentreply!==0 && loginState">
                 {{newsCounter.cnewpostcomment+newsCounter.cnewcommentreply}}
                 </b-badge>
               </b-list-group-item>
 <!--              <b-list-group-item to="/messages=repost" class="border-0 py-2">Repost</b-list-group-item>-->
-              <b-list-group-item to="/messages=like" class="border-0 py-2">
+              <b-list-group-item id="message-like-popover" to="/messages=like" class="border-0 py-2">
                 Like
-                <b-badge variant="danger" v-if="newsCounter.cnewlpost+newsCounter.cnewlcomment!==0">
+                <b-badge id="message-like-badge" variant="danger" v-if="newsCounter.cnewlpost+newsCounter.cnewlcomment!==0 && loginState">
                   {{newsCounter.cnewlpost+newsCounter.cnewlcomment}}
                 </b-badge>
               </b-list-group-item>
@@ -85,11 +86,11 @@
           >
 <!--            Login popover for visitor-->
             <b-button-group vertical v-show="!loginState">
-              <b-button to="/login" variant="outline-secondary" style="text-align: left">
+              <b-button id="loginButton" to="/login" variant="outline-secondary" style="text-align: left">
                 <b-icon icon="person-check" aria-hidden="true" variant="primary"></b-icon>
                 Login
               </b-button>
-              <b-button to="/register" variant="outline-secondary" style="text-align: left">
+              <b-button id="registerButton" to="/register" variant="outline-secondary" style="text-align: left">
                 <b-icon icon="person-plus" aria-hidden="true" variant="success"></b-icon>
                 Register
               </b-button>
@@ -108,17 +109,18 @@
           </b-popover>
 <!--          Search bar-->
           <b-nav-form @submit="searchAction">
-            <b-form-input aria-label="Input"
+            <b-form-input id="searchInput"
                           v-model="searchKey"
                           placeholder="Search..."
                           required></b-form-input>
 
-            <b-form-select v-model="searchSelect" class="mr-2" required>
-              <b-form-select-option value="searchmodule">Module</b-form-select-option>
-              <b-form-select-option value="searchpost">Post</b-form-select-option>
+            <b-form-select id="searchSelect" v-model="searchSelect" class="mr-2" required>
+              <b-form-select-option id="selectModule" value="searchmodule">Module</b-form-select-option>
+              <b-form-select-option id="selectPost" value="searchpost">Post</b-form-select-option>
             </b-form-select>
 
             <b-button variant="outline-dark"
+                      id="searchButton"
                       class="my-2 my-sm-0"
                       type="submit">
               <img src="./search.svg" height="14" alt="search">
@@ -132,7 +134,6 @@
 
 <script>
 import {mapGetters} from 'vuex'
-import axios from "axios";
 
 export default {
 

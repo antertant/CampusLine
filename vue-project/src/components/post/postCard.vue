@@ -1,6 +1,6 @@
 <template>
   <b-card
-    style="max-width: 50rem;"
+    style="max-width: 50rem;" :id="'postCard_'+postContent.post_id"
     class="mt-4 mx-auto bg-light shadow-sm"
     footer-tag="footer"
     header-tag="header"

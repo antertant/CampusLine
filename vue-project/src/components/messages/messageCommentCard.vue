@@ -8,9 +8,9 @@
     <b-tabs card>
       <b-tab @click="getCommentList">
         <template #title>
-          <b-icon icon="tag" variant="info"></b-icon>
+          <b-icon id="postCommentTab" icon="tag" variant="info"></b-icon>
           <span style="color: black"><b>Post Comments</b></span>
-          <b-badge variant="danger" v-if="postC!==0">{{ postC }}</b-badge>
+          <b-badge id="postCommentBadge" variant="danger" v-if="postC!==0">{{ postC }}</b-badge>
         </template>
         <b-card v-for="comment in commentList" :key="comment.comment_id" no-body class="shadow-sm">
           <!--      avator, comment user and comment time-->
@@ -58,9 +58,9 @@
 <!--      comment reply list-->
       <b-tab @click="getReplyList">
         <template #title>
-          <b-icon icon="tag" variant="info"></b-icon>
+          <b-icon id="commentReplyTab" icon="tag" variant="info"></b-icon>
           <span style="color: black"><b>Comment Replies</b></span>
-          <b-badge variant="danger" v-if="commentR!==0">{{commentR}}</b-badge>
+          <b-badge id="commentReplyBadge" variant="danger" v-if="commentR!==0">{{commentR}}</b-badge>
         </template>
         <b-card v-for="comment in replyList" :key="comment.reply_id" no-body class="shadow-sm">
           <!--      avator, comment user and comment time-->

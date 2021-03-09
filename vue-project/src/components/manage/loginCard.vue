@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="loginCard">
     <b-card style="max-width: 28rem; margin-top: 8rem" header-tag="loginHeader" class="mx-auto">
 
       <b-alert v-model="showLoginError" variant="danger" dismissible fade>
@@ -22,7 +22,7 @@
 
 <!--          Username/Email input-->
           <b-form-input
-            id="input-1"
+            id="input-username"
             v-model="loginInfo.username"
             type="text"
             placeholder="Enter email address or username"
@@ -33,7 +33,7 @@
 <!--        Password input-->
         <b-form-group id="input-group-2" label="Password" label-for="input-2">
           <b-form-input
-            id="input-2"
+            id="input-password"
             v-model="loginInfo.password"
             type="password"
             placeholder="Enter password"
@@ -46,9 +46,9 @@
         </div>
 
 <!--        Buttons-->
-        <b-button type="submit" variant="primary">Login</b-button>
-        <b-button type="reset" variant="warning">Reset</b-button>
-        <b-button href="/register" variant="info" style="float:right;">Register</b-button>
+        <b-button id="loginSubmit" type="submit" variant="primary">Login</b-button>
+        <b-button id="loginReset" type="reset" variant="warning">Reset</b-button>
+        <b-button id="loginRegister" href="/register" variant="info" style="float:right;">Register</b-button>
       </b-form>
     </b-card>
 
@@ -56,6 +56,8 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
 name: "loginCard",
   data(){

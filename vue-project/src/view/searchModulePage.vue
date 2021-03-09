@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-top: 6rem">
+  <div id="searchModBody" style="margin-top: 6rem">
     <h3 class="text-center my-5" v-if="searchResult.length>1">
       Get {{ searchResult.length }} results from searching
       "{{ searchKey }}" in Modules ...

@@ -1,10 +1,10 @@
 <template>
   <div>
-    <b-card v-if="currentUser===''" align="center">
+    <b-card id="visitorMessageInfo" v-if="!loginState" align="center">
       <b-icon icon="exclamation-diamond" variant="danger"></b-icon>
       Please login before browsing message box.
     </b-card>
-    <b-row align-h="center" style="margin-top: 6rem" v-if="currentUser!==''">
+    <b-row align-h="center" style="margin-top: 6rem" v-if="loginState">
       <!--    message side bar-->
       <b-col lg="2" sm="3" md="3">
         <message-side-bar class="position-fixed"
@@ -47,6 +47,7 @@ export default {
   computed:{
     ...mapGetters({
       currentUser: "loginInfo/getLUName",
+      loginState: "loginInfo/getLoginState",
       newMessageCount: "newMessage/getNewMessageCount"
     })
   },

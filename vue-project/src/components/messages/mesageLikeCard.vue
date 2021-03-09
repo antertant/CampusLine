@@ -7,7 +7,7 @@
     <b-tabs card>
       <b-tab @click="getPostLikeList">
         <template #title>
-          <b-icon icon="tag" variant="info"></b-icon>
+          <b-icon id="postLikeTab" icon="tag" variant="info"></b-icon>
           <span style="color: black"><b>Post Likes</b></span>
           <b-badge variant="danger" v-if="postL!==0">{{postL}}</b-badge>
         </template>
@@ -42,7 +42,7 @@
 
       <b-tab @click="getCommentLikeList">
         <template #title>
-          <b-icon icon="tag" variant="info"></b-icon>
+          <b-icon id="commentLikeTab" icon="tag" variant="info"></b-icon>
           <span style="color: black"><b>Comment Likes</b></span>
           <b-badge variant="danger" v-if="commentL!==0">{{commentL}}</b-badge>
         </template>
