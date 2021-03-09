@@ -13,6 +13,7 @@ public class IUserServiceTest {
     @Autowired
     private IUserService iUserService;
 
+
     @Test
     void testfollow(){
         //test follow
@@ -59,4 +60,11 @@ public class IUserServiceTest {
     void testisfollowed(){
         Assertions.assertEquals(1,iUserService.isFollowed("meng","Mao"));
     }
+
+    @Test//follow
+    void testfollow0(){Assertions.assertEquals(1,iUserService.follow("ppp","Mao"));}
+
+    @Test//unfollow
+    void testfollow1(){Assertions.assertEquals(2,iUserService.follow("ppp","Mao"));}
+
 }

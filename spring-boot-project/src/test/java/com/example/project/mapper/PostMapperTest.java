@@ -27,20 +27,20 @@ class PostMapperTest {
     @Test//get a post by its id
     void getPost() throws ParseException {
         Post post = new Post();
-        post.setPost_id(2);
+        post.setPost_id(7);
         post.setModule_name("springboot");
-        post.setPost_content("springboot is perfect");
-        post.setPost_author("meng");
+        post.setPost_content("spspspspsp");
+        post.setPost_author("Mao");
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String s = "2021-02-05 22:28:00";
+        String s = "2021-02-18 00:31:19";
         Date date = format.parse(s);
         post.setPost_createtime(date);
 
-        post.setPost_likes(2);
-        post.setPost_comments(3);
+        post.setPost_likes(3);
+        post.setPost_comments(0);
         post.setPost_collections(0);
-        Assertions.assertEquals(post.getPost_id(),postMapper.getPost(2).getPost_id());
+        Assertions.assertEquals(post,postMapper.getPost(7));
     }
 
     @Test//search posts by key
@@ -130,9 +130,9 @@ class PostMapperTest {
         Assertions.assertEquals(0,postMapper.existLike(2,"ppp"));
     }
 
-    @Test
-    void existCollect() {
-    }
+//    @Test
+//    void existCollect() {
+//    }
 
     @Test
     void test_getpostbyauthor(){

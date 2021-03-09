@@ -20,27 +20,28 @@ class ICommentServiceTest {
     @Resource
     private PostMapper postMapper;
 
+    //run each test in order
     @Test
-    void commentpost() {
-        Assertions.assertEquals(3,(commentMapper.getComments(2)).size());
+    void commentpost_0() {
+        Assertions.assertEquals(5,(commentMapper.getComments(2)).size());
         Assertions.assertEquals(1,commentMapper.insertComment(2,"meng","comment..."));
         postMapper.updateP(2,2);
-        Assertions.assertEquals(4,(commentMapper.getComments(2)).size());
+        Assertions.assertEquals(6,(commentMapper.getComments(2)).size());
     }
 
 
     @Test// like comment or cancel like comment
-    void likecomment() {
+    void likecomment_1() {
         Assertions.assertEquals(1,iCommentService.likecomment(5,"Mao"));
         Assertions.assertEquals(0,iCommentService.likecomment(5,"Mao"));
     }
 
     @Test
-    void deletecomment() {
-        Assertions.assertEquals(4,(commentMapper.getComments(2)).size());
+    void deletecomment_2() {
+        Assertions.assertEquals(6,(commentMapper.getComments(2)).size());
         Assertions.assertEquals(1,commentMapper.deleteComment(11));
         postMapper.updateP(2,-2);
-        Assertions.assertEquals(3,(commentMapper.getComments(2)).size());
+        Assertions.assertEquals(5,(commentMapper.getComments(2)).size());
     }
 
 }

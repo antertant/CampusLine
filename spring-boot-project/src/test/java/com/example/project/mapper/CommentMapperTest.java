@@ -48,12 +48,12 @@ class CommentMapperTest {
         }
     }
 
-    @Test
+    @Test//get the like count of a comment
     void getLikeCount() {
         Assertions.assertEquals(1,commentMapper.getLikeCount(5));
     }
 
-    @Test
+    @Test//get replies of a comment
     void getReplies() throws ParseException{
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         List<CommentReply> list = commentMapper.getReplies(4);
