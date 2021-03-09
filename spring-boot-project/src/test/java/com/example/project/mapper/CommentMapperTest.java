@@ -74,7 +74,7 @@ class CommentMapperTest {
 
     @Test
     void insertCommentReply() {
-        int ret = commentMapper.insertCommentReply(9,"Mao","ppp","commentreply");
+        int ret = commentMapper.insertCommentReply(9,"Mao","ppp","commentreply",0);
         Assertions.assertEquals(1,ret);
     }
 
