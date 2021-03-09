@@ -66,7 +66,7 @@
 <!--    Modals-->
 <!--    Follower List-->
     <b-modal id="follower-modal"
-             hide-backdrop
+
              content-class="shadow"
              hide-footer centered lazy>
       <template #modal-header>
@@ -77,7 +77,7 @@
 <!--    Following List-->
     <b-modal id="following-modal"
              ref="following-modal"
-             hide-backdrop
+
              content-class="shadow"
              hide-footer centered lazy>
       <template #modal-header>
@@ -87,7 +87,7 @@
     </b-modal>
 <!--    Collection List-->
     <b-modal id="collection-modal"
-             hide-backdrop
+
              content-class="shadow"
              size="lg"
              scrollable

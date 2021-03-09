@@ -43,7 +43,7 @@
 <!--          Message Button-->
           <b-nav-item id="message-popover">
             <b-icon icon="bell"></b-icon>
-            Messages
+            Notifications
             <b-badge variant="danger" id="message-badge"
                      v-if="newsCounter.cnewpostcomment+newsCounter.cnewcommentreply
             +newsCounter.cnewlpost+newsCounter.cnewlcomment!==0 && loginState">
