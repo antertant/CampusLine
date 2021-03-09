@@ -67,9 +67,15 @@ public class UserController {
     @RequestMapping(value = "/api/updatepassword", method = RequestMethod.POST)
     @ResponseBody
     public Result updatepassword(@RequestParam("username")String username,
-                         @RequestParam("password")String password){
-        iUserService.updatePassword(username,password);
-        return Result.ok("update password successfully");
+                         @RequestParam("password")String password,
+                                 @RequestParam("oldpassword")String oldpassword){
+        String oldpw=iUserService.getpassword(username);
+        if(Objects.equals(oldpw,oldpassword)){ //verify old password and update new
+            iUserService.updatePassword(username,password);
+            return Result.ok("update password successfully");
+        }else
+            return Result.fail("old password is incorrect");
+        //return Result.ok("update password successfully");
     }
 
     @CrossOrigin
