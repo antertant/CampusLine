@@ -40,7 +40,7 @@ class PostMapperTest {
         post.setPost_likes(2);
         post.setPost_comments(3);
         post.setPost_collections(0);
-        Assertions.assertEquals(post,postMapper.getPost(2));
+        Assertions.assertEquals(post.getPost_id(),postMapper.getPost(2).getPost_id());
     }
 
     @Test//search posts by key
@@ -133,5 +133,64 @@ class PostMapperTest {
     @Test
     void existCollect() {
     }
+
+    @Test
+    void test_getpostbyauthor(){
+        List<Integer> list = new ArrayList<>();
+        list.add(12); list.add(9);list.add(3);
+        List<Post> list1 = postMapper.getPostsbyAuthor("ppp");
+        Assertions.assertEquals(list.size(),list1.size());
+        for(int i=0;i<list.size();i++){
+            Assertions.assertEquals(list.get(i),(list1.get(i)).getPost_id());
+        }
+    }
+
+    @Test
+    void test_getfollowpost(){
+        List<Integer> list = new ArrayList<>();
+        list.add(12); list.add(9);list.add(3);
+        List<Post> list1 = postMapper.getFollowPost("Mao");
+        Assertions.assertEquals(list.size(),list1.size());
+        for(int i=0;i<list.size();i++){
+            Assertions.assertEquals(list.get(i),(list1.get(i)).getPost_id());
+        }
+    }
+
+    @Test
+    void test_countcollect(){
+        Assertions.assertEquals(1,postMapper.countCollect("Mao"));
+    }
+
+    @Test
+    void test_getNew1(){
+        Assertions.assertEquals(3,postMapper.getNew1("Mao"));
+    }
+
+    @Test
+    void test_getNew2(){
+        Assertions.assertEquals(0,postMapper.getNew2("Mao"));
+    }
+
+    @Test
+    void test_getNew3(){
+        Assertions.assertEquals(0,postMapper.getNew3("Mao"));
+    }
+
+    @Test
+    void test_getNew4(){
+        Assertions.assertEquals(3,postMapper.getNew4("Mao"));
+    }
+
+    @Test
+    void test_getcollect(){
+        List<Integer> list = new ArrayList<>();
+        list.add(4);
+        List<Post> list1 = postMapper.getCollects("Mao");
+        Assertions.assertEquals(list.size(),list1.size());
+        for(int i=0;i<list.size();i++){
+            Assertions.assertEquals(list.get(i),(list1.get(i)).getPost_id());
+        }
+    }
+
 
 }
