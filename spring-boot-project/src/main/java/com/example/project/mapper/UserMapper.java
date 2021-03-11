@@ -12,6 +12,7 @@ public interface UserMapper {
     int existVemail(@Param(value = "email")String email);
     void updateVcode(@Param(value = "email")String email,@Param(value = "verifycode")String verifycode);
     void insertUser(@Param(value = "username")String username,@Param(value = "password")String password,@Param(value = "email")String email);
+    void deleteUser(@Param(value = "username")String username);
     User selectByPrimaryKey(@Param(value = "username")String username);
     String usernameByEmail(@Param(value = "email")String email);
     int updatePassword(@Param(value = "username")String username,@Param(value = "password")String password);
@@ -35,4 +36,5 @@ public interface UserMapper {
 
     void createVcode(@Param(value = "email")String email,@Param(value = "verifycode")String verifycode);
     int checkVcode(@Param(value = "email")String email,@Param(value = "verifycode")String verifycode);
+    void deleteVcode(@Param(value = "email")String email);
 }

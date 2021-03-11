@@ -4,7 +4,7 @@ spring:
     url: jdbc:mysql://localhost:3306/project?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: 123456
+    password: 123
   mail:
     username: ece651project@163.com
     password: MFEUWSQDKLNSMDET

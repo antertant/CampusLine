@@ -46,6 +46,16 @@
     values (#{username},#{password},#{email},NULL)
   </insert>
 
+  <delete id="deleteUser">
+    delete from user_info
+    where username=#{username}
+  </delete>
+
+  <delete id="deleteVcode">
+    delete from email_verify
+    where email=#{email}
+  </delete>
+
   <update id="updatePassword">
     update user_info
     set password=#{password}
