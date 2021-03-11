@@ -42,6 +42,15 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
+        <dependency><!--邮箱依赖-->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.shalousun</groupId>
+            <artifactId>common-util</artifactId>
+            <version>1.9.2</version>
+        </dependency>
 
         <!--mysql 驱动-->
         <dependency>

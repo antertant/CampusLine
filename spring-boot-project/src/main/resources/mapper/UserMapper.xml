@@ -12,6 +12,40 @@
     where email = #{email}
   </select>
 
+  <insert id="createVcode">
+    insert into email_verify
+    values (#{email},#{verifycode})
+  </insert>
+
+  <select id="checkVcode" resultType="java.lang.Integer">
+    select count(*) from email_verify
+    where email = #{email} and verifycode = #{verifycode}
+  </select>
+
+  <select id="existUser" resultType="java.lang.Integer">
+    select count(*) from user_info
+    where username = #{username}
+  </select>
+
+  <select id="existEmail" resultType="java.lang.Integer">
+    select count(*) from user_info
+    where email = #{email}
+  </select>
+
+  <select id="existVemail" resultType="java.lang.Integer">
+    select count(*) from email_verify
+    where email = #{email}
+  </select>
+
+  <update id="updateVcode">
+    update email_verify set verifycode = #{verifycode} where email = #{email}
+  </update>
+
+  <insert id="insertUser">
+    insert into user_info
+    values (#{username},#{password},#{email},NULL)
+  </insert>
+
   <update id="updatePassword">
     update user_info
     set password=#{password}

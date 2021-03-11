@@ -1,13 +1,17 @@
 package com.example.project.controller;
 
 import com.example.project.entity.User;
+import com.example.project.mapper.UserMapper;
 import com.example.project.result.Result;
 import com.example.project.service.IUserService;
 import com.example.project.service.Impl.IUserServiceImpl;
+import com.power.common.util.RandomUtil;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -17,6 +21,10 @@ import java.util.Objects;
 public class UserController {
     @Autowired
     private IUserService iUserService;
+    @Autowired
+    JavaMailSenderImpl mailSender;
+    @Resource
+    private UserMapper userMapper;
 
 //    @RequestMapping("/hello")
 //    @ResponseBody
@@ -26,6 +34,7 @@ public class UserController {
 //        String out = "Mao's password: " + iUserService.getpassword("Mao");
 //        return out;
 //    }
+
     @CrossOrigin
     @RequestMapping(value = "/api/login", method = RequestMethod.POST,
             produces = "application/json;charset=UTF-8")
@@ -60,6 +69,40 @@ public class UserController {
             }
         }
         return Result.fail("fail");
+    }
+
+    @CrossOrigin
+    @ApiOperation(value = "send verify code to email")
+    @RequestMapping(value = "/api/sendmail",method = RequestMethod.POST)
+    @ResponseBody
+    public Result sendmail(@RequestParam("email")String email){
+        SimpleMailMessage message=new SimpleMailMessage();
+        String verifycode= RandomUtil.randomNumbers(4);
+        message.setSubject("验证码");
+        message.setText(verifycode);
+        message.setTo(email);
+        message.setFrom("ece651project@163.com");
+        mailSender.send(message);
+        if(userMapper.existVemail(email)!=0){
+            userMapper.updateVcode(email,verifycode);
+        }else
+            userMapper.createVcode(email,verifycode);
+        return Result.ok("verify code send successful");
+    }
+
+    @CrossOrigin
+    @ApiOperation(value = "register")
+    @RequestMapping(value = "/api/register",method = RequestMethod.POST)
+    @ResponseBody
+    public Result register(@RequestParam("username")String username,@RequestParam("password")String password,@RequestParam("email")String email,@RequestParam("verifycode")String verifycode) {
+        if(userMapper.existUser(username)==0){
+            if(userMapper.existEmail(email)==0){
+                if(userMapper.checkVcode(email,verifycode)==1){
+                    userMapper.insertUser(username,password,email);
+                }else return Result.fail("wrong verify code!");
+            }else return Result.fail("email exist!");
+        }else return Result.fail("username exist!");
+        return Result.ok("register finish");
     }
 
     @CrossOrigin

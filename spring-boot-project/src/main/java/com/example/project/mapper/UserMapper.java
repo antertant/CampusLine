@@ -7,6 +7,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 public interface UserMapper {
+    int existUser(@Param(value = "username")String username);
+    int existEmail(@Param(value = "email")String email);
+    int existVemail(@Param(value = "email")String email);
+    void updateVcode(@Param(value = "email")String email,@Param(value = "verifycode")String verifycode);
+    void insertUser(@Param(value = "username")String username,@Param(value = "password")String password,@Param(value = "email")String email);
     User selectByPrimaryKey(@Param(value = "username")String username);
     String usernameByEmail(@Param(value = "email")String email);
     int updatePassword(@Param(value = "username")String username,@Param(value = "password")String password);
@@ -27,4 +32,7 @@ public interface UserMapper {
     //void updateF(@Param(value = "post_id")int post_id,@Param(value = "choice")int choice);
     //int insert(User record);
     //int insertSelective(User record);
+
+    void createVcode(@Param(value = "email")String email,@Param(value = "verifycode")String verifycode);
+    int checkVcode(@Param(value = "email")String email,@Param(value = "verifycode")String verifycode);
 }
