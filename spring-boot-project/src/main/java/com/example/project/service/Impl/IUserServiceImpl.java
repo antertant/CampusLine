@@ -29,6 +29,8 @@ public class IUserServiceImpl implements IUserService {
     }
 
     @Override
+    public void updatePassword_email(String email,String password){userMapper.updatePassword_email(email,password);};
+    @Override
     public User getuser(String username) {
         User user = userMapper.selectByPrimaryKey(username);
         //user.setFollows(userMapper.selectFollow(username));

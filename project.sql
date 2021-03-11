@@ -11,7 +11,7 @@
  Target Server Version : 50515
  File Encoding         : 65001
 
- Date: 07/03/2021 00:16:46
+ Date: 11/03/2021 14:30:30
 */
 
 SET NAMES utf8mb4;
@@ -35,7 +35,7 @@ CREATE TABLE `comment_like`  (
 -- ----------------------------
 -- Records of comment_like
 -- ----------------------------
-INSERT INTO `comment_like` VALUES (5, 'Mao', '2021-02-17 08:56:47', 0);
+INSERT INTO `comment_like` VALUES (5, 'Mao', '2021-02-17 08:56:47', 1);
 
 -- ----------------------------
 -- Table structure for comment_reply
@@ -56,16 +56,35 @@ CREATE TABLE `comment_reply`  (
   CONSTRAINT `comment_reply_ibfk_2` FOREIGN KEY (`from_user`) REFERENCES `user_info` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `comment_reply_ibfk_3` FOREIGN KEY (`to_user`) REFERENCES `user_info` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `comment_reply_ibfk_4` FOREIGN KEY (`comment_id`) REFERENCES `post_comment` (`comment_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of comment_reply
 -- ----------------------------
 INSERT INTO `comment_reply` VALUES (1, 3, 'I agree', '2021-02-17 05:25:47', 'meng', 'Mao', 0);
 INSERT INTO `comment_reply` VALUES (2, 4, 'no', '2021-02-17 05:29:57', 'meng', 'ppp', 0);
-INSERT INTO `comment_reply` VALUES (4, 3, 'hahahaha', '2021-02-17 12:48:34', 'Mao', 'meng', 0);
+INSERT INTO `comment_reply` VALUES (4, 3, 'hahahaha', '2021-02-17 12:48:34', 'Mao', 'meng', 1);
 INSERT INTO `comment_reply` VALUES (5, 8, 'reply test', '2021-02-18 16:27:17', 'Mao', 'Mao', 0);
 INSERT INTO `comment_reply` VALUES (7, 8, 'string,,,', '2021-02-18 16:29:33', 'ppp', 'Mao', 0);
+INSERT INTO `comment_reply` VALUES (16, 3, 'string', '2021-03-07 04:41:43', 'meng', 'meng', 1);
+INSERT INTO `comment_reply` VALUES (17, 5, 'string', '2021-03-07 04:44:26', 'meng', 'meng', 1);
+INSERT INTO `comment_reply` VALUES (18, 5, 'string', '2021-03-07 04:47:02', 'meng', 'meng', 1);
+
+-- ----------------------------
+-- Table structure for email_verify
+-- ----------------------------
+DROP TABLE IF EXISTS `email_verify`;
+CREATE TABLE `email_verify`  (
+  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `verifycode` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of email_verify
+-- ----------------------------
+INSERT INTO `email_verify` VALUES ('1173229585@qq.com', '6462');
+INSERT INTO `email_verify` VALUES ('z58fu@uwaterloo.ca', '5697');
+INSERT INTO `email_verify` VALUES ('1234@qq.com', '1234');
 
 -- ----------------------------
 -- Table structure for module
@@ -160,11 +179,11 @@ CREATE TABLE `post_comment`  (
 -- ----------------------------
 -- Records of post_comment
 -- ----------------------------
-INSERT INTO `post_comment` VALUES (3, 2, 'Mao', 'good post', '2021-02-17 05:18:44', 0);
-INSERT INTO `post_comment` VALUES (4, 2, 'ppp', 'what a bad post!', '2021-02-17 05:19:20', 0);
-INSERT INTO `post_comment` VALUES (5, 2, 'meng', 'I like my post', '2021-02-17 10:36:07', 0);
-INSERT INTO `post_comment` VALUES (8, 8, 'Mao', 'like like like', '2021-02-18 16:22:14', 0);
-INSERT INTO `post_comment` VALUES (9, 8, 'ppp', 'like like like', '2021-02-18 16:24:12', 0);
+INSERT INTO `post_comment` VALUES (3, 2, 'Mao', 'good post', '2021-02-17 05:18:44', 1);
+INSERT INTO `post_comment` VALUES (4, 2, 'ppp', 'what a bad post!', '2021-02-17 05:19:20', 1);
+INSERT INTO `post_comment` VALUES (5, 2, 'meng', 'I like my post', '2021-02-17 10:36:07', 1);
+INSERT INTO `post_comment` VALUES (8, 8, 'Mao', 'like like like', '2021-02-18 16:22:14', 1);
+INSERT INTO `post_comment` VALUES (9, 8, 'ppp', 'like like like', '2021-02-18 16:24:12', 1);
 
 -- ----------------------------
 -- Table structure for post_like
@@ -184,18 +203,18 @@ CREATE TABLE `post_like`  (
 -- ----------------------------
 -- Records of post_like
 -- ----------------------------
-INSERT INTO `post_like` VALUES (2, 'Mao', '2021-02-16 22:56:25', 0);
-INSERT INTO `post_like` VALUES (2, 'meng', '2021-02-16 22:56:41', 0);
+INSERT INTO `post_like` VALUES (2, 'Mao', '2021-02-16 22:56:25', 1);
+INSERT INTO `post_like` VALUES (2, 'meng', '2021-02-16 22:56:41', 1);
 INSERT INTO `post_like` VALUES (3, 'meng', '2021-02-18 05:02:39', 0);
 INSERT INTO `post_like` VALUES (7, 'Mao', '2021-02-18 05:33:07', 0);
 INSERT INTO `post_like` VALUES (7, 'meng', '2021-02-18 05:32:58', 0);
 INSERT INTO `post_like` VALUES (7, 'ppp', '2021-02-18 05:32:45', 0);
-INSERT INTO `post_like` VALUES (8, 'Mao', '2021-02-18 11:16:17', 0);
-INSERT INTO `post_like` VALUES (8, 'meng', '2021-02-18 11:16:34', 0);
+INSERT INTO `post_like` VALUES (8, 'Mao', '2021-02-18 11:16:17', 1);
+INSERT INTO `post_like` VALUES (8, 'meng', '2021-02-18 11:16:34', 1);
 INSERT INTO `post_like` VALUES (9, 'Mao', '2021-02-18 16:18:39', 0);
 INSERT INTO `post_like` VALUES (9, 'meng', '2021-02-18 16:19:14', 0);
 INSERT INTO `post_like` VALUES (9, 'ppp', '2021-02-18 16:18:55', 0);
-INSERT INTO `post_like` VALUES (11, 'Mao', '2021-02-19 05:21:26', 0);
+INSERT INTO `post_like` VALUES (11, 'Mao', '2021-02-19 05:21:26', 1);
 
 -- ----------------------------
 -- Table structure for user_follower
@@ -215,7 +234,6 @@ CREATE TABLE `user_follower`  (
 -- ----------------------------
 INSERT INTO `user_follower` VALUES ('Mao', 'meng');
 INSERT INTO `user_follower` VALUES ('ppp', 'Mao');
-INSERT INTO `user_follower` VALUES ('ppp', 'Mao');
 
 -- ----------------------------
 -- Table structure for user_info
@@ -234,8 +252,11 @@ CREATE TABLE `user_info`  (
 -- ----------------------------
 -- Records of user_info
 -- ----------------------------
+INSERT INTO `user_info` VALUES ('gang', '123', '1', 'springboot');
 INSERT INTO `user_info` VALUES ('Mao', '1234', '', NULL);
 INSERT INTO `user_info` VALUES ('meng', '123', '', 'life');
 INSERT INTO `user_info` VALUES ('ppp', '123', ' ', NULL);
+INSERT INTO `user_info` VALUES ('zgf', '123', '1173229585@qq.com', NULL);
+INSERT INTO `user_info` VALUES ('zgfu', '123', 'z58fu@uwaterloo.ca', NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
