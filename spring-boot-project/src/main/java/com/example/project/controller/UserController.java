@@ -122,6 +122,24 @@ public class UserController {
     }
 
     @CrossOrigin
+    @ApiOperation(value = "update password by email verify code")
+    @RequestMapping(value = "/api/updatepassword_email", method = RequestMethod.POST)
+    @ResponseBody
+    public Result updatepassword_email(@RequestParam("email")String email,
+                                 @RequestParam("verifycode")String verifycode,
+                                 @RequestParam("password")String password){
+        if(userMapper.checkVcode(email,verifycode)==1){
+            iUserService.updatePassword_email(email,password);
+            //change the verify code in case user use the same verifycode to change password continuously
+            String vcode= RandomUtil.randomNumbers(4);
+            userMapper.updateVcode(email,vcode);
+
+            return Result.ok("update password successfully");
+        }else
+            return Result.fail("email or verify code is incorrect");
+    }
+
+    @CrossOrigin
     @ApiOperation(value = "follow user or cancel follow")
     @RequestMapping(value = "/api/follow", method = RequestMethod.POST)
     @ResponseBody

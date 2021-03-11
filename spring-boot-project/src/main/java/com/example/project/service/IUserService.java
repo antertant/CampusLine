@@ -9,6 +9,7 @@ public interface IUserService {
     String getpassword(String username);
     String getpassword_email(String email);
     void updatePassword(String uername,String password);
+    void updatePassword_email(String email,String password);
 
     int follow(String follower,String username);
     List<String> getFollower(String username);

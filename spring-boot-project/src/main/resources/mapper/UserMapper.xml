@@ -62,6 +62,12 @@
     where username=#{username}
   </update>
 
+  <update id="updatePassword_email">
+    update user_info
+    set password=#{password}
+    where email=#{email}
+  </update>
+
   <select id="selectFollow" resultType="java.lang.String">
     select follow from user_follow
     where username = #{username}

@@ -37,4 +37,5 @@ public interface UserMapper {
     void createVcode(@Param(value = "email")String email,@Param(value = "verifycode")String verifycode);
     int checkVcode(@Param(value = "email")String email,@Param(value = "verifycode")String verifycode);
     void deleteVcode(@Param(value = "email")String email);
+    void updatePassword_email(@Param(value = "email")String email,@Param(value = "password")String password);
 }
