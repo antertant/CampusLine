@@ -8,6 +8,8 @@ import java.util.List;
 
 
 public interface IModuleService {
+    int createModule(String module_name);
+
     List<Post> getPosts(String module_name);
 
     List<Module> getModules();

@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : Mysql
+ Source Server         : mydatabase
  Source Server Type    : MySQL
- Source Server Version : 50515
+ Source Server Version : 80011
  Source Host           : localhost:3306
  Source Schema         : project
 
  Target Server Type    : MySQL
- Target Server Version : 50515
+ Target Server Version : 80011
  File Encoding         : 65001
 
- Date: 11/03/2021 14:30:30
+ Date: 12/03/2021 03:00:19
 */
 
 SET NAMES utf8mb4;
@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `comment_like`;
 CREATE TABLE `comment_like`  (
   `comment_id` int(11) NOT NULL,
   `clike_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `clike_time` datetime NULL DEFAULT NULL,
+  `clike_time` datetime(0) NULL DEFAULT NULL,
   `viewed` int(11) NULL DEFAULT 0,
   INDEX `like_user`(`clike_user`) USING BTREE,
   INDEX `comment_id`(`comment_id`) USING BTREE,
@@ -45,7 +45,7 @@ CREATE TABLE `comment_reply`  (
   `reply_id` int(11) NOT NULL AUTO_INCREMENT,
   `comment_id` int(11) NOT NULL,
   `creply_content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `creply_time` datetime NULL DEFAULT NULL,
+  `creply_time` datetime(0) NULL DEFAULT NULL,
   `from_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `to_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `viewed` int(11) NULL DEFAULT 0,
@@ -92,18 +92,35 @@ INSERT INTO `email_verify` VALUES ('1234@qq.com', '1234');
 DROP TABLE IF EXISTS `module`;
 CREATE TABLE `module`  (
   `module_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `module_intro` varchar(3000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `max_adminnumber` int(11) NULL DEFAULT NULL,
+  `module_intro` varchar(3000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 'default module introduction',
+  `max_adminnumber` int(11) NULL DEFAULT 5,
   PRIMARY KEY (`module_name`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of module
 -- ----------------------------
+INSERT INTO `module` VALUES ('django', 'default module introduction', 5);
 INSERT INTO `module` VALUES ('java', 'Java Is the Language of Possibilities. Java is powering the innovation behind our digital world. Harness this potential with Java resources for student coders, hobbyists, developers, and IT leaders.', 5);
 INSERT INTO `module` VALUES ('life', 'life 123', 5);
 INSERT INTO `module` VALUES ('springboot', 'Spring Boot offers a fast way to build applications. It looks at your classpath and at the beans you have configured, makes reasonable assumptions about what you are missing, and adds those items. With Spring Boot, you can focus more on business features and less on infrastructure.', 5);
 INSERT INTO `module` VALUES ('vue', 'Vue (pronounced /vjuː/, like view) is a progressive framework for building user interfaces. It is designed from the ground up to be incrementally adoptable, and can easily scale between a library and a framework depending on different use cases. It consists of an approachable core library that focuses on the view layer only, and an ecosystem of supporting libraries that helps you tackle complexity in large Single-Page Applications.', 5);
+
+-- ----------------------------
+-- Table structure for module_creation
+-- ----------------------------
+DROP TABLE IF EXISTS `module_creation`;
+CREATE TABLE `module_creation`  (
+  `module_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `request_count` int(11) NULL DEFAULT 1,
+  PRIMARY KEY (`module_name`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of module_creation
+-- ----------------------------
+INSERT INTO `module_creation` VALUES ('h', 3);
+INSERT INTO `module_creation` VALUES ('SVM', 1);
 
 -- ----------------------------
 -- Table structure for post
@@ -114,7 +131,7 @@ CREATE TABLE `post`  (
   `module_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `post_content` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   `post_author` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `post_createtime` datetime NULL DEFAULT NULL,
+  `post_createtime` datetime(0) NULL DEFAULT NULL,
   `post_likes` int(11) NULL DEFAULT 0 COMMENT 'number of like',
   `post_comments` int(11) NULL DEFAULT 0 COMMENT 'number of comment',
   `post_collections` int(11) NULL DEFAULT 0 COMMENT 'number of collection',
@@ -132,7 +149,7 @@ INSERT INTO `post` VALUES (2, 'springboot', 'springboot is perfect', 'meng', '20
 INSERT INTO `post` VALUES (3, 'vue', 'vue vuevue vue', 'ppp', '2021-02-06 03:28:24', 1, 0, 0);
 INSERT INTO `post` VALUES (4, NULL, 'Test', 'meng', '2021-02-06 08:31:57', 0, 0, 1);
 INSERT INTO `post` VALUES (5, 'java', 'System.out.println(\"hello java\")', 'Mao', '2021-02-18 03:30:57', 0, 0, 0);
-INSERT INTO `post` VALUES (6, 'java', 'java is the best programming language', 'meng', '2021-02-18 03:32:24', 0, 0, 0);
+INSERT INTO `post` VALUES (6, 'java', '&lt;h1&gt;hello java&lt;/h1&gt;', 'meng', '2021-02-18 03:32:24', 0, 0, 0);
 INSERT INTO `post` VALUES (7, 'springboot', 'spspspspsp', 'Mao', '2021-02-18 05:31:19', 3, 0, 0);
 INSERT INTO `post` VALUES (8, NULL, 'life hahaha', 'meng', '2021-02-18 11:15:23', 2, 2, 0);
 INSERT INTO `post` VALUES (9, NULL, 'sohai', 'ppp', '2021-02-18 11:15:43', 3, 0, 0);
@@ -167,7 +184,7 @@ CREATE TABLE `post_comment`  (
   `post_id` int(11) NOT NULL,
   `comment_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `comment_content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `comment_time` datetime NULL DEFAULT NULL,
+  `comment_time` datetime(0) NULL DEFAULT NULL,
   `viewed` int(11) NULL DEFAULT 0,
   PRIMARY KEY (`comment_id`) USING BTREE,
   INDEX `comment_user`(`comment_user`) USING BTREE,
@@ -192,7 +209,7 @@ DROP TABLE IF EXISTS `post_like`;
 CREATE TABLE `post_like`  (
   `post_id` int(11) NOT NULL,
   `like_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'user that likes this post',
-  `like_time` datetime NULL DEFAULT NULL,
+  `like_time` datetime(0) NULL DEFAULT NULL,
   `viewed` int(11) NULL DEFAULT 0,
   PRIMARY KEY (`post_id`, `like_user`) USING BTREE,
   INDEX `like_user`(`like_user`) USING BTREE,
@@ -256,6 +273,7 @@ INSERT INTO `user_info` VALUES ('gang', '123', '1', 'springboot');
 INSERT INTO `user_info` VALUES ('Mao', '1234', '', NULL);
 INSERT INTO `user_info` VALUES ('meng', '123', '', 'life');
 INSERT INTO `user_info` VALUES ('ppp', '123', ' ', NULL);
+INSERT INTO `user_info` VALUES ('systemadmin', '123', ' ', NULL);
 INSERT INTO `user_info` VALUES ('zgf', '123', '1173229585@qq.com', NULL);
 INSERT INTO `user_info` VALUES ('zgfu', '123', 'z58fu@uwaterloo.ca', NULL);
 

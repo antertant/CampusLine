@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,6 +30,37 @@ public class ModuleController {
     private PostMapper postMapper;
     @Resource
     private ModuleMapper moduleMapper;
+
+    @CrossOrigin
+    @ApiOperation("Module Creation Request")
+    @RequestMapping(value="/api/createmodulerequest", method = RequestMethod.POST)
+    @ResponseBody
+    public Result createmodulerequest(@RequestParam("module_name")String module_name){
+        int flag = iModuleService.createModule(module_name);
+        if(flag == 1)
+            return Result.fail("Module with the same name has existed");
+        else //if(flag == 0)
+            return Result.ok("Successfully request, please wait for admin to review");
+    }
+
+    @CrossOrigin
+    @ApiOperation("Get Module Creation Request List")
+    @RequestMapping(value = "/api/getrequests",method = RequestMethod.GET)
+    @ResponseBody
+    public Result getmodule(){
+        List<HashMap<String,Object>> list = moduleMapper.getRequests();
+        return Result.ok(list);
+    }
+
+    @CrossOrigin
+    @ApiOperation("Review Module Creation")
+    @RequestMapping(value="/api/createmodule", method = RequestMethod.POST)
+    @ResponseBody
+    public Result createmodule(@RequestParam("module_name")String module_name){
+        moduleMapper.insertModule(module_name);
+        moduleMapper.deleteRequest(module_name);
+        return Result.ok("A new knowledge module is created");
+    }
 
     @CrossOrigin
     @ApiOperation("After click the dropdown menu of 'mudule' at the navbar" +

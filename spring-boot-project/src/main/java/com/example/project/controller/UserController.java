@@ -198,4 +198,23 @@ public class UserController {
         int isfollowed = iUserService.isFollowed(username,follower);
         return Result.ok(isfollowed);
     }
+
+    @CrossOrigin
+    @ApiOperation("get user list for managemant")
+    @RequestMapping(value="/api/getusers", method = RequestMethod.GET)
+    @ResponseBody
+    public Result getusers(){
+        List<User> list = userMapper.getUsers();
+        return Result.ok(list);
+    }
+
+    @CrossOrigin
+    @ApiOperation("delete user account")
+    @RequestMapping(value="/api/deleteuser", method = RequestMethod.POST)
+    @ResponseBody
+    public Result deleteuser(@RequestParam("username")String username){
+        userMapper.deleteByPrimaryKey(username);
+        return Result.ok("delete successfully");
+    }
+
 }

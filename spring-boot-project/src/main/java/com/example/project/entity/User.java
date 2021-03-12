@@ -6,7 +6,6 @@ public class User {
     private String username;
     private String password;
     private String email;
-    private int permission_id;
     private String module_admin;
     //private List<String> follows;
     private List<String> followers;
@@ -25,23 +24,6 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    public int getPermission_id() {
-        return permission_id;
-    }
-
-    public void setPermission_id(int permission_id) {
-        this.permission_id = permission_id;
-    }
-
-    /*public List<String> getFollows() {
-        return follows;
-    }*/
-
-    /*public void setFollows(List<String> follows) {
-        this.follows = follows;
-    }*/
-
     public List<String> getFollowers() {
         return followers;
     }

@@ -127,6 +127,10 @@
     where follower = #{username}
   </select>
 
+  <select id="getUsers" resultType="com.example.project.entity.User">
+    select username,email,module_admin from user_info
+    where username!="systemadmin"
+  </select>
 <!--  <insert id="insert" parameterType="com.example.project.entity.User">-->
 <!--    insert into user_info (username, password)-->
 <!--    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR})-->

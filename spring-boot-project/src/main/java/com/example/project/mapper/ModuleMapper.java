@@ -8,6 +8,14 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface ModuleMapper {
+    int existModule(@Param(value = "module_name")String module_name);
+    void createModulerequest(@Param(value = "module_name")String module_name);
+    void updateModulerequest(@Param(value = "module_name")String module_name);
+
+    List<HashMap<String,Object>> getRequests();
+    void insertModule(@Param(value = "module_name")String module_name);
+    void deleteRequest(@Param(value = "module_name")String module_name);
+
     Module getModule(@Param(value = "module_name")String module_name);
 
     List<Post> getPosts(@Param(value="module_name")String module_name);

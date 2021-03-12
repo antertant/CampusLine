@@ -8,6 +8,8 @@ import com.example.project.entity.NewMsg;
 import java.util.List;
 
 public interface PostMapper {
+    void updatePost(@Param(value="post")Post post);
+
     void insertPost(@Param(value="post")Post post);
 
     Post getPost(@Param(value = "post_id")int post_id);
