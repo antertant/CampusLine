@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.project.mapper.PostMapper">
+    <update id="updatePost">
+        update post set post_content=#{post.post_content}
+        where post_id=#{post.post_id}
+    </update>
+
     <insert id="insertPost" parameterType="com.example.project.entity.Post">
         insert into post(module_name,post_content,post_author,post_createtime)
         values (#{post.module_name},#{post.post_content},#{post.post_author},UTC_TIMESTAMP)

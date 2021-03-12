@@ -25,6 +25,20 @@ public class IModuleServiceImpl implements IModuleService {
     private UserMapper userMapper;
 
     @Override
+    public int createModule(String module_name){
+        if(moduleMapper.getModule(module_name)==null){
+            //...
+            if(moduleMapper.existModule(module_name)==0)
+                moduleMapper.createModulerequest(module_name);
+            else
+                moduleMapper.updateModulerequest(module_name);
+            return 0;
+        }
+        else
+            return 1;
+    }
+
+    @Override
     public List<Post> getPosts(String module_name){
         List<Post> posts = moduleMapper.getPosts(module_name);
         return posts;
@@ -33,22 +47,12 @@ public class IModuleServiceImpl implements IModuleService {
     @Override
     public List<Module> getModules(){
         List<Module> modules = moduleMapper.getModules();
-//        for(int i=0;i<modules.size();i++){
-//            Module m = modules.get(i);
-//            List<String> admins = moduleMapper.getAdmins(m.getModule_name());
-//            modules.get(i).setAdmins(admins);
-//        }
         return modules;
     }
 
     @Override
     public List<Module> searchModule(String key){
         List<Module> modules = moduleMapper.searchModule(key);
-//        for(int i=0;i<modules.size();i++){
-//            Module m = modules.get(i);
-//            List<String> admins = moduleMapper.getAdmins(m.getModule_name());
-//            modules.get(i).setAdmins(admins);
-//        }
         return modules;
     }
 

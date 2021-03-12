@@ -42,6 +42,16 @@ public class PostController {
     }
 
     @CrossOrigin
+    @ApiOperation("edit a post")
+    @RequestMapping(value = "/api/editpost", method = RequestMethod.POST)
+    @ResponseBody
+    public Result editpost(@RequestBody Post post){//post_id,content
+        Post post_ = HTMLUtils.escape(post);
+        postMapper.updatePost(post_);
+        return Result.ok("edit successfully");
+    }
+
+    @CrossOrigin
     @ApiOperation("get post by its id")
     @RequestMapping(value = "/api/getpost", method = RequestMethod.GET)
     @ResponseBody

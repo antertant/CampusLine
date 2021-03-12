@@ -37,24 +37,11 @@ public class IPostServiceImpl implements IPostService {
     @Override
     public int likepost(int post_id, String username){
         int choice;//like or cancel like
-//        int eachlikepoint = 2;
-//        Post post = postMapper.getPost(post_id);
-//        String module_name = post.getModule_name();
-//        String author = post.getPost_author();
-//        if(module_name == null)
-//            module_name = "life";
         int existlike = postMapper.existLike(post_id,username);
         if(existlike == 0){
             choice = 1;
             postMapper.insertLike(post_id,username);//and like time
             postMapper.updateP(post_id,choice);//likes++ at table post
-//            int existpoint = moduleMapper.existPoint(author,module_name);
-//            if(existpoint == 0){//no entry at module_point table
-//                moduleMapper.insertPoint(author,module_name,eachlikepoint);
-//            }
-//            else{//update author's point at module_name
-//                postMapper.updatePoint(author,module_name,eachlikepoint);
-//            }
             return 1;
         }
         else{

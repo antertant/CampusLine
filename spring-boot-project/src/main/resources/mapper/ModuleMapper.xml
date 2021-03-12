@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.project.mapper.ModuleMapper">
+
+    <select id="existModule" resultType="java.lang.Integer">
+        select count(1) from module_creation
+        where module_name = #{module_name}
+    </select>
+    <insert id="createModulerequest">
+        insert into module_creation(module_name)
+        values(#{module_name})
+    </insert>
+    <update id="updateModulerequest">
+        update module_creation
+        set request_count=request_count+1 where module_name = #{module_name}
+    </update>
+
+    <select id="getRequests" resultType="java.util.HashMap">
+        select * from module_creation
+    </select>
+    <insert id="insertModule">
+        insert into module(module_name) values (#{module_name})
+    </insert>
+    <delete id="deleteRequest">
+        delete from module_creation where module_name = #{module_name}
+    </delete>
+
     <select id="getModule" resultType="com.example.project.entity.Module">
         select * from module
         where module_name = #{module_name}
@@ -32,30 +56,6 @@
         and module_name != 'life'
         order by module_name asc
     </select>
-
-<!--    <select id="getPoints" resultType="java.lang.Integer">-->
-<!--        select point from module_point-->
-<!--        where username = #{username}-->
-<!--        and module_name = #{module_name}-->
-<!--    </select>-->
-<!--    <select id="existPoint" resultType="java.lang.Integer">-->
-<!--        select count(1) from module_point-->
-<!--        where username = #{username}-->
-<!--          and module_name = #{module_name}-->
-<!--    </select>-->
-<!--    <insert id="insertPoint">-->
-<!--        insert into module_point-->
-<!--        values (#{username},#{module_name},#{point})-->
-<!--    </insert>-->
-<!--    <insert id="insertManagement" parameterType="com.example.project.entity.ModuleManagement" useGeneratedKeys="true" keyProperty="permission_id" >-->
-<!--        insert into module_management(module_name)-->
-<!--        values(#{module_name})-->
-<!--    </insert>-->
-<!--    <update id="updateUserpermission">-->
-<!--        update user_info set-->
-<!--        permission_id = #{permission_id}-->
-<!--        where username = #{username}-->
-<!--    </update>-->
 
     <update id="setAdmin">
         update user_info set module_admin = #{module_name}
