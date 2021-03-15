@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class PostComment {
+public class PostComment implements Comparable<PostComment>{
     private int comment_id;
     private int post_id;
     private String comment_user;
@@ -93,5 +93,15 @@ public class PostComment {
         )
             return true;
         return false;
+    }
+
+    @Override//descending order
+    public int compareTo(PostComment postComment){
+        if(this.getComment_likes()>postComment.getComment_likes())
+            return -1;
+        else if(this.getComment_likes()<postComment.getComment_likes())
+            return 1;
+        else
+            return 0;
     }
 }
