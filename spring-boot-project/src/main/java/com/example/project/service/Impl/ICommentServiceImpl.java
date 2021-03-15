@@ -9,6 +9,7 @@ import com.example.project.service.ICommentService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -64,6 +65,7 @@ public class ICommentServiceImpl implements ICommentService{
             c.setComment_likes(like_count);
             c.setReplies(replies);
         }
+        Collections.sort(comments);
         return comments;
     }
     @Override
