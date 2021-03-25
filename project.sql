@@ -11,7 +11,7 @@
  Target Server Version : 80011
  File Encoding         : 65001
 
- Date: 12/03/2021 03:00:19
+ Date: 25/03/2021 07:47:22
 */
 
 SET NAMES utf8mb4;
@@ -36,6 +36,11 @@ CREATE TABLE `comment_like`  (
 -- Records of comment_like
 -- ----------------------------
 INSERT INTO `comment_like` VALUES (5, 'Mao', '2021-02-17 08:56:47', 1);
+INSERT INTO `comment_like` VALUES (5, 'ppp', '2021-03-12 12:51:37', 0);
+INSERT INTO `comment_like` VALUES (3, 'ppp', '2021-03-12 12:51:51', 0);
+INSERT INTO `comment_like` VALUES (3, 'Mao', '2021-03-12 12:51:59', 0);
+INSERT INTO `comment_like` VALUES (4, 'Mao', '2021-03-12 13:09:30', 0);
+INSERT INTO `comment_like` VALUES (4, 'meng', '2021-03-12 13:09:37', 0);
 
 -- ----------------------------
 -- Table structure for comment_reply
@@ -128,6 +133,7 @@ INSERT INTO `module_creation` VALUES ('SVM', 1);
 DROP TABLE IF EXISTS `post`;
 CREATE TABLE `post`  (
   `post_id` int(11) NOT NULL AUTO_INCREMENT,
+  `if_top` int(255) NULL DEFAULT 0,
   `module_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `post_content` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   `post_author` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
@@ -145,17 +151,17 @@ CREATE TABLE `post`  (
 -- ----------------------------
 -- Records of post
 -- ----------------------------
-INSERT INTO `post` VALUES (2, 'springboot', 'springboot is perfect', 'meng', '2021-02-06 03:28:00', 2, 3, 0);
-INSERT INTO `post` VALUES (3, 'vue', 'vue vuevue vue', 'ppp', '2021-02-06 03:28:24', 1, 0, 0);
-INSERT INTO `post` VALUES (4, NULL, 'Test', 'meng', '2021-02-06 08:31:57', 0, 0, 1);
-INSERT INTO `post` VALUES (5, 'java', 'System.out.println(\"hello java\")', 'Mao', '2021-02-18 03:30:57', 0, 0, 0);
-INSERT INTO `post` VALUES (6, 'java', '&lt;h1&gt;hello java&lt;/h1&gt;', 'meng', '2021-02-18 03:32:24', 0, 0, 0);
-INSERT INTO `post` VALUES (7, 'springboot', 'spspspspsp', 'Mao', '2021-02-18 05:31:19', 3, 0, 0);
-INSERT INTO `post` VALUES (8, NULL, 'life hahaha', 'meng', '2021-02-18 11:15:23', 2, 2, 0);
-INSERT INTO `post` VALUES (9, NULL, 'sohai', 'ppp', '2021-02-18 11:15:43', 3, 0, 0);
-INSERT INTO `post` VALUES (10, NULL, 'zzy', 'Mao', '2021-02-18 11:15:56', 0, 0, 0);
-INSERT INTO `post` VALUES (11, NULL, 'today is happy', 'meng', '2021-02-19 00:20:37', 1, 0, 0);
-INSERT INTO `post` VALUES (12, NULL, 'wuhu', 'ppp', '2021-02-19 00:20:53', 0, 0, 0);
+INSERT INTO `post` VALUES (2, 0, 'springboot', 'springboot is perfect', 'meng', '2021-02-06 03:28:00', 2, 3, 0);
+INSERT INTO `post` VALUES (3, 0, 'vue', 'vue vuevue vue', 'ppp', '2021-02-06 03:28:24', 1, 0, 0);
+INSERT INTO `post` VALUES (4, 0, NULL, 'Test', 'meng', '2021-02-06 08:31:57', 0, 0, 1);
+INSERT INTO `post` VALUES (5, 1, 'java', 'System.out.println(\"hello java\")', 'Mao', '2021-02-18 03:30:57', 0, 0, 0);
+INSERT INTO `post` VALUES (6, 1, 'java', '&lt;h1&gt;hello java&lt;/h1&gt;', 'meng', '2021-02-18 03:32:24', 0, 0, 0);
+INSERT INTO `post` VALUES (7, 0, 'springboot', 'spspspspsp', 'Mao', '2021-02-18 05:31:19', 3, 0, 0);
+INSERT INTO `post` VALUES (8, 0, 'java', 'life hahaha', 'meng', '2021-02-18 11:15:23', 2, 2, 0);
+INSERT INTO `post` VALUES (9, 1, 'java', 'sohai', 'ppp', '2021-02-18 11:15:43', 3, 0, 0);
+INSERT INTO `post` VALUES (10, 1, NULL, 'zzy', 'Mao', '2021-02-18 11:15:56', 0, 0, 0);
+INSERT INTO `post` VALUES (11, 1, NULL, 'today is happy', 'meng', '2021-02-19 00:20:37', 1, 0, 0);
+INSERT INTO `post` VALUES (12, 1, NULL, 'wuhu', 'ppp', '2021-02-19 00:20:53', 0, 0, 0);
 
 -- ----------------------------
 -- Table structure for post_collect

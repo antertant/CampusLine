@@ -36,8 +36,27 @@
         <if test="module_name == 'life'">
             or module_name is null
         </if>
-        order by post_createtime desc
+        order by if_top desc, post_createtime desc
     </select>
+
+    <select id="getTopc" resultType="java.lang.Integer">
+        select count(1) from post
+        where module_name =#{module_name}
+        <if test="module_name == null">
+        or module_name is null
+        </if>
+        and if_top = 1
+    </select>
+
+    <select id="ifTop" resultType="java.lang.Integer">
+        select if_top from post
+        where post_id =#{post_id}
+    </select>
+
+    <update id="setTop">
+        update post set if_top = 1-if_top
+        where post_id=#{post_id}
+    </update>
 
     <select id="getModules" resultType="com.example.project.entity.Module">
         select * from module

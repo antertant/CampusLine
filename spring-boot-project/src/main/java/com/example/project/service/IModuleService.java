@@ -12,6 +12,8 @@ public interface IModuleService {
 
     List<Post> getPosts(String module_name);
 
+    int toTop(int post_id);
+
     List<Module> getModules();
 
     List<Module> searchModule(String key);
