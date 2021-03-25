@@ -139,6 +139,22 @@ public class ModuleController {
     }
 
     @CrossOrigin
+    @ApiOperation("Pin a post to the top of a module")
+    @RequestMapping(value = "/api/totop",method = RequestMethod.POST)
+    @ResponseBody
+    public Result totop(@RequestParam("post_id")int post_id){
+        //refresh the page
+        //return Result.ok(HTMLUtils.tohtmls(posts));
+        int flag=iModuleService.toTop(post_id);
+        if(flag == 0)
+            return Result.ok("Pin post to top successfully");
+        else if(flag == 1)
+            return Result.fail("There has been sufficient posts at the top");
+        else//flag == 2
+            return Result.ok("Cancel top");
+    }
+
+    @CrossOrigin
     @ApiOperation("Get user's points at a module")
     @RequestMapping(value="/api/getpoints", method = RequestMethod.POST)
     @ResponseBody

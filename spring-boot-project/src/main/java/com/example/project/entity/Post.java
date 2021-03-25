@@ -5,6 +5,7 @@ import java.util.Date;
 
 public class Post {
     private int post_id;
+    private int if_top;
     private String module_name;
     private String post_content;
     private String post_author;
@@ -19,6 +20,14 @@ public class Post {
 
     public void setPost_id(int post_id) {
         this.post_id = post_id;
+    }
+
+    public int getIf_top() {
+        return if_top;
+    }
+
+    public void setIf_top(int if_top) {
+        this.if_top = if_top;
     }
 
     public String getModule_name() {

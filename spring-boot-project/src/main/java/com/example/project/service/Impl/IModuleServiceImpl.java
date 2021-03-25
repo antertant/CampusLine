@@ -45,6 +45,26 @@ public class IModuleServiceImpl implements IModuleService {
     }
 
     @Override
+    public int toTop(int post_id){
+        int if_top = moduleMapper.ifTop(post_id);
+        if(if_top==1){
+            moduleMapper.setTop(post_id);
+            return 2;
+        }
+        else{
+            String module_name = (postMapper.getPost(post_id)).getModule_name();
+            //the number of top posts at a module
+            int count = moduleMapper.getTopc(module_name);
+            if(count>=3)
+                return 1;
+            else{
+                moduleMapper.setTop(post_id);
+                return 0;
+            }
+        }
+    }
+
+    @Override
     public List<Module> getModules(){
         List<Module> modules = moduleMapper.getModules();
         return modules;
