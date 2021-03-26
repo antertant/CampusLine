@@ -3,6 +3,7 @@
     <b-col lg="5" sm="8">
 <!--      header button-->
       <b-button v-b-toggle="'life-header-toggle'"
+                id="lifeHeader"
                 variant="info"
                 class="mb-2"
                 block>
@@ -104,6 +105,9 @@ export default {
           console.log(failResponse)
         })
     }
+  },
+  created() {
+    document.title = 'UWSK - Life Circle'
   },
   mounted() {
     this.$store.dispatch("lifePostInfo/getlifePostfromServer")

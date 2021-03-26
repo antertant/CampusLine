@@ -12,6 +12,8 @@ import moduleManagePage from "@/view/moduleManagePage";
 import registrationPage from "@/view/registrationPage";
 import profilePage from "@/view/profilePage";
 import messagePage from "@/view/messagePage";
+import newsPage from "@/view/newsPage";
+import changePasswordPage from "@/view/changePasswordPage";
 
 Vue.use(Router)
 
@@ -38,6 +40,12 @@ export default new Router({
       component: registrationPage
     },
     {
+      path: '/change_password=:user',
+      name: 'changePasswordPage',
+      component: changePasswordPage,
+      props: true
+    },
+    {
       path: '/knowledge-modules',
       name: 'modulesPage',
       component: modulesPage
@@ -46,6 +54,11 @@ export default new Router({
       path: '/life',
       name: 'lifeCirclePage',
       component: lifeCirclePage
+    },
+    {
+      path: '/news',
+      name: 'newsPage',
+      component: newsPage
     },
     {
       path: '/knowledge-modules/:modName',

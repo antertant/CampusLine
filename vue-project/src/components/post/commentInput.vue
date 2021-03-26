@@ -8,12 +8,15 @@
            @hidden="resetCModal"
            @ok="handleCOk"
            centered>
+    <div v-if="current_user===''">
+      <b-icon icon="exclamation-diamond" variant="danger"></b-icon> Please login before make comments!
+    </div>
     <form ref='commentform'
           class="mb-3"
-          @submit.prevent="handleCSubmit">
+          @submit.prevent="handleCSubmit"
+          v-if="current_user!==''">
       <b-form-group label-for="comment-input"
-                    invalid-feedback="Content is required"
-                    :state="postCommentState">
+                    invalid-feedback="Content is required">
         <b-form-textarea rows="3" max-rows="6"
                       placeholder="Enter your comment..."
                       id="comment-input"
@@ -41,7 +44,8 @@ export default {
   data () {
     return {
       postCommentContent: '',
-      hasComments: false
+      hasComments: false,
+      comments: []
     }
   },
   methods: {
@@ -78,12 +82,13 @@ export default {
         this.$bvToast.toast(
           'Cannot post empty comment.',{
             title: [errTitle],
+            class: 'comment-input-error-toast',
             toaster: 'b-toaster-top-center',
             variant: 'danger',
             solid: true
           }
         )
-      // Communication
+      // Communication: submit the comment
       else {
         axios
           .post('/comment', null, {params:{
@@ -97,12 +102,14 @@ export default {
           .catch(failResponse=>{
             console.log(failResponse)
           })
-        this.$emit('rreply')
-        this.$nextTick(() => {
+
+        this.$nextTick(()=>{
+          // send message back to post card
+          this.$emit('emit-comment', this.comments)
+          // after submitting, hide modal manually
           this.$bvModal.hide('comment-modal-'+this.commentId)
         })
       }
-      // after submitting, hide modal manually
     }
   }
 }

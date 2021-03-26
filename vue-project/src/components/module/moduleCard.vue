@@ -5,6 +5,7 @@
       :key="singleModule.module_name"
       :header="singleModule.module_name.toUpperCase()"
       :lead="singleModule.module_intro"
+      :id="singleModule.module_name+'_block'"
       border-variant="secondary"
       style="max-width: 50rem"
       class="mx-auto"
@@ -12,6 +13,7 @@
       text-variant="white">
       <b-button
         variant="secondary"
+        :id="singleModule.module_name+'_button'"
         :to="'knowledge-modules/'+singleModule.module_name">
         ENTER
       </b-button>

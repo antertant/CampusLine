@@ -36,8 +36,12 @@
       <div>
         <b-button variant="success" v-b-modal="'collection-modal'" block>
           Collection
-          <b-badge>5</b-badge>
+          <b-badge>{{collectCounter}}</b-badge>
         </b-button>
+      </div>
+<!--      Change password-->
+      <div>
+        <a :href="'change_password='+currentUser">Change Password</a>
       </div>
     </div>
 
@@ -62,7 +66,7 @@
 <!--    Modals-->
 <!--    Follower List-->
     <b-modal id="follower-modal"
-             hide-backdrop
+
              content-class="shadow"
              hide-footer centered lazy>
       <template #modal-header>
@@ -73,7 +77,7 @@
 <!--    Following List-->
     <b-modal id="following-modal"
              ref="following-modal"
-             hide-backdrop
+
              content-class="shadow"
              hide-footer centered lazy>
       <template #modal-header>
@@ -83,7 +87,7 @@
     </b-modal>
 <!--    Collection List-->
     <b-modal id="collection-modal"
-             hide-backdrop
+
              content-class="shadow"
              size="lg"
              scrollable
@@ -102,17 +106,19 @@ import axios from "axios";
 import FollowerCard from "@/components/Profile/followerCard";
 import FollowingCard from "@/components/Profile/followingCard";
 import CollectionCard from "@/components/Profile/collectionCard";
+import UpdatePasswordCard from "@/components/manage/updatePasswordCard";
 
 export default {
   name: "userInfoCard",
-  components: {CollectionCard, FollowingCard, FollowerCard},
+  components: {UpdatePasswordCard, CollectionCard, FollowingCard, FollowerCard},
   props: ['profileUser'],
   data() {
     return{
       followed: false,
       avColor: "primary",
       followerCounter: 0,
-      followingCounter: 0
+      followingCounter: 0,
+      collectCounter: 0
     }
   },
   computed: {
@@ -127,9 +133,30 @@ export default {
     profileUser() {
       this.getFollowingCount()
       this.getFollowerCount()
+      this.getCollectCount()
+      this.isFollowed()
     }
   },
   methods: {
+    isFollowed() {
+      axios
+        .get('/isfollowed', {params:{
+            username: this.currentUser,
+            follower: this.profileUser
+          }})
+        .then(response=>{
+          console.log(response)
+          if(response.data.code === 200)
+            if(response.data.data === 1){
+              this.followed = true
+              this.avColor = "success"
+            }
+            else {
+              this.followed = false
+              this.avColor = "primary"
+            }
+        })
+    },
     followUser() {
       axios
         .post('/follow', null, {params:{
@@ -176,6 +203,18 @@ export default {
           console.log(failResponse)
         })
     },
+    getCollectCount() {
+      axios
+        .get('/countcollects', {params:{username: this.profileUser}})
+        .then(response=>{
+          console.log(response)
+          if(response.data.code === 200)
+            this.collectCounter = response.data.data
+        })
+        .catch(failResponse=>{
+          console.log(failResponse)
+        })
+    },
     hideModal(ref) {
       this.$nextTick(()=>{
         this.$bvModal.hide(ref)
@@ -196,6 +235,8 @@ export default {
     this.avColor = "primary"
     this.getFollowingCount()
     this.getFollowerCount()
+    this.getCollectCount()
+    this.isFollowed()
   }
 }
 </script>

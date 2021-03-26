@@ -32,6 +32,9 @@ export default {
       })
     }
   },
+  created() {
+    document.title = 'UWSK - Home'
+  },
   mounted() {
     this.getHotPosts()
   }

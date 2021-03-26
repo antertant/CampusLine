@@ -1,6 +1,6 @@
 <template>
   <b-card
-    style="max-width: 50rem;"
+    style="max-width: 50rem;" :id="'postCard_'+postContent.post_id"
     class="mt-4 mx-auto bg-light shadow-sm"
     footer-tag="footer"
     header-tag="header"
@@ -9,7 +9,7 @@
     <b-form-row class="my-2 ml-2 p-3 text-dark rounded-bottom"
                 id="header"
                 align-v="stretch">
-      <b-col cols="auto"><b-avatar size="md"></b-avatar></b-col>
+      <b-col cols="auto"><b-avatar :to="'/profile='+postContent.post_author" size="md"></b-avatar></b-col>
       <b-col cols="auto" id="post-author" align-self="center">
         <b>{{ postContent.post_author }}</b>
         <span id="post-time"><{{ postTime }}></span>
@@ -38,7 +38,7 @@
           <b-badge>{{ postContent.post_likes + likeCount }}</b-badge>
         </b-list-group-item>
 <!--        Like list trigger-->
-        <b-popover :target="'pc-like-'+postContent.post_id" triggers="hover" placement="bottom">
+        <b-popover class="like-popover" :target="'pc-like-'+postContent.post_id" triggers="hover" placement="bottom">
           <b-button variant="white"
                     size="sm"
                     v-b-toggle="'postLike-'+postContent.post_id"
@@ -49,8 +49,9 @@
 
 <!--        Comment button-->
         <b-list-group-item :id="'pc-comment-'+postContent.post_id"
+                           :ref="'pc-comment-'+postContent.post_id"
                            v-b-toggle="'postComment-'+postContent.post_id"
-                           @click="getComment"
+                           @click="getCommentHook"
                            button>
           <b-icon icon="chat-left-text" size="sm"></b-icon>
           <b-badge>{{ comments.length }}</b-badge>
@@ -64,7 +65,7 @@
           </b-button>
         </b-popover>
 <!--        Child Component: Comment input-->
-        <comment-input :comment-id="postContent.post_id" @rreply="getComment"></comment-input>
+        <comment-input :comment-id="postContent.post_id" @emit-comment="cButtonGetCommentHook"></comment-input>
 
 <!--        Repost Button-->
 <!--        <b-list-group-item button>-->
@@ -92,19 +93,21 @@
       </b-list-group>
 
 <!--      Comment Cards-->
-      <b-collapse :id="'postComment-'+postContent.post_id" v-if="cCardFlag">
+      <b-collapse class="comment-collapse"
+                  :id="'postComment-'+postContent.post_id"
+                  v-model="visible">
         <b-card v-if="!commentEmpty" style="text-align: center">There is no comment here yet.</b-card>
         <div v-if="commentEmpty" v-for="comment in comments" :key="comment.comment_id">
 <!--          Child Component: Comment Card-->
           <comment-card :comment-data="comment"
                         :id="comment.comment_id"
-                        @reply-event="getComment"
-                        @comment-deleted="getComment"></comment-card>
+                        @reply-event="getCommentHook"
+                        @comment-deleted="getCommentHook"></comment-card>
         </div>
       </b-collapse>
 
 <!--       Like list-->
-      <b-collapse :id="'postLike-'+postContent.post_id">
+      <b-collapse class="like-collapse" :id="'postLike-'+postContent.post_id">
         <b-card v-if="!likeEmpty" style="text-align: center">Nobody likes this post yet.</b-card>
         <b-card v-if="likeEmpty" v-for="like in likes" :key="like.comment_id">
           <div class="ml-1"><b-avatar size="sm"></b-avatar> <b>{{ like }}</b></div>
@@ -131,10 +134,11 @@ export default {
       postTime: Date,
       likeCount: 0, // Like counter
       comments: [], // The content of comments
+      postId: this.postContent.post_id,
       showPost: true,
       likePress: false,  // Like pressed flag
       likes: [],  // Like lists
-      cCardFlag: true
+      visible: false // comment collapse status
     }
   },
   computed: {
@@ -169,22 +173,49 @@ export default {
   },
   methods: {
     collectPost() {
-      axios
-        .post('/collect', null, {params: {
-          post_id: this.postContent.post_id,
-          username: this.current_user}})
-        .then(response=>{
-          console.log(response)
-          if(response.data.code === 200){
-            if(response.data.data === "collect successfully")
-              this.constructSuccessToast('Collection added')
-            else if(response.data.data === "remove collection successfully")
-              this.constructSuccessToast('Collection removed')
+      // Alert component construction
+      const crtEl = this.$createElement
+      const errTitle = crtEl(
+        'p',
+        { class: ['text-center', 'mb-0'] },
+        [
+          crtEl('b-icon', { props:{ icon: 'exclamation-diamond', small: true } }),
+          crtEl('strong', ' Error')
+        ]
+      )
+
+      // Show alert when the like action is done by a visitor
+      if(this.current_user === '')
+        this.$bvToast.toast(
+          'Please login before interacting with posts.',{
+            title: [errTitle],
+            toaster: 'b-toaster-top-center',
+            variant: 'danger',
+            solid: true
           }
-        })
-        .catch(failResponse=>{
-          console.log(failResponse)
-        })
+        )
+      // Communication
+      else {
+        axios
+          .post('/collect', null, {
+            params: {
+              post_id: this.postContent.post_id,
+              username: this.current_user
+            }
+          })
+          .then(response => {
+            console.log(response)
+            if (response.data.code === 200) {
+              if (response.data.data === "collect successfully")
+                this.constructSuccessToast('Collection added')
+              else if (response.data.data === "remove collection successfully")
+                this.constructSuccessToast('Collection removed')
+            }
+          })
+          .catch(failResponse => {
+            console.log(failResponse)
+          })
+      }
     },
     likePost() {
       // Alert component construction
@@ -251,6 +282,16 @@ export default {
       this.hideModal()
       this.$nextTick()
     },
+    cButtonGetCommentHook() {
+      if(this.visible === false){
+        this.visible = true
+      }
+      this.getCommentHook()
+    },
+    async getCommentHook() {
+      let res = await this.getComment()
+    },
+    // get comment list
     getComment() {
       // Communication
       axios
@@ -258,14 +299,16 @@ export default {
         .then(response=>{
           console.log(response)
           if(response.data.code === 200){
-            this.comments = response.data.data
+            this.setComments(response.data.data)
           }
         })
         .catch(failResponse=>{
           console.log(failResponse)
         })
-      this.cCardFlag = false
-      this.cCardFlag = true
+    },
+    // set comment data
+    setComments(comments) {
+      this.comments = comments
     },
     getLike() {
       axios

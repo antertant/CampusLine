@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="margin-top: 6rem" id="searchPostBody">
     <h3 class="text-center my-5" v-if="searchResult.length>1">
       Get {{ searchResult.length }} results from searching
       "{{ searchKey }}" in Posts ...
@@ -40,6 +40,9 @@ export default {
           console.log(failResponse)
         })
     }
+  },
+  created() {
+    document.title = 'UWSK - SearchPost_' + this.searchKey
   },
   mounted() {
     this.getSearchResult()
