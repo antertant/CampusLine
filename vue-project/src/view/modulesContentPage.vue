@@ -30,7 +30,7 @@
       </b-collapse>
 
 <!--      module posts creator-->
-      <post-input :module-name="modName"></post-input>
+      <post-rich-input :module-name="modName"/>
 
 <!--      post list-->
       <div v-for="list in postList">
@@ -53,10 +53,11 @@ import PostCard from "../components/post/postCard";
 import PostInput from "@/components/post/postInput";
 import ModuleSideFunctions from "@/components/module/moduleSideFunctions";
 import axios from "axios";
+import PostRichInput from "@/components/post/postRichInput";
 
 export default {
   name: "modulesContentPage",
-  components: {ModuleSideFunctions, PostInput, PostCard},
+  components: {PostRichInput, ModuleSideFunctions, PostInput, PostCard},
   props: ['modName'],
   data() {
     return {
