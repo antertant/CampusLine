@@ -31,7 +31,7 @@
       </b-collapse>
 
 <!--      post creator-->
-      <post-input :module-name="null"></post-input>
+      <post-rich-input :module-name="null"/>
 
 <!--      post list-->
       <div v-for="list in postList">
@@ -54,9 +54,11 @@ import {mapGetters} from "vuex";
 import PostInput from "@/components/post/postInput";
 import ModuleSideFunctions from "@/components/module/moduleSideFunctions";
 import axios from "axios";
+import PostRichInput from "@/components/post/postRichInput";
+
 export default {
   name: "lifeCirclePage",
-  components: {ModuleSideFunctions, PostInput, PostCard},
+  components: {PostRichInput, ModuleSideFunctions, PostInput, PostCard},
   data() {
     return {
       adminList: [],

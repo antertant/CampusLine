@@ -17,7 +17,7 @@
     </b-form-row>
 <!--    Post content-->
       <b-card-text class="ml-4" style="position:relative; max-height:150px; overflow-y:auto">
-        {{ postContent.post_content }}
+        <div v-html="postContent.post_content"/>
       </b-card-text>
       <b-img src="https://placekitten.com/380/200" class="border-secondary shadow" center></b-img>
 <!--    Post buttons-->

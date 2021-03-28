@@ -1,5 +1,6 @@
 <template>
   <div style="margin-top: 6rem">
+    <rich-text-editor></rich-text-editor>
     <hot-card :hot-data="hotPosts"></hot-card>
   </div>
 </template>
@@ -9,9 +10,10 @@ import StickyHeader from "../components/header/stickyHeader";
 import PostCard from "../components/post/postCard";
 import axios from "axios";
 import HotCard from "@/components/home/hotCard";
+import RichTextEditor from "@/components/rich-text/tinymceEditor";
 export default {
   name: "homePage",
-  components: {HotCard, PostCard, StickyHeader},
+  components: {RichTextEditor, HotCard, PostCard, StickyHeader},
   data() {
     return {
       hotPosts: []
