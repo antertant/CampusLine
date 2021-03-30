@@ -1,6 +1,5 @@
 <template>
   <div style="margin-top: 6rem">
-    <rich-text-editor></rich-text-editor>
     <hot-card :hot-data="hotPosts"></hot-card>
   </div>
 </template>
