@@ -164,6 +164,10 @@ export default {
   methods: {
     submitRegister(event) {
       event.preventDefault()
+      // If any format is invalid, return
+      if(!(this.emailState === true | this.usernameState === true | this.passwordState === true))
+        return
+      // communicating with back end
       axios
         .post('/register', null, {params:{
             username: this.registerForm.username,
