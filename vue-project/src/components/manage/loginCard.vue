@@ -16,10 +16,9 @@
       <b-form @submit="onSubmit" @reset="onReset" v-if="show">
         <b-form-group
           id="input-group-1"
-          label="Username:"
+          label="Username / Email Address:"
           label-for="input-1"
         >
-
 <!--          Username/Email input-->
           <b-form-input
             id="input-username"
@@ -71,7 +70,14 @@ name: "loginCard",
   methods:{
     onSubmit(event) {
       event.preventDefault()
-      // http request-url&params
+      let emailReg = /^[a-zA-Z0-9_-]+@uwaterloo\.ca$/
+      if(emailReg.test(this.loginInfo.username)){
+        this.loginWithEmail()
+        return
+      }
+      this.loginWithName()
+    },
+    loginWithName() {
       this.$axios
         .post('/login',{
           username:this.loginInfo.username,
@@ -91,6 +97,33 @@ name: "loginCard",
             this.showLoginError = true
             this.loginInfo.username = ''
             this.loginInfo.password = ''
+            this.loginInfo.email = ''
+          }
+        })
+        .catch(failResponse=>{
+          console.log(failResponse)
+        })
+    },
+    loginWithEmail() {
+      this.$axios
+        .post('/login_mail', {
+          email:this.loginInfo.username,
+          password:this.loginInfo.password
+        })
+        .then(response=>{
+          console.log(response)
+          if(response.data.code === 200){
+            this.$router.replace({path:'/home'})
+            this.$store.commit('loginInfo/setLUName', response.data.data.username)
+            this.$nextTick(()=>{
+              this.$store.dispatch("newMessage/getNewMessageCountFS", response.data.data.username)
+            })
+          }
+          else{
+            this.showLoginError = true
+            this.loginInfo.username = ''
+            this.loginInfo.password = ''
+            this.loginInfo.email = ''
           }
         })
         .catch(failResponse=>{
