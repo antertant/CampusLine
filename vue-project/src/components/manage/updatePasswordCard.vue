@@ -1,7 +1,7 @@
 <template>
  <b-card class="mx-auto">
    <template #header>
-     <h5>Change your Password</h5>
+     <h5>Change Your Password</h5>
    </template>
 
    <b-form v-if="!successFlag"

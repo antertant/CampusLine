@@ -87,7 +87,7 @@
           </b-form-invalid-feedback>
         </b-form-group>
         <b-card-text v-if="sendSuccess">
-          Success
+          <em>Send Code Successful.</em>
         </b-card-text>
   <!--      Buttons-->
         <div class="float-right">

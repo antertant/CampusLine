@@ -14,6 +14,7 @@ import profilePage from "@/view/profilePage";
 import messagePage from "@/view/messagePage";
 import newsPage from "@/view/newsPage";
 import changePasswordPage from "@/view/changePasswordPage";
+import forgetPasswordPage from "@/view/forgetPasswordPage"
 
 Vue.use(Router)
 
@@ -38,6 +39,11 @@ export default new Router({
       path: '/register',
       name: 'registerPage',
       component: registrationPage
+    },
+    {
+      path: '/forgetpw',
+      name: 'forgetPasswordPage',
+      component: forgetPasswordPage
     },
     {
       path: '/change_password=:user',
