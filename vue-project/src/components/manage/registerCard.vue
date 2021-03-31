@@ -92,7 +92,7 @@
   <!--      Buttons-->
         <div class="float-right">
           <b-button type="reset" variant="warning">Reset</b-button>
-          <b-button type="submit" variant="primary">Submit</b-button>
+          <b-button type="submit" variant="primary" :disabled="!allReadyState">Submit</b-button>
         </div>
 
       </b-form>
@@ -159,6 +159,9 @@ export default {
         return false
       else
         return true
+    },
+    allReadyState() {
+      return this.passwordState & this.usernameState & this.emailState
     }
   },
   methods: {
