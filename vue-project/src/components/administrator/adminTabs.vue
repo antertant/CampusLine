@@ -15,7 +15,7 @@
           <b-icon icon="tag" variant="primary"></b-icon>
           <b>Module Request Management</b>
         </template>
-
+        <module-request-card/>
       </b-tab>
 
     </b-tabs>
@@ -25,9 +25,10 @@
 <script>
 import UserItemCard from "@/components/administrator/userItemCard";
 import axios from "axios";
+import ModuleRequestCard from "@/components/administrator/moduleRequestCard";
 export default {
   name: "adminTabs",
-  components: {UserItemCard},
+  components: {ModuleRequestCard, UserItemCard},
   data() {
     return{
       userInfo:[{

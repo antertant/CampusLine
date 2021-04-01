@@ -3,16 +3,13 @@
                 class="shadow"
                 horizontal>
     <b-list-group-item style="min-width: 15rem; background-color: #97acd2" class="border-right-0">
-      <b>Module Name</b>
+      <em><b>Module Name</b></em>
     </b-list-group-item>
     <b-list-group-item style="min-width: 15rem; background-color: #97acd2" class="border-right-0">
-      <b>Email Address</b>
-    </b-list-group-item>
-    <b-list-group-item style="min-width: 15rem; background-color: #97acd2" class="border-right-0">
-      <b>Module Admin</b>
+      <em><b>Request Count</b></em>
     </b-list-group-item>
     <b-list-group-item style="min-width: 15rem; background-color: #97acd2">
-      <b>Manage</b>
+      <em><b>Manage</b></em>
     </b-list-group-item>
   </b-list-group>
 </template>
