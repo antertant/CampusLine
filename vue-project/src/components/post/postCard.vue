@@ -14,7 +14,49 @@
         <b>{{ postContent.post_author }}</b>
         <span id="post-time"><{{ postTime }}></span>
       </b-col>
+      <b-col style="text-align: right" v-if="current_user === postContent.post_author">
+        <b-button class="mr-3" variant="white" v-b-toggle="'post-editor-'+postContent.post_id">
+          <b-icon icon="pencil"/>
+        </b-button>
+      </b-col>
     </b-form-row>
+<!--    post editor modal-->
+    <b-collapse :id="'post-editor-'+postContent.post_id" centered>
+      <b-card class="border-bottom bg-light mb-3" no-body>
+        <h4 style="text-align: center" class="mt-2">Post Editor</h4>
+        <rich-text-editor v-if="editorState"
+                          :text-pipe="postContent.post_content"
+                          @rich-input-content="updatePostContent" />
+        <b-button style="margin: 4px"
+                  class="float-right my-1"
+                  variant="info"
+                  @click="$bvModal.show('update-post-'+postContent.post_id)">
+          Update
+        </b-button>
+        <b-button style="margin: 4px"
+                  class="float-right my-1"
+                  variant="danger"
+                  @click="$bvModal.show('quit-editor-'+postContent.post_id)">
+          Reset
+        </b-button>
+      </b-card>
+    </b-collapse>
+    <!--    Quit editor modal-->
+    <b-modal :id="'quit-editor-'+postContent.post_id" hide-header centered>
+      Are you sure to reset the editor? You will lose all content edited.
+      <template #modal-footer>
+        <b-button @click="$bvModal.hide('quit-editor-'+postContent.post_id)">No</b-button>
+        <b-button @click="resetEditor" variant="danger">Yes</b-button>
+      </template>
+    </b-modal>
+    <!--    Update post-->
+    <b-modal :id="'update-post-'+postContent.post_id" hide-header centered>
+      Are you sure to update the post?
+      <template #modal-footer>
+        <b-button @click="$bvModal.hide('update-post-'+postContent.post_id)">No</b-button>
+        <b-button @click="updatePost" variant="success">Yes</b-button>
+      </template>
+    </b-modal>
 <!--    Post content-->
       <b-card-text class="ml-4" style="position:relative; max-height:150px; overflow-y:auto">
         <div v-html="postContent.post_content"/>
@@ -124,21 +166,24 @@ import {mapGetters} from "vuex";
 import axios from "axios";
 import CommentCard from "@/components/post/commentCard";
 import CommentInput from "@/components/post/commentInput";
+import RichTextEditor from "@/components/rich-text/tinymceEditor";
 
 export default {
   name: "postCard",
-  components: {CommentInput, CommentCard},
+  components: {RichTextEditor, CommentInput, CommentCard},
   props: ['postContent', 'adminCode'],
   data() {
     return{
       postTime: Date,
+      tmpContent: '',
       likeCount: 0, // Like counter
       comments: [], // The content of comments
       postId: this.postContent.post_id,
       showPost: true,
       likePress: false,  // Like pressed flag
       likes: [],  // Like lists
-      visible: false // comment collapse status
+      visible: false, // comment collapse status
+      editorState: true,
     }
   },
   computed: {
@@ -291,7 +336,6 @@ export default {
     async getCommentHook() {
       let res = await this.getComment()
     },
-    // get comment list
     getComment() {
       // Communication
       axios
@@ -306,7 +350,6 @@ export default {
           console.log(failResponse)
         })
     },
-    // set comment data
     setComments(comments) {
       this.comments = comments
     },
@@ -346,6 +389,31 @@ export default {
           solid: true
         }
       )
+    },
+    resetEditor(){
+      this.editorState = false
+      this.$nextTick(()=>{
+        this.editorState = true
+      })
+      this.$bvModal.hide('quit-editor-'+this.postContent.post_id)
+    },
+    updatePostContent(newContent){
+      this.tmpContent = newContent
+    },
+    updatePost(){
+      axios
+        .post('/editpost', {post_id: this.postId, post_content: this.tmpContent})
+        .then(response=>{
+          console.log(response)
+          if(response.data.code === 200){
+            this.postContent.post_content = this.tmpContent
+            this.constructSuccessToast('Update post successfully')
+          }
+        })
+        .catch(failResponse=>{
+          console.log(failResponse)
+        })
+      this.$bvModal.hide('update-post-'+this.postId)
     }
   },
   mounted() {
