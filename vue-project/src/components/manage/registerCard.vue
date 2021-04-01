@@ -87,12 +87,12 @@
           </b-form-invalid-feedback>
         </b-form-group>
         <b-card-text v-if="sendSuccess">
-          Success
+          <em>Send Code Successful.</em>
         </b-card-text>
   <!--      Buttons-->
         <div class="float-right">
           <b-button type="reset" variant="warning">Reset</b-button>
-          <b-button type="submit" variant="primary">Submit</b-button>
+          <b-button type="submit" variant="primary" :disabled="!allReadyState">Submit</b-button>
         </div>
 
       </b-form>
@@ -159,11 +159,18 @@ export default {
         return false
       else
         return true
+    },
+    allReadyState() {
+      return this.passwordState & this.usernameState & this.emailState
     }
   },
   methods: {
     submitRegister(event) {
       event.preventDefault()
+      // If any format is invalid, return
+      if(!(this.emailState === true | this.usernameState === true | this.passwordState === true))
+        return
+      // communicating with back end
       axios
         .post('/register', null, {params:{
             username: this.registerForm.username,
