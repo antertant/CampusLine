@@ -1,6 +1,6 @@
 <template>
-  <b-card class="border-secondary shadow" bg-variant="light">
-    <b-card-header class="mb-2">
+  <b-card class="border-light shadow-sm" bg-variant="light">
+    <b-card-header class="mb-2" style="text-align: center">
       <h3>Edit Introduction of {{ String(moduleName).toUpperCase() }} Module</h3>
     </b-card-header>
 <!--    <template #header>-->

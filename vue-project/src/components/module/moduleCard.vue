@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-row align-h="center" class="mb-4">
+    <b-row align-h="center" class="mb-4" v-if="current_user">
       <b-button variant="primary"
                 style="min-width: 60rem"
                 @click="$bvModal.show('create-module-request')">
@@ -28,7 +28,7 @@
           :lead="singleModule.module_intro"
           :id="singleModule.module_name+'_block'"
           border-variant="secondary"
-          style="max-width: 50rem"
+          style="max-width: 40rem"
           class="mx-auto"
           bg-variant="info"
           text-variant="white">
@@ -48,7 +48,7 @@
           :lead="singleModule.module_intro"
           :id="singleModule.module_name+'_block'"
           border-variant="secondary"
-          style="max-width: 50rem"
+          style="max-width: 40rem"
           class="mx-auto"
           bg-variant="info"
           text-variant="white">
@@ -65,14 +65,23 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+import axios from "axios";
+
 export default {
   name: "moduleCard",
-  props: ['multiModules'],
+  // props: ['multiModules'],
   data() {
     return{
+      multiModules: [],
       moduleList: [],
       module_name: ''
     }
+  },
+  computed:{
+    ...mapGetters({
+      current_user: "loginInfo/getLUName"
+    })
   },
   methods:{
     preprocessModuleList() {
@@ -153,9 +162,27 @@ export default {
         }
       )
     },
+    getModulefromServer() {
+      axios
+        .get('/getmodule', {
+          params:{
+            choice: 2
+          }
+        })
+        .then(response=>{
+          console.log(response)
+          if(response.data.code === 200){
+            this.multiModules = response.data.data
+            this.preprocessModuleList()
+          }
+        })
+        .catch(failResponse=>{
+          console.log(failResponse)
+        })
+    }
   },
-  mounted() {
-    this.preprocessModuleList()
+  beforeMount() {
+    this.getModulefromServer()
   }
 }
 </script>
