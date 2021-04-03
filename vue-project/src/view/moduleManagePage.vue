@@ -1,8 +1,8 @@
 <template>
   <div>
-    <b-row align-h="center" v-if="role === 'admin'">
+    <b-row style="margin-top: 6rem;" align-h="center" v-if="role === 'admin'">
       <b-col lg="5" sm="8">
-        <h1 style="text-align: center">{{modName.toUpperCase()}}</h1>
+        <h1 style="text-align: center">{{modName.toUpperCase()}} MANAGEMENT</h1>
         <module-intro-input :module-name="modName"></module-intro-input>
         <div v-for="list in modulePostList">
           <post-card :post-content="list" :admin-code="1"></post-card>
@@ -10,7 +10,7 @@
       </b-col>
       <b-col cols="auto">
         <b-row class="position-fixed">
-          <module-side-functions :module-name="modName"></module-side-functions>
+          <module-side-functions style="margin-top: 6rem" :module-name="modName"></module-side-functions>
         </b-row>
       </b-col>
     </b-row>
@@ -68,18 +68,18 @@ export default {
     this.$store.dispatch("modulePostInfo/getModulePostfromServer", this.modName)
     this.$store.dispatch('moduleList/getModulefromServer')
     this.getRole()
-    this.$nextTick()
 
-    // this.moduleIntro = this.modulesList[0].module_intro
-    let module
-    for(let i=0; i<this.modulesList.length; i++){
-      module = this.modulesList[i]
-      if(module.module_name === this.modName){
-        this.moduleIntro = module.module_intro
-        break
+    this.$nextTick(()=>{
+      // this.moduleIntro = this.modulesList[0].module_intro
+      let module
+      for(let i=0; i<this.modulesList.length; i++){
+        module = this.modulesList[i]
+        if(module.module_name === this.modName){
+          this.moduleIntro = module.module_intro
+          break
+        }
       }
-    }
-
+    })
   }
 }
 </script>

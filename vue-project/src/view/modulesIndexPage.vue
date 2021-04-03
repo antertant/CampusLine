@@ -1,6 +1,6 @@
 <template>
   <div style="margin-top: 6rem">
-    <module-card :multi-modules="modulesList"></module-card>
+    <module-card></module-card>
   </div>
 </template>
 
@@ -14,16 +14,8 @@ export default {
     return {
     }
   },
-  computed: {
-    ...mapGetters({
-      modulesList: 'moduleList/getModuleList'
-    })
-  },
   created() {
     document.title = 'UWSK - Modules List'
-  },
-  mounted() {
-    this.$store.dispatch('moduleList/getModulefromServer')
   }
 }
 </script>

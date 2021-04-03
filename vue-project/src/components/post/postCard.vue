@@ -5,6 +5,42 @@
     footer-tag="footer"
     header-tag="header"
     v-if="showPost" no-body>
+<!--    Pinned Bar-->
+    <b-card style="border-radius: 0" v-if="postContent.if_top" no-body>
+      <b-button variant="white" :disabled="!admin" @click="$bvModal.show('cancel-top-'+postId)">
+        <b-icon variant="danger" icon="lock-fill"/> PINNED
+      </b-button>
+    </b-card>
+    <b-modal :id="'cancel-top-'+postId" hide-header centered>
+      <b>
+        Are you sure to cancel the pin?
+      </b>
+      <template #modal-footer>
+        <b-button @click="$bvModal.hide('cancel-top-'+postId)">No</b-button>
+        <b-button @click="pinPostToTop(); $bvModal.hide('cancel-top-'+postId)"
+                  variant="info">
+          Yes
+        </b-button>
+      </template>
+    </b-modal>
+
+    <b-card style="border-radius: 0" v-if="admin & !postContent.if_top" no-body>
+      <b-button variant="white" @click="$bvModal.show('to-top-'+postId)">
+        <b-icon variant="success" icon="unlock-fill"/> CLICK TO PIN
+      </b-button>
+    </b-card>
+    <b-modal :id="'to-top-'+postId" hide-header centered>
+      <b>
+        Are you sure to pin the post?
+      </b>
+      <template #modal-footer>
+        <b-button @click="$bvModal.hide('to-top-'+postId)">No</b-button>
+        <b-button @click="pinPostToTop(); $bvModal.hide('to-top-'+postId)"
+                  variant="info">
+          Yes
+        </b-button>
+      </template>
+    </b-modal>
 <!--    Post author-->
     <b-form-row class="my-2 ml-2 p-3 text-dark rounded-bottom"
                 id="header"
@@ -58,10 +94,10 @@
       </template>
     </b-modal>
 <!--    Post content-->
-      <b-card-text class="ml-4" style="position:relative; max-height:150px; overflow-y:auto">
-        <div v-html="postContent.post_content"/>
-      </b-card-text>
-      <b-img src="https://placekitten.com/380/200" class="border-secondary shadow" center></b-img>
+    <b-card-text class="ml-4" style="position:relative; max-height:150px; overflow-y:auto">
+      <div v-html="postContent.post_content"/>
+    </b-card-text>
+    <b-img src="https://placekitten.com/380/200" class="border-secondary shadow" center></b-img>
 <!--    Post buttons-->
     <b-row align-h="center" class="mt-3">
       <b-col>
@@ -390,6 +426,27 @@ export default {
         }
       )
     },
+    constructFailureToast(action) {
+      // Alert component construction
+      const crtEl = this.$createElement
+      const errTitle = crtEl(
+        'p',
+        { class: ['text-center', 'mb-0'] },
+        [
+          crtEl('b-icon', { props:{ icon: 'exclamation-diamond', small: true } }),
+          crtEl('strong', ' Fail')
+        ]
+      )
+      // Show alert
+      this.$bvToast.toast(
+        action+'!',{
+          title: [errTitle],
+          toaster: 'b-toaster-top-center',
+          variant: 'danger',
+          solid: true
+        }
+      )
+    },
     resetEditor(){
       this.editorState = false
       this.$nextTick(()=>{
@@ -414,6 +471,26 @@ export default {
           console.log(failResponse)
         })
       this.$bvModal.hide('update-post-'+this.postId)
+    },
+    pinPostToTop(){
+      axios
+        .post('/totop', null, {params:{post_id: this.postContent.post_id}})
+        .then(response=>{
+          console.log(response)
+          if(response.data.code === 200){
+            if(response.data.data === 'Pin post to top successfully')
+              this.constructSuccessToast('Pin post to top successfully')
+            else if(response.data.data === 'Cancel top')
+              this.constructSuccessToast('Cancel top successfully')
+            this.postContent.if_top = !this.postContent.if_top
+          }
+          else{
+            this.constructFailureToast('There can only be up to 3 pinned posts at the same time')
+          }
+        })
+        .catch(failResponse=>{
+          console.log(failResponse)
+        })
     }
   },
   mounted() {
