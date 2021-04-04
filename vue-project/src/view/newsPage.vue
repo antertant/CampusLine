@@ -1,6 +1,9 @@
 <template>
   <div style="margin-top: 6rem">
-    <h3 id="newsTitle" style="text-align: center;">New Posts from Following List</h3>
+    <h3 id="newsTitle" style="text-align: center;">
+      <b-icon icon="newspaper"/>
+      New Posts from Following List
+    </h3>
     <b-card v-if="currentUser===''" align="center">
       <b-icon icon="exclamation-diamond" variant="danger"></b-icon>
       Please login before browsing current following posts.
@@ -8,7 +11,8 @@
     <post-card v-for="newsPost in newsPostList"
                :post-content="newsPost"
                :key="newsPost.post_id"
-               v-if="currentUser!==''"></post-card>
+               v-if="currentUser!==''"
+               class="mx-auto"></post-card>
   </div>
 </template>
 

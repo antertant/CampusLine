@@ -42,15 +42,15 @@
             <b-list-group-item @click="getPostByID(comment.post_id)" v-b-modal="'origin-post-modal'" variant="light" button>
               Origin Post
             </b-list-group-item>
-<!--            <b-list-group-item v-b-modal="'reply-modal-'+comment.comment_id+0" variant="light" button>-->
-<!--              Reply-->
-<!--            </b-list-group-item>-->
+            <!--            <b-list-group-item v-b-modal="'reply-modal-'+comment.comment_id+0" variant="light" button>-->
+            <!--              Reply-->
+            <!--            </b-list-group-item>-->
           </b-list-group>
 
           <!--    reply comment modal-->
-<!--          <reply-input :comment-id="comment.comment_id"-->
-<!--                       :reply-id="0"-->
-<!--                       :from-user="currentUser"></reply-input>-->
+          <!--          <reply-input :comment-id="comment.comment_id"-->
+          <!--                       :reply-id="0"-->
+          <!--                       :from-user="currentUser"></reply-input>-->
 
         </b-card>
       </b-tab>

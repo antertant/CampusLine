@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-top: 6rem">
+  <div style="margin-top: 3rem">
     <hot-card :hot-data="hotPosts"></hot-card>
   </div>
 </template>

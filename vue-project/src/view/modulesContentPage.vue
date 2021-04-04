@@ -1,6 +1,6 @@
 <template>
   <b-row align-h="center" style="margin-top: 5rem">
-    <b-col lg="5" sm="8">
+    <b-col lg="5" sm="8" cols="auto">
 <!--      header button-->
       <b-button v-b-toggle="'life-header-toggle'"
                 variant="info"

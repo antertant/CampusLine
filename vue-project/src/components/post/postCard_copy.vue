@@ -1,19 +1,14 @@
 <template>
   <b-card
-    style="max-width: 50rem; border-radius: 14px; min-width: 34rem"
-    :id="'postCard_'+postContent.post_id"
+    style="max-width: 50rem;" :id="'postCard_'+postContent.post_id"
     class="mt-4 mx-2 bg-light shadow-sm"
     footer-tag="footer"
     header-tag="header"
     v-if="showPost" no-body>
 <!--    Pinned Bar-->
-    <b-card style="border-radius: 14px 14px 0 0;" no-body>
+    <b-card style="border-radius: 0" v-if="postContent.if_top & !isHot" no-body>
       <b-button variant="white" :disabled="!admin" @click="$bvModal.show('cancel-top-'+postId)">
-        <b><em v-if="postContent.module_name===null">Life</em></b>
-        <b><em>{{ postContent.module_name }}</em></b>
-        <span v-if="postContent.if_top & !isHot">
-          | <b-icon variant="danger" icon="lock-fill"/> PINNED
-        </span>
+        <b-icon variant="danger" icon="lock-fill"/> PINNED
       </b-button>
     </b-card>
     <b-modal :id="'cancel-top-'+postId" hide-header centered>
@@ -46,6 +41,21 @@
         </b-button>
       </template>
     </b-modal>
+<!--    Post author-->
+    <b-form-row class="my-2 ml-2 p-3 text-dark rounded-bottom"
+                id="header"
+                align-v="stretch">
+      <b-col cols="auto"><b-avatar :to="'/profile='+postContent.post_author" size="md"></b-avatar></b-col>
+      <b-col cols="auto" id="post-author" align-self="center">
+        <b>{{ postContent.post_author }}</b>
+        <span id="post-time"><{{ postTime }}></span>
+      </b-col>
+      <b-col style="text-align: right" v-if="current_user === postContent.post_author">
+        <b-button class="mr-3" variant="white" v-b-toggle="'post-editor-'+postContent.post_id">
+          <b-icon icon="pencil"/>
+        </b-button>
+      </b-col>
+    </b-form-row>
 <!--    post editor modal-->
     <b-collapse :id="'post-editor-'+postContent.post_id" centered>
       <b-card class="border-bottom bg-light mb-3" no-body>
@@ -83,41 +93,18 @@
         <b-button @click="updatePost" variant="success">Yes</b-button>
       </template>
     </b-modal>
-<!--    logo-->
-    <div style="position: absolute; right: 0">
+<!--    Post content-->
+    <b-card-text class="ml-4" style="position:relative; max-height:400px; overflow-y:auto">
+      <div v-html="postContent.post_content"/>
+    </b-card-text>
+<!--    <b-img src="https://placekitten.com/380/200" class="border-secondary shadow" center></b-img>-->
+    <div style="text-align: right">
       <b-img src="https://upload.wikimedia.org/wikipedia/en/thumb/6/6e/University_of_Waterloo_seal.svg/1200px-University_of_Waterloo_seal.svg.png"
              alt="University of Waterloo seal.svg"
              width="48"
-             height="48" class="mx-3 my-3"/>
+             height="48" class="mr-3"/>
     </div>
-<!--    Post avatar-->
-    <b-row class="ml-2 p-3 text-dark rounded-bottom"
-                id="header"
-                align-v="stretch">
-      <b-col cols="auto">
-        <b-avatar :to="'/profile='+postContent.post_author" size="md"/>
-      </b-col>
-<!--      post author-->
-      <b-col cols="10" id="post-author">
-        <b-row>
-          <b>{{ postContent.post_author }}</b>
-          <b-button variant="white"
-                    v-b-toggle="'post-editor-'+postContent.post_id"
-                    v-if="current_user===postContent.post_author">
-            <b-icon icon="pencil"/>
-          </b-button>
-        </b-row>
-<!--    post time-->
-        <b-row>
-          <span id="post-time"><{{ postTime }}></span>
-        </b-row>
-<!--        <b-img src="https://placekitten.com/380/200" class="border-secondary shadow" center></b-img>-->
-      </b-col>
-<!--    Post content-->
-      <b-card-text style="width:100%; max-height:400px; overflow-y: auto; margin-left: 4.5rem"
-                   v-html="postContent.post_content" class="mt-2"/>
-    </b-row>
-    <!--    Post buttons-->
+<!--    Post buttons-->
     <b-row align-h="center" class="mt-3">
       <b-col>
       <b-list-group style="text-align: center" class="shadow-sm" horizontal>
@@ -490,9 +477,6 @@ export default {
           console.log(failResponse)
         })
       this.$bvModal.hide('update-post-'+this.postId)
-      this.$nextTick(()=>{
-        this.$root.$emit('bv::toggle::collapse', 'post-editor-'+this.postContent.post_id)
-      })
     },
     pinPostToTop(){
       axios
