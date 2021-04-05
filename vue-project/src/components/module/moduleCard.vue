@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-row align-h="center" class="mb-4" v-if="current_user">
-      <b-button variant="primary"
+      <b-button variant="danger"
                 style="min-width: 60rem"
                 @click="$bvModal.show('create-module-request')">
         <h5>
@@ -13,8 +13,8 @@
         Module Name:
         <b-input v-model="module_name"></b-input>
         <template #modal-footer>
-          <b-button variant="danger" @click="hideApplyModal">Cancel</b-button>
-          <b-button variant="info" @click="applyForModule">Submit</b-button>
+          <b-button variant="dark" @click="hideApplyModal">Cancel</b-button>
+          <b-button variant="warning" @click="applyForModule">Submit</b-button>
         </template>
       </b-modal>
     </b-row>
@@ -30,10 +30,10 @@
           border-variant="secondary"
           style="max-width: 40rem"
           class="mx-auto"
-          bg-variant="info"
+          bg-variant="dark"
           text-variant="white">
           <b-button
-            variant="secondary"
+            variant="warning"
             :id="singleModule.module_name+'_button'"
             :to="'knowledge-modules/'+singleModule.module_name">
             ENTER
@@ -50,10 +50,10 @@
           border-variant="secondary"
           style="max-width: 40rem"
           class="mx-auto"
-          bg-variant="info"
+          bg-variant="dark"
           text-variant="white">
           <b-button
-            variant="secondary"
+            variant="warning"
             :id="singleModule.module_name+'_button'"
             :to="'knowledge-modules/'+singleModule.module_name">
             ENTER

@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div style="padding-bottom: 6rem; padding-top: 6rem">
     <b-card id="visitorMessageInfo" v-if="!loginState" align="center">
       <b-icon icon="exclamation-diamond" variant="danger"></b-icon>
       Please login before browsing message box.
     </b-card>
-    <b-row align-h="center" style="margin-top: 6rem" v-if="loginState">
+    <b-row align-h="center" v-if="loginState">
       <!--    message side bar-->
       <b-col cols="auto">
         <message-side-bar :m-type="mType"

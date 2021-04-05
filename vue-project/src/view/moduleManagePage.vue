@@ -1,11 +1,11 @@
 <template>
   <div>
-    <b-row style="margin-top: 6rem;" align-h="center" v-if="role === 'admin'">
+    <b-row style="padding-top: 6rem; padding-bottom: 6rem" align-h="center" v-if="role === 'admin'">
       <b-col lg="5" sm="8">
         <h1 style="text-align: center">{{modName.toUpperCase()}} MANAGEMENT</h1>
         <module-intro-input :module-name="modName"></module-intro-input>
         <div v-for="list in modulePostList">
-          <post-card :post-content="list" :admin-code="1"></post-card>
+          <post-card :post-content="list" :is-mod="true" :admin-code="1"></post-card>
         </div>
       </b-col>
       <b-col cols="auto">

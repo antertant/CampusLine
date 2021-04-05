@@ -1,34 +1,54 @@
 <template>
 <!--  Navigation for all pages-->
   <div role="navigation">
-    <b-navbar toggleable="lg" type="light" variant="light" fixed="top">
+    <b-navbar style="max-width: 120rem;"
+              class="mx-auto fixed-top"
+              toggleable="lg"
+              type="light"
+              variant="light">
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
 <!--        Menu-->
         <b-navbar-nav class="mx-auto">
 <!--          Website Logo-->
-          <b-navbar-brand href="/" tag="h1">
-            <img src="./logo.svg" height="20" alt="logo">
+          <b-navbar-brand href="/">
+            <em>
+              <b>
+                CampusLine
+              </b>
+            </em>
+            <b-img src="https://upload.wikimedia.org/wikipedia/en/thumb/6/6e/University_of_Waterloo_seal.svg/1200px-University_of_Waterloo_seal.svg.png"
+                   alt="University of Waterloo seal.svg"
+                   width="36"
+                   height="36" class="d-inline-block align-top"/>
           </b-navbar-brand>
 <!--          Homepage Button-->
           <b-nav-item to="/" id="headerHome">
-            <b-icon icon="house"></b-icon>
-            Home
+            <b-icon variant="warning" icon="house"></b-icon>
+            <b>
+              Home
+            </b>
           </b-nav-item>
 <!--          New Posts Button-->
-          <b-nav-item to="news" v-if="loginState" id="SignInNews">
-            <b-icon icon="newspaper"></b-icon>
-            News
+          <b-nav-item to="/news" v-if="loginState" id="SignInNews">
+            <b-icon variant="warning" icon="newspaper"></b-icon>
+            <b>
+              News
+            </b>
           </b-nav-item>
           <b-nav-item to="/login" v-if="!loginState" id="VisitorNews">
-            <b-icon icon="newspaper"></b-icon>
-            News
+            <b-icon variant="warning" icon="newspaper"></b-icon>
+            <b>
+              News
+            </b>
           </b-nav-item>
 <!--          Modules Button-->
           <b-nav-item id="modules-popover">
-            <b-icon icon="box-seam"></b-icon>
-            Modules
+            <b-icon variant="warning" icon="box-seam"></b-icon>
+            <b>
+              Modules
+            </b>
           </b-nav-item>
           <b-popover target="modules-popover" placement="buttom" triggers="focus">
             <b-list-group style="font-size: medium; color: black">
@@ -42,8 +62,10 @@
           </b-popover>
 <!--          Message Button-->
           <b-nav-item id="message-popover">
-            <b-icon icon="bell"></b-icon>
-            Notifications
+            <b-icon variant="warning" icon="bell"></b-icon>
+            <b>
+              Notifications
+            </b>
             <b-badge variant="danger" id="message-badge"
                      v-if="newsCounter.cnewpostcomment+newsCounter.cnewcommentreply
             +newsCounter.cnewlpost+newsCounter.cnewlcomment!==0 && loginState">
@@ -74,10 +96,10 @@
         <b-navbar-nav class="mx-auto">
 <!--          Login/Logout and Profile Button-->
           <b-nav-item id="navBar-user-popover" class="mr-3">
-            <b-avatar button></b-avatar>
+            <b-avatar variant="warning" button></b-avatar>
 <!--            Show 'Visitor' when do not login yet-->
-            <span v-if="!loginState">Visitor</span>
-            <span v-if="loginState">{{ loginName }}</span>
+            <span v-if="!loginState"><b>Visitor</b></span>
+            <span v-if="loginState"><b>{{ loginName }}</b></span>
           </b-nav-item>
           <b-popover
             target="navBar-user-popover"
@@ -86,22 +108,22 @@
           >
 <!--            Login popover for visitor-->
             <b-button-group vertical v-show="!loginState">
-              <b-button id="loginButton" to="/login" variant="outline-secondary" style="text-align: left">
-                <b-icon icon="person-check" aria-hidden="true" variant="primary"></b-icon>
+              <b-button class="mb-1" id="loginButton" to="/login" variant="dark" style="text-align: left">
+                <b-icon icon="person-check" aria-hidden="true" variant="warning"></b-icon>
                 Login
               </b-button>
-              <b-button id="registerButton" to="/register" variant="outline-secondary" style="text-align: left">
-                <b-icon icon="person-plus" aria-hidden="true" variant="success"></b-icon>
+              <b-button id="registerButton" to="/register" variant="dark" style="text-align: left">
+                <b-icon icon="person-plus" aria-hidden="true" variant="danger"></b-icon>
                 Register
               </b-button>
             </b-button-group>
 <!--            Login popover for user-->
             <b-button-group vertical v-show="loginState">
-              <b-button :to="'/profile='+loginName" variant="outline-secondary" style="text-align: left">
-                <b-icon icon="person" aria-hidden="true" variant="primary"></b-icon>
+              <b-button class="mb-1" :to="'/profile='+loginName" variant="dark" style="text-align: left">
+                <b-icon icon="person" aria-hidden="true" variant="warning"></b-icon>
                 Profile
               </b-button>
-              <b-button @click="logout" variant="outline-secondary" style="text-align: left">
+              <b-button @click="logout" variant="dark" style="text-align: left">
                 <b-icon icon="power" aria-hidden="true" variant="danger"></b-icon>
                 Logout
               </b-button>
@@ -114,7 +136,7 @@
                           placeholder="Search..."
                           required></b-form-input>
 
-            <b-form-select id="searchSelect" v-model="searchSelect" class="mr-2" required>
+            <b-form-select id="searchSelect" v-model="searchSelect" class="mx-1" required>
               <b-form-select-option id="selectModule" value="searchmodule">Module</b-form-select-option>
               <b-form-select-option id="selectPost" value="searchpost">Post</b-form-select-option>
             </b-form-select>
@@ -123,7 +145,7 @@
                       id="searchButton"
                       class="my-2 my-sm-0"
                       type="submit">
-              <img src="./search.svg" height="14" alt="search">
+              <b-icon icon="search" variant="light" />
             </b-button>
           </b-nav-form>
         </b-navbar-nav>

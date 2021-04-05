@@ -7,7 +7,8 @@
            @show="resetCModal"
            @hidden="resetCModal"
            @ok="handleCOk"
-           centered>
+           centered
+           hide-footer>
     <div v-if="current_user===''">
       <b-icon icon="exclamation-diamond" variant="danger"></b-icon> Please login before make replies!
     </div>
@@ -28,6 +29,10 @@
         </b-form-textarea>
       </b-form-group>
     </form>
+    <div class="float-right">
+      <b-button @click="$bvModal.hide('reply-modal-'+commentId+replyId)" variant="dark">Cancel</b-button>
+      <b-button @click="handleCOk" variant="warning">Submit</b-button>
+    </div>
   </b-modal>
 </template>
 

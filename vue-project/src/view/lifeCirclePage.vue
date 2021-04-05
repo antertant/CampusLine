@@ -1,10 +1,10 @@
 <template>
-  <b-row align-h="center" style="margin-top: 5rem">
+  <b-row align-h="center" style="padding-top: 6rem; padding-bottom: 6rem">
     <b-col lg="5" sm="8">
 <!--      header button-->
       <b-button v-b-toggle="'life-header-toggle'"
                 id="lifeHeader"
-                variant="info"
+                variant="dark"
                 class="mb-2"
                 block>
         <span class="h3"><b-icon icon="justify" class="float-left"></b-icon></span>
@@ -24,8 +24,8 @@
           </b-list-group-item>
 
           <b-list-group-item v-if="currentUser !== ''" style="text-align: center">
-            <b-button variant="info" :pressed="ownPosts" @click="ownPosts=true">Self Posts</b-button>
-            <b-button variant="info" :pressed="!ownPosts" @click="ownPosts=false">All Posts</b-button>
+            <b-button variant="warning" :pressed="ownPosts" @click="ownPosts=true">Self Posts</b-button>
+            <b-button variant="warning" :pressed="!ownPosts" @click="ownPosts=false">All Posts</b-button>
           </b-list-group-item>
         </b-list-group>
       </b-collapse>
@@ -35,7 +35,7 @@
 
 <!--      post list-->
       <div v-for="list in postList">
-        <post-card :post-content="list"></post-card>
+        <post-card :post-content="list" :is-mod="true" class="mx-auto" />
       </div>
     </b-col>
     <b-col cols="auto">

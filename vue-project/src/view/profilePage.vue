@@ -1,5 +1,5 @@
 <template>
-  <b-row align-h="center" style="margin-top: 6rem">
+  <b-row align-h="center" style="padding-bottom: 6rem; padding-top: 6rem">
     <b-col cols="auto">
       <b-row>
         <user-info-card :profile-user="profileUser"></user-info-card>
@@ -8,7 +8,7 @@
 
     <b-col class="float-right" cols="auto">
       <b-card :style="selfPostCardStyle" class="shadow">
-        <b-card-header>
+        <b-card-header header-bg-variant="white">
           <h4>Self Posts</h4>
         </b-card-header>
         <self-post-card :profile-user="profileUser"></self-post-card>

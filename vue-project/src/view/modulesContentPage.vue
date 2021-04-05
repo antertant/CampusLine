@@ -1,5 +1,5 @@
 <template>
-  <b-row align-h="center" style="margin-top: 5rem">
+  <b-row align-h="center" style="padding-top: 6rem;padding-bottom: 6rem">
     <b-col lg="5" sm="8" cols="auto">
 <!--      header button-->
       <b-button v-b-toggle="'life-header-toggle'"
@@ -34,7 +34,7 @@
 
 <!--      post list-->
       <div v-for="list in postList">
-        <post-card :post-content="list"></post-card>
+        <post-card :post-content="list" :is-mod="true" class="mx-auto" />
       </div>
     </b-col>
 

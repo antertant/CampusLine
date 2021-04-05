@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-top: 6rem">
+  <div style="padding-top: 6rem; padding-bottom: 6rem">
     <h3 id="newsTitle" style="text-align: center;">
       <b-icon icon="newspaper"/>
       New Posts from Following List

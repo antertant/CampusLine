@@ -1,5 +1,5 @@
 <template>
-  <register-card></register-card>
+  <register-card style="padding-bottom: 24rem; padding-top: 12rem" />
 </template>
 
 <script>

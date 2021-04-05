@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <b-card v-if="user!==currentUser" text-variant="danger" align="center" style="margin-top: 6rem">
+  <div style="padding-top: 12rem; padding-bottom: 28rem">
+    <b-card v-if="user!==currentUser" text-variant="danger" align="center">
       <h3>
         <b-icon icon="exclamation-diamond" variant="danger"></b-icon>
         You have no authentication to access this page!

@@ -2,8 +2,7 @@
   <div>
       <post-card v-for="selfPost in selfPostList"
                  :key="selfPost.post_id"
-                 :post-content="selfPost"
-                 class="mx-auto" />
+                 :post-content="selfPost" />
   </div>
 </template>
 

@@ -1,5 +1,9 @@
 <template>
-  <b-card align="center" class="shadow" bg-variant="light" style="min-width: 13rem">
+  <b-card body-bg-variant="light"
+          body-text-variant="dark"
+          align="center"
+          class="shadow border-white"
+          style="min-width: 13rem; border-radius: 6px">
 <!--    Avatar-->
 <!--    follow user-->
     <b-avatar :badge-variant="avColor"
@@ -20,21 +24,21 @@
     <div v-if="sameUser">
 <!--      Follower list button-->
       <div class="mb-2">
-        <b-button variant="info" v-b-modal="'follower-modal'" block>
+        <b-button variant="warning" v-b-modal="'follower-modal'" block>
           Follower
           <b-badge>{{followerCounter}}</b-badge>
         </b-button>
       </div>
 <!--      Follow list button-->
       <div class="mb-2">
-        <b-button variant="info" v-b-modal="'following-modal'" block>
+        <b-button variant="warning" v-b-modal="'following-modal'" block>
           Following
           <b-badge>{{followingCounter}}</b-badge>
         </b-button>
       </div>
 <!--      Collection button-->
       <div>
-        <b-button variant="success" v-b-modal="'collection-modal'" block>
+        <b-button variant="danger" v-b-modal="'collection-modal'" block>
           Collection
           <b-badge>{{collectCounter}}</b-badge>
         </b-button>
@@ -115,7 +119,7 @@ export default {
   data() {
     return{
       followed: false,
-      avColor: "primary",
+      avColor: "warning",
       followerCounter: 0,
       followingCounter: 0,
       collectCounter: 0
@@ -149,11 +153,11 @@ export default {
           if(response.data.code === 200)
             if(response.data.data === 1){
               this.followed = true
-              this.avColor = "success"
+              this.avColor = "danger"
             }
             else {
               this.followed = false
-              this.avColor = "primary"
+              this.avColor = "warning"
             }
         })
     },
@@ -167,11 +171,11 @@ export default {
           if(response.data.code === 200){
             if(response.data.data === "follow successfully"){
               this.followed = true
-              this.avColor = "success"
+              this.avColor = "danger"
             }
             if(response.data.data === "cancel follow successfully"){
               this.followed = false
-              this.avColor = "primary"
+              this.avColor = "warning"
             }
           }
         })

@@ -8,7 +8,7 @@
     <b-tabs card>
       <b-tab @click="getCommentList">
         <template #title>
-          <b-icon id="postCommentTab" icon="tag" variant="info"></b-icon>
+          <b-icon id="postCommentTab" icon="tag" variant="danger"></b-icon>
           <span style="color: black"><b>Post Comments</b></span>
           <b-badge id="postCommentBadge" variant="danger" v-if="postC!==0">{{ postC }}</b-badge>
         </template>
@@ -58,7 +58,7 @@
 <!--      comment reply list-->
       <b-tab @click="getReplyList">
         <template #title>
-          <b-icon id="commentReplyTab" icon="tag" variant="info"></b-icon>
+          <b-icon id="commentReplyTab" icon="tag" variant="danger"></b-icon>
           <span style="color: black"><b>Comment Replies</b></span>
           <b-badge id="commentReplyBadge" variant="danger" v-if="commentR!==0">{{commentR}}</b-badge>
         </template>

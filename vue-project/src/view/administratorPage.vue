@@ -1,5 +1,7 @@
 <template>
-  <admin-tabs/>
+  <div style="padding-top: 6rem; padding-bottom: 6rem">
+    <admin-tabs/>
+  </div>
 </template>
 
 <script>

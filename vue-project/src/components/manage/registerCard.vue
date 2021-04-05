@@ -1,13 +1,15 @@
 <template>
   <div>
 <!--    Register Card-->
-    <b-card style="max-width: 30rem; margin-top: 8rem"
+    <b-card style="max-width: 30rem;"
             class="mx-auto"
+            header-text-variant="light"
+            header-bg-variant="dark"
             v-if="registerFeedback!=='Registration Successful!'">
   <!--    Header-->
       <template #header>
         <h5 class="mb-0">
-          <b-icon icon="person-lines-fill" variant="info"></b-icon>
+          <b-icon icon="card-list" variant="danger"></b-icon>
           REGISTRATION
         </h5>
       </template>
@@ -79,7 +81,7 @@
               </b-form-input>
             </b-col>
             <b-col>
-              <b-button variant="info" @click="getEmailCode" :disabled="!emailState">Send Code</b-button>
+              <b-button variant="warning" @click="getEmailCode" :disabled="!emailState">Send Code</b-button>
             </b-col>
           </b-row>
           <b-form-invalid-feedback for="registerCode">
@@ -91,8 +93,8 @@
         </b-card-text>
   <!--      Buttons-->
         <div class="float-right">
-          <b-button type="reset" variant="warning">Reset</b-button>
-          <b-button type="submit" variant="primary" :disabled="!allReadyState">Submit</b-button>
+          <b-button type="reset" variant="dark">Reset</b-button>
+          <b-button type="submit" variant="danger" :disabled="!allReadyState">Submit</b-button>
         </div>
 
       </b-form>

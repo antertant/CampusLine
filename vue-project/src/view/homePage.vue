@@ -1,6 +1,6 @@
 <template>
-  <div style="margin-top: 3rem">
-    <hot-card :hot-data="hotPosts"></hot-card>
+  <div style="padding-top: 6rem; padding-bottom: 6rem;">
+    <hot-card></hot-card>
   </div>
 </template>
 
@@ -35,9 +35,6 @@ export default {
   },
   created() {
     document.title = 'UWSK - Home'
-  },
-  mounted() {
-    this.getHotPosts()
   }
 }
 </script>
