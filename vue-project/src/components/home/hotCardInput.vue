@@ -24,8 +24,8 @@
             <rich-text-editor :text-pipe="postContent" @rich-input-content="updatePContent" />
           </b-form-group>
           <div class="mt-2 mb-0 float-right">
-            <b-button class="shadow-sm" variant="warning" type="reset">Reset</b-button>
-            <b-button class="shadow-sm" variant="primary" type="submit">Post</b-button>
+            <b-button class="shadow-sm" variant="danger" type="reset">Reset</b-button>
+            <b-button class="shadow-sm" variant="warning" type="submit">Post</b-button>
           </div>
         </b-form>
       </b-card>

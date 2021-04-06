@@ -20,13 +20,13 @@
        <div>
          <hot-card-title style="width: 55rem" mod-name="Knowledge"/>
        </div>
-        <b-tabs active-nav-item-class="font-weight-bold text-uppercase text-dark bg-warning"
+        <b-tabs active-nav-item-class="font-weight-bold text-uppercase text-dark bg-white"
                 v-model="tabIndex"
                 justified>
           <b-tab v-for="singleKnowModule in hotKnowData"
                  :key="singleKnowModule.module_name">
             <template #title>
-              <b style="color: black">
+              <b style="color: #000000">
                 {{singleKnowModule.module_name}}
               </b>
             </template>
