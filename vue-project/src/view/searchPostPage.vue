@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-top: 6rem" id="searchPostBody">
+  <div style="padding-bottom: 6rem; padding-top: 6rem" id="searchPostBody">
     <h3 class="text-center my-5" v-if="searchResult.length>1">
       Get {{ searchResult.length }} results from searching
       "{{ searchKey }}" in Posts ...
@@ -7,9 +7,11 @@
     <h3 class="text-center my-5" v-if="searchResult.length<=1">
       Get {{ searchResult.length }} result from searching
       "{{ searchKey }}" in Posts ...
-    </h3>    <post-card v-for="singleResult in searchResult"
+    </h3>
+    <post-card v-for="singleResult in searchResult"
                :post-content="singleResult"
-               :key="singleResult.post_id"></post-card>
+               :key="singleResult.post_id"
+               class="mx-auto"></post-card>
   </div>
 </template>
 

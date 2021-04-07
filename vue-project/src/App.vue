@@ -1,15 +1,18 @@
 <template>
   <div id="app">
-    <sticky-header></sticky-header>
+    <sticky-header/>
     <router-view/>
+    <sticky-footer/>
   </div>
 </template>
 
 <script>
 import stickyHeader from "./components/header/stickyHeader";
+import StickyFooter from "@/components/common/stickyFooter";
 export default {
   name: 'App',
   components: {
+    StickyFooter,
     stickyHeader
   }
 }
@@ -17,6 +20,6 @@ export default {
 
 <style>
 #app {
-  margin-top: 4rem;
+  background: #efe8e0;
 }
 </style>

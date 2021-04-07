@@ -1,6 +1,10 @@
 <template>
   <div id="loginCard">
-    <b-card style="max-width: 28rem; margin-top: 8rem" header-tag="loginHeader" class="mx-auto">
+    <b-card style="max-width: 28rem;"
+            header-tag="loginHeader"
+            header-bg-variant="dark"
+            header-text-variant="light"
+            class="mx-auto border-dark">
 
       <b-alert v-model="showLoginError" variant="danger" dismissible fade>
         Incorrect username/password.
@@ -9,7 +13,7 @@
 <!--      Card Header-->
       <template #header>
         <h5 class="mb-0">
-          <b-icon icon="card-checklist" variant="primary"></b-icon>
+          <b-icon icon="card-checklist" variant="warning"></b-icon>
           Login
         </h5>
       </template>
@@ -45,9 +49,9 @@
         </div>
 
 <!--        Buttons-->
-        <b-button id="loginSubmit" type="submit" variant="primary">Login</b-button>
-        <b-button id="loginReset" type="reset" variant="warning">Reset</b-button>
-        <b-button id="loginRegister" href="/register" variant="info" style="float:right;">Register</b-button>
+        <b-button id="loginSubmit" type="submit" variant="warning">Login</b-button>
+        <b-button id="loginReset" type="reset" variant="dark">Reset</b-button>
+        <b-button id="loginRegister" href="/register" variant="danger" style="float:right;">Register</b-button>
       </b-form>
     </b-card>
 

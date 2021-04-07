@@ -15,7 +15,7 @@
         <b-col cols="auto">
           <b-button variant="white" size="sm"
                     v-b-modal="'reply-modal-'+commentId+reply_id">
-            <b-icon icon="chat-left-text" variant="primary"></b-icon>
+            <b-icon icon="chat-left-text" variant="dark"></b-icon>
           </b-button>
 
 <!--          Child component: reply input-->
@@ -28,7 +28,7 @@
                     size="sm"
                     v-b-modal="'delete-reply-modal-'+commentId+reply_id"
                     v-if="current_user === reply_from_user">
-            <b-icon icon="trash"></b-icon>
+            <b-icon icon="trash" variant="danger"></b-icon>
           </b-button>
           <b-modal :ref="'delete-reply-modal-'+commentId+reply_id"
                    :id="'delete-reply-modal-'+commentId+reply_id"

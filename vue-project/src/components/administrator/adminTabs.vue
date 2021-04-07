@@ -1,5 +1,5 @@
 <template>
-  <b-card style="max-width: 68rem; margin-top: 6rem" class="mx-auto" no-body>
+  <b-card style="max-width: 68rem" class="mx-auto" no-body>
     <b-tabs card>
 
       <b-tab>

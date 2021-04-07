@@ -8,7 +8,7 @@
     <b-tabs card>
       <b-tab @click="getCommentList">
         <template #title>
-          <b-icon id="postCommentTab" icon="tag" variant="info"></b-icon>
+          <b-icon id="postCommentTab" icon="tag" variant="danger"></b-icon>
           <span style="color: black"><b>Post Comments</b></span>
           <b-badge id="postCommentBadge" variant="danger" v-if="postC!==0">{{ postC }}</b-badge>
         </template>
@@ -42,15 +42,15 @@
             <b-list-group-item @click="getPostByID(comment.post_id)" v-b-modal="'origin-post-modal'" variant="light" button>
               Origin Post
             </b-list-group-item>
-<!--            <b-list-group-item v-b-modal="'reply-modal-'+comment.comment_id+0" variant="light" button>-->
-<!--              Reply-->
-<!--            </b-list-group-item>-->
+            <!--            <b-list-group-item v-b-modal="'reply-modal-'+comment.comment_id+0" variant="light" button>-->
+            <!--              Reply-->
+            <!--            </b-list-group-item>-->
           </b-list-group>
 
           <!--    reply comment modal-->
-<!--          <reply-input :comment-id="comment.comment_id"-->
-<!--                       :reply-id="0"-->
-<!--                       :from-user="currentUser"></reply-input>-->
+          <!--          <reply-input :comment-id="comment.comment_id"-->
+          <!--                       :reply-id="0"-->
+          <!--                       :from-user="currentUser"></reply-input>-->
 
         </b-card>
       </b-tab>
@@ -58,7 +58,7 @@
 <!--      comment reply list-->
       <b-tab @click="getReplyList">
         <template #title>
-          <b-icon id="commentReplyTab" icon="tag" variant="info"></b-icon>
+          <b-icon id="commentReplyTab" icon="tag" variant="danger"></b-icon>
           <span style="color: black"><b>Comment Replies</b></span>
           <b-badge id="commentReplyBadge" variant="danger" v-if="commentR!==0">{{commentR}}</b-badge>
         </template>

@@ -16,7 +16,7 @@
 <!--            Comment Button-->
             <b-button variant="white" size="sm"
                       v-b-modal="'reply-modal-'+comment_id+0">
-              <b-icon icon="chat-left-text" variant="primary"></b-icon>
+              <b-icon icon="chat-left-text" variant="dark"></b-icon>
             </b-button>
 <!--            Child Component: reply input-->
             <reply-input :comment-id="comment_id"

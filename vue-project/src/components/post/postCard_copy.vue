@@ -1,19 +1,14 @@
 <template>
   <b-card
-    style="width: 50rem; border-radius: 14px"
-    :id="'postCard_'+postContent.post_id"
-    class="mt-4 bg-light shadow-sm"
+    style="max-width: 50rem;" :id="'postCard_'+postContent.post_id"
+    class="mt-4 mx-2 bg-light shadow-sm"
     footer-tag="footer"
     header-tag="header"
     v-if="showPost" no-body>
 <!--    Pinned Bar-->
-    <b-card style="border-radius: 14px 14px 0 0;" no-body>
-      <b-button variant="white" :disabled="!admin || !postContent.if_top" @click="$bvModal.show('cancel-top-'+postId)">
-        <b><em v-if="postContent.module_name===null">Life</em></b>
-        <b><em>{{ postContent.module_name }}</em></b>
-        <span v-if="postContent.if_top & isMod">
-          | <b-icon variant="danger" icon="lock-fill"/> PINNED
-        </span>
+    <b-card style="border-radius: 0" v-if="postContent.if_top & !isHot" no-body>
+      <b-button variant="white" :disabled="!admin" @click="$bvModal.show('cancel-top-'+postId)">
+        <b-icon variant="danger" icon="lock-fill"/> PINNED
       </b-button>
     </b-card>
     <b-modal :id="'cancel-top-'+postId" hide-header centered>
@@ -46,14 +41,21 @@
         </b-button>
       </template>
     </b-modal>
-<!--    post editor button-->
-    <b-button variant="white"
-              v-b-toggle="'post-editor-'+postContent.post_id"
-              v-if="current_user===postContent.post_author"
-              style="position: absolute; right: 0.6rem; top: 0.1rem"
-              title="edit the post">
-      <b-icon icon="pencil"/>
-    </b-button>
+<!--    Post author-->
+    <b-form-row class="my-2 ml-2 p-3 text-dark rounded-bottom"
+                id="header"
+                align-v="stretch">
+      <b-col cols="auto"><b-avatar :to="'/profile='+postContent.post_author" size="md"></b-avatar></b-col>
+      <b-col cols="auto" id="post-author" align-self="center">
+        <b>{{ postContent.post_author }}</b>
+        <span id="post-time"><{{ postTime }}></span>
+      </b-col>
+      <b-col style="text-align: right" v-if="current_user === postContent.post_author">
+        <b-button class="mr-3" variant="white" v-b-toggle="'post-editor-'+postContent.post_id">
+          <b-icon icon="pencil"/>
+        </b-button>
+      </b-col>
+    </b-form-row>
 <!--    post editor modal-->
     <b-collapse :id="'post-editor-'+postContent.post_id" centered>
       <b-card class="border-bottom bg-light mb-3" no-body>
@@ -63,13 +65,13 @@
                           @rich-input-content="updatePostContent" />
         <b-button style="margin: 4px"
                   class="float-right my-1"
-                  variant="warning"
+                  variant="info"
                   @click="$bvModal.show('update-post-'+postContent.post_id)">
           Update
         </b-button>
         <b-button style="margin: 4px"
                   class="float-right my-1"
-                  variant="dark"
+                  variant="danger"
                   @click="$bvModal.show('quit-editor-'+postContent.post_id)">
           Reset
         </b-button>
@@ -91,100 +93,70 @@
         <b-button @click="updatePost" variant="success">Yes</b-button>
       </template>
     </b-modal>
-<!--    logo-->
-<!--    <b-img src="https://upload.wikimedia.org/wikipedia/en/thumb/6/6e/University_of_Waterloo_seal.svg/1200px-University_of_Waterloo_seal.svg.png"-->
-<!--           alt="University of Waterloo seal.svg"-->
-<!--           width="32"-->
-<!--           height="32"-->
-<!--           style="position: absolute; right: 0.8rem; top: 0.2rem"/>-->
-<!--    show post in modal-->
-    <div style="position: absolute; left: 1rem; top: 0.3rem">
-      <b-button @click="$bvModal.show('post-content-modal-'+postContent.post_id)"
-                variant="white"
-                style="padding: 0"
-                title="show post in modal">
-        <b-icon variant="dark" icon="aspect-ratio"/>
-      </b-button>
-    </div>
-    <b-modal :id="'post-content-modal-'+postContent.post_id"
-             size="lg"
-             hide-header
-             hide-footer
-             centered>
-      <div v-html="postContent.post_content"/>
-    </b-modal>
-
-<!--    Post avatar-->
-    <b-row class="ml-2 p-3 text-dark rounded-bottom"
-                id="header"
-                align-v="stretch">
-      <b-col cols="auto">
-        <b-avatar :to="'/profile='+postContent.post_author" size="md"/>
-      </b-col>
-<!--      post author-->
-      <b-col cols="10" id="post-author">
-        <b-row>
-          <b>{{ postContent.post_author }}</b>
-        </b-row>
-<!--    post time-->
-        <b-row>
-          <span id="post-time"><{{ postTime }}></span>
-        </b-row>
-<!--        <b-img src="https://placekitten.com/380/200" class="border-secondary shadow" center></b-img>-->
-      </b-col>
 <!--    Post content-->
-      <b-card-text style="width:100%; max-height:400px; overflow-y: auto; margin-left: 4.5rem"
-                   v-html="postContent.post_content" class="mt-2"/>
-    </b-row>
+    <b-card-text class="ml-4" style="position:relative; max-height:400px; overflow-y:auto">
+      <div v-html="postContent.post_content"/>
+    </b-card-text>
+<!--    <b-img src="https://placekitten.com/380/200" class="border-secondary shadow" center></b-img>-->
+    <div style="text-align: right">
+      <b-img src="https://upload.wikimedia.org/wikipedia/en/thumb/6/6e/University_of_Waterloo_seal.svg/1200px-University_of_Waterloo_seal.svg.png"
+             alt="University of Waterloo seal.svg"
+             width="48"
+             height="48" class="mr-3"/>
+    </div>
 <!--    Post buttons-->
     <b-row align-h="center" class="mt-3">
       <b-col>
       <b-list-group style="text-align: center" class="shadow-sm" horizontal>
-    <!--        Collect Button-->
-        <b-list-group-item @click="collectPost"
-                           button>
+<!--        Collect Button-->
+        <b-list-group-item @click="collectPost" button>
           <b-icon icon="star"></b-icon>
         </b-list-group-item>
 
-    <!--        Like Button-->
+<!--        Like Button-->
         <b-list-group-item :id="'pc-like-'+postContent.post_id"
                            @click="likePost"
                            button>
           <b-icon icon="hand-thumbs-up" v-if="!likePress"></b-icon>
-          <b-icon icon="hand-thumbs-up" variant="danger" v-if="likePress"></b-icon>
-          <b-badge variant="warning">{{ postContent.post_likes + likeCount }}</b-badge>
+          <b-icon icon="hand-thumbs-up" variant="info" v-if="likePress"></b-icon>
+          <b-badge>{{ postContent.post_likes + likeCount }}</b-badge>
         </b-list-group-item>
-    <!--        Like list trigger-->
+<!--        Like list trigger-->
         <b-popover class="like-popover" :target="'pc-like-'+postContent.post_id" triggers="hover" placement="bottom">
           <b-button variant="white"
                     size="sm"
                     v-b-toggle="'postLike-'+postContent.post_id"
                     @click="getLike">
-            <b-icon icon="list-stars" size="sm" variant="danger"></b-icon> Like list
+            <b-icon icon="list-stars" size="sm" variant="primary"></b-icon> Like list
           </b-button>
         </b-popover>
 
-    <!--        Comment button-->
+<!--        Comment button-->
         <b-list-group-item :id="'pc-comment-'+postContent.post_id"
                            :ref="'pc-comment-'+postContent.post_id"
                            v-b-toggle="'postComment-'+postContent.post_id"
                            @click="getCommentHook"
                            button>
           <b-icon icon="chat-left-text" size="sm"></b-icon>
-          <b-badge variant="warning">{{ comments.length }}</b-badge>
+          <b-badge>{{ comments.length }}</b-badge>
         </b-list-group-item>
-        <!--        Comment input trigger-->
+<!--        Comment input trigger-->
         <b-popover :target="'pc-comment-'+postContent.post_id" triggers="hover" placement="bottom">
           <b-button variant="white"
                     size="sm"
                     v-b-modal="'comment-modal-'+postContent.post_id">
-            <b-icon icon="pencil-square" size="sm" variant="danger"></b-icon> Write Comment
+            <b-icon icon="pencil-square" size="sm" variant="primary"></b-icon> Write Comment
           </b-button>
         </b-popover>
-    <!--        Child Component: Comment input-->
+<!--        Child Component: Comment input-->
         <comment-input :comment-id="postContent.post_id" @emit-comment="cButtonGetCommentHook"></comment-input>
 
-    <!--        Delete Button-->
+<!--        Repost Button-->
+<!--        <b-list-group-item button>-->
+<!--          <b-icon icon="box-arrow-up-right"></b-icon>-->
+<!--        </b-list-group-item>-->
+
+<!--        Delete Button-->
         <b-list-group-item button
                            v-if="current_user===postContent.post_author || admin"
                            v-b-modal="'delete-post-modal-'+postContent.post_id+0">
@@ -204,13 +176,13 @@
 
       </b-list-group>
 
-    <!--      Comment Cards-->
+<!--      Comment Cards-->
       <b-collapse class="comment-collapse"
                   :id="'postComment-'+postContent.post_id"
                   v-model="visible">
         <b-card v-if="!commentEmpty" style="text-align: center">There is no comment here yet.</b-card>
         <div v-if="commentEmpty" v-for="comment in comments" :key="comment.comment_id">
-        <!--          Child Component: Comment Card-->
+<!--          Child Component: Comment Card-->
           <comment-card :comment-data="comment"
                         :id="comment.comment_id"
                         @reply-event="getCommentHook"
@@ -218,7 +190,7 @@
         </div>
       </b-collapse>
 
-    <!--       Like list-->
+<!--       Like list-->
       <b-collapse class="like-collapse" :id="'postLike-'+postContent.post_id">
         <b-card v-if="!likeEmpty" style="text-align: center">Nobody likes this post yet.</b-card>
         <b-card v-if="likeEmpty" v-for="like in likes" :key="like.comment_id">
@@ -241,11 +213,10 @@ import RichTextEditor from "@/components/rich-text/tinymceEditor";
 export default {
   name: "postCard",
   components: {RichTextEditor, CommentInput, CommentCard},
-  props: ['postContent', 'adminCode', 'isMod'],
+  props: ['postContent', 'adminCode', 'isHot'],
   data() {
     return{
       postTime: Date,
-      isMod: false,
       tmpContent: '',
       likeCount: 0, // Like counter
       comments: [], // The content of comments
@@ -505,10 +476,7 @@ export default {
         .catch(failResponse=>{
           console.log(failResponse)
         })
-      this.$nextTick(()=>{
-        this.$bvModal.hide('update-post-'+this.postId)
-        this.$root.$emit('bv::toggle::collapse', 'post-editor-'+this.postContent.post_id)
-      })
+      this.$bvModal.hide('update-post-'+this.postId)
     },
     pinPostToTop(){
       axios

@@ -1,5 +1,7 @@
 <template>
-  <forget-password-card style="max-width: 40rem; margin-top: 8rem" />
+  <div style="padding-top: 12rem; padding-bottom: 28rem">
+    <forget-password-card style="max-width: 40rem" />
+  </div>
 </template>
 
 <script>

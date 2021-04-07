@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div v-for="selfPost in selfPostList" key="1">
-      <post-card :post-content="selfPost"></post-card>
-    </div>
+      <post-card v-for="selfPost in selfPostList"
+                 :key="selfPost.post_id"
+                 :post-content="selfPost" />
   </div>
 </template>
 

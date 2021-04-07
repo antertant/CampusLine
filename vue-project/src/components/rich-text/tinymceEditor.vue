@@ -4,7 +4,7 @@
     v-model="sunHtml"
     @input="inputEmit"
     :init="{
-         height: 300,
+         height: 250,
          menubar: false,
          branding: false,
          toolbar_mode: 'sliding',

@@ -1,5 +1,5 @@
 <template>
-  <div id="searchModBody" style="margin-top: 6rem">
+  <div id="searchModBody" style="padding-bottom: 6rem; padding-top: 6rem">
     <h3 class="text-center my-5" v-if="searchResult.length>1">
       Get {{ searchResult.length }} results from searching
       "{{ searchKey }}" in Modules ...
@@ -8,17 +8,18 @@
       Get {{ searchResult.length }} result from searching
       "{{ searchKey }}" in Modules ...
     </h3>
-    <module-card :multi-modules="searchResult"></module-card>
+    <module-list :multi-modules="searchResult"/>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import ModuleCard from "@/components/module/moduleCard";
+import ModuleList from "@/components/module/moduleList";
 
 export default {
   name: "searchModulePage",
-  components: {ModuleCard},
+  components: {ModuleList, ModuleCard},
   props: ['searchKey'],
   data (){
     return{

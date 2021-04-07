@@ -1,28 +1,29 @@
 <template>
-  <div>
+  <div style="padding-bottom: 6rem; padding-top: 6rem">
     <b-card id="visitorMessageInfo" v-if="!loginState" align="center">
       <b-icon icon="exclamation-diamond" variant="danger"></b-icon>
       Please login before browsing message box.
     </b-card>
-    <b-row align-h="center" style="margin-top: 6rem" v-if="loginState">
+    <b-row align-h="center" v-if="loginState">
       <!--    message side bar-->
-      <b-col lg="2" sm="3" md="3">
-        <message-side-bar class="position-fixed"
-                          :m-type="mType"
+      <b-col cols="auto">
+        <message-side-bar :m-type="mType"
                           :like-count="newMessageCount.cnewlpost + newMessageCount.cnewlcomment"
                           :comment-count="newMessageCount.cnewpostcomment + newMessageCount.cnewcommentreply"></message-side-bar>
       </b-col>
 
       <!--    message content card-->
-      <b-col sm="8" md="6" class="">
+      <b-col cols="auto">
         <!--      comment list card-->
-        <message-comment-card v-if="mType === 'comment'"
+        <message-comment-card :style="cardStyle"
+                              v-if="mType === 'comment'"
                               :post-c="newMessageCount.cnewpostcomment"
                               :comment-r="newMessageCount.cnewcommentreply"></message-comment-card>
         <!--      repost list card-->
 <!--        <message-repost-card v-if="mType === 'repost'"></message-repost-card>-->
         <!--      like list card-->
-        <mesage-like-card v-if="mType === 'like'"
+        <mesage-like-card :style="cardStyle"
+                          v-if="mType === 'like'"
                           :post-l="newMessageCount.cnewlpost"
                           :comment-l="newMessageCount.cnewlcomment"></mesage-like-card>
         <!--      messager card-->
@@ -44,6 +45,15 @@ export default {
   name: "messagePage",
   components: {MessageMCard, MesageLikeCard, MessageRepostCard, MessageCommentCard, MessageSideBar},
   props: ['mType'],
+  data() {
+    return{
+      cardStyle:{
+        'min-width': '50rem',
+        'height': '',
+        'overflow-y': 'auto'
+      }
+    }
+  },
   computed:{
     ...mapGetters({
       currentUser: "loginInfo/getLUName",
@@ -51,11 +61,21 @@ export default {
       newMessageCount: "newMessage/getNewMessageCount"
     })
   },
+  methods:{
+    getHeight(){
+      this.cardStyle.height = (window.innerHeight-180).toString()+'px'
+    }
+  },
   created() {
     document.title = 'UWSK - Message Box'
+    window.addEventListener("resize", this.getHeight)
+    this.getHeight()
   },
   mounted() {
     this.$store.dispatch("newMessage/getNewMessageCountFS", this.currentUser)
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.getHeight)
   }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="padding-top: 10rem; padding-bottom: 40rem">
     <login-card v-if="!loginState"></login-card>
 
     <b-card align="center" v-if="loginState" style="margin-top: 6rem">
