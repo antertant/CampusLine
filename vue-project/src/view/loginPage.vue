@@ -20,7 +20,7 @@ export default {
     })
   },
   created() {
-    document.title = 'UWSK - Sign in'
+    document.title = 'CampusLine - Sign in'
   },
 }
 </script>

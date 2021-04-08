@@ -3,7 +3,7 @@
     <b-col lg="5" sm="8" cols="auto">
 <!--      header button-->
       <b-button v-b-toggle="'life-header-toggle'"
-                variant="info"
+                variant="dark"
                 class="mb-2"
                 block>
         <span class="h3"><b-icon icon="justify" class="float-left"></b-icon></span>
@@ -23,14 +23,14 @@
           </b-list-group-item>
 
           <b-list-group-item v-if="currentUser !== ''" style="text-align: center">
-            <b-button variant="info" :pressed="ownPosts" @click="ownPosts=true">Self Posts</b-button>
-            <b-button variant="info" :pressed="!ownPosts" @click="ownPosts=false">All Posts</b-button>
+            <b-button variant="warning" :pressed="ownPosts" @click="ownPosts=true">Self Posts</b-button>
+            <b-button variant="warning" :pressed="!ownPosts" @click="ownPosts=false">All Posts</b-button>
           </b-list-group-item>
         </b-list-group>
       </b-collapse>
 
 <!--      module posts creator-->
-      <post-rich-input :module-name="modName"/>
+      <post-rich-input v-if="!ownPosts" :module-name="modName"/>
 
 <!--      post list-->
       <div v-for="list in postList">
@@ -109,7 +109,7 @@ export default {
     }
   },
   created() {
-    document.title = 'UWSK - Knowledge_' + String(this.modName).toUpperCase()
+    document.title = 'CampusLine - Knowledge_' + String(this.modName).toUpperCase()
   },
   mounted() {
     this.$store.dispatch("modulePostInfo/getModulePostfromServer", this.modName)

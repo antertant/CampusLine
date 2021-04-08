@@ -119,7 +119,7 @@
                 id="header"
                 align-v="stretch">
       <b-col cols="auto">
-        <b-avatar :to="'/profile='+postContent.post_author" size="md"/>
+        <b-avatar :id="'avatar-'+postContent.post_author" :to="'/profile='+postContent.post_author" size="md"/>
       </b-col>
 <!--      post author-->
       <b-col cols="10" id="post-author">
@@ -168,7 +168,7 @@
         <b-list-group-item :id="'pc-comment-'+postContent.post_id"
                            :ref="'pc-comment-'+postContent.post_id"
                            v-b-toggle="'postComment-'+postContent.post_id"
-                           @click="getCommentHook"
+                           @click="getComment"
                            button>
           <b-icon icon="chat-left-text" size="sm"></b-icon>
           <b-badge variant="warning">{{ comments.length }}</b-badge>
@@ -176,16 +176,19 @@
         <!--        Comment input trigger-->
         <b-popover :target="'pc-comment-'+postContent.post_id" triggers="hover" placement="bottom">
           <b-button variant="white"
+                    :target="'pc-comment-popover-'+postContent.post_id"
+                    :id="'pc-comment-popover-'+postContent.post_id"
                     size="sm"
                     v-b-modal="'comment-modal-'+postContent.post_id">
             <b-icon icon="pencil-square" size="sm" variant="danger"></b-icon> Write Comment
           </b-button>
         </b-popover>
     <!--        Child Component: Comment input-->
-        <comment-input :comment-id="postContent.post_id" @emit-comment="cButtonGetCommentHook"></comment-input>
+        <comment-input :post-id="postContent.post_id" @emit-comment="cButtonGetCommentHook"></comment-input>
 
     <!--        Delete Button-->
         <b-list-group-item button
+                           :id="'delete-post-button-'+postContent.post_id"
                            v-if="current_user===postContent.post_author || admin"
                            v-b-modal="'delete-post-modal-'+postContent.post_id+0">
           <b-icon icon="trash"></b-icon>
@@ -197,8 +200,8 @@
                  centered>
           Are you sure to delete the post?
           <template #modal-footer>
-            <b-button @click="hideModal">No</b-button>
-            <b-button @click="deletePost" variant="danger">Yes</b-button>
+            <b-button id="delete-post-modal-button-no" @click="hideModal">No</b-button>
+            <b-button id="delete-post-modal-button-yes" @click="deletePost" variant="danger">Yes</b-button>
           </template>
         </b-modal>
 
@@ -206,15 +209,15 @@
 
     <!--      Comment Cards-->
       <b-collapse class="comment-collapse"
-                  :id="'postComment-'+postContent.post_id"
-                  v-model="visible">
+                  :id="'postComment-'+postContent.post_id">
         <b-card v-if="!commentEmpty" style="text-align: center">There is no comment here yet.</b-card>
         <div v-if="commentEmpty" v-for="comment in comments" :key="comment.comment_id">
         <!--          Child Component: Comment Card-->
           <comment-card :comment-data="comment"
+                        :post-id="postId"
                         :id="comment.comment_id"
-                        @reply-event="getCommentHook"
-                        @comment-deleted="getCommentHook"></comment-card>
+                        @reply-event="cButtonGetCommentHook"
+                        @comment-deleted="getComment"></comment-card>
         </div>
       </b-collapse>
 
@@ -253,7 +256,6 @@ export default {
       showPost: true,
       likePress: false,  // Like pressed flag
       likes: [],  // Like lists
-      visible: false, // comment collapse status
       editorState: true,
     }
   },
@@ -263,7 +265,7 @@ export default {
     }),
     // Comment list empty detector
     commentEmpty: function() {
-      if(this.comments.length === 0){
+      if(!this.comments.length){
         return false;
       }
       else{
@@ -398,14 +400,9 @@ export default {
       this.hideModal()
       this.$nextTick()
     },
-    cButtonGetCommentHook() {
-      if(this.visible === false){
-        this.visible = true
-      }
-      this.getCommentHook()
-    },
-    async getCommentHook() {
-      let res = await this.getComment()
+    cButtonGetCommentHook(data) {
+      this.setComments(data)
+      this.commentEmpty = true
     },
     getComment() {
       // Communication
@@ -413,7 +410,7 @@ export default {
         .get('/getcomments',{params:{post_id:this.postContent.post_id}})
         .then(response=>{
           console.log(response)
-          if(response.data.code === 200){
+          if(response.data.code === 200 && response.data.data){
             this.setComments(response.data.data)
           }
         })

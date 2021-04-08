@@ -7,6 +7,7 @@
 <!--    Avatar-->
 <!--    follow user-->
     <b-avatar :badge-variant="avColor"
+              id="profile-avatar"
               button
               @click="followUser"
               v-if="!sameUser">
@@ -24,21 +25,21 @@
     <div v-if="sameUser">
 <!--      Follower list button-->
       <div class="mb-2">
-        <b-button variant="warning" v-b-modal="'follower-modal'" block>
+        <b-button id="profile-follower-button" variant="warning" v-b-modal="'follower-modal'" block>
           Follower
           <b-badge>{{followerCounter}}</b-badge>
         </b-button>
       </div>
 <!--      Follow list button-->
       <div class="mb-2">
-        <b-button variant="warning" v-b-modal="'following-modal'" block>
+        <b-button id="profile-following-button" variant="warning" v-b-modal="'following-modal'" block>
           Following
           <b-badge>{{followingCounter}}</b-badge>
         </b-button>
       </div>
 <!--      Collection button-->
       <div>
-        <b-button variant="danger" v-b-modal="'collection-modal'" block>
+        <b-button id="profile-collection-button" variant="danger" v-b-modal="'collection-modal'" block>
           Collection
           <b-badge>{{collectCounter}}</b-badge>
         </b-button>

@@ -67,7 +67,7 @@ export default {
     }
   },
   created() {
-    document.title = 'UWSK - Message Box'
+    document.title = 'CampusLine - Message Box'
     window.addEventListener("resize", this.getHeight)
     this.getHeight()
   },

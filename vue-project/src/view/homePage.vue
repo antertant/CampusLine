@@ -34,7 +34,7 @@ export default {
     }
   },
   created() {
-    document.title = 'UWSK - Home'
+    document.title = 'CampusLine - Home'
   }
 }
 </script>

@@ -1,6 +1,7 @@
 <template>
   <b-card style="max-width: 50rem" class="mx-auto">
   <editor
+    :id="'my-tinymce-'+modName"
     v-model="sunHtml"
     @input="inputEmit"
     :init="{
@@ -55,7 +56,7 @@ import 'tinymce/plugins/fullscreen'
 export default {
   name: "richTextEditor",
   components: {'editor': Editor},
-  props:['textPipe'],
+  props:['textPipe', 'modName'],
   watch:{
     textPipe: {
       handler() {this.sunHtml = this.textPipe}

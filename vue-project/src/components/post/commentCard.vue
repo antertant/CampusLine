@@ -14,17 +14,20 @@
 <!--          likes & reply icon-->
           <b-col cols="auto">
 <!--            Comment Button-->
-            <b-button variant="white" size="sm"
+            <b-button variant="white"
+                      size="sm"
+                      :id="'comment-reply-'+comment_id"
                       v-b-modal="'reply-modal-'+comment_id+0">
               <b-icon icon="chat-left-text" variant="dark"></b-icon>
             </b-button>
 <!--            Child Component: reply input-->
             <reply-input :comment-id="comment_id"
+                         :post-id="postId"
                          :reply-id="0"
                          :from-user="comment_user"
-                         @rreply="pushReplyQuest"></reply-input>
+                         @r-reply="pushReplyQuest"/>
 <!--            Like Button-->
-            <b-button variant="white" @click="likeComment">
+            <b-button :id="'comment-like-'+comment_id" variant="white" @click="likeComment">
               <b-icon icon="hand-thumbs-up" v-if="!likePress"></b-icon>
               <b-icon variant="info" icon="hand-thumbs-up" v-if="likePress"></b-icon>
               <b-badge variant="light">{{ comment_likes + likeCount }}</b-badge>
@@ -61,6 +64,7 @@
 <!--      Child Component: comment reply card-->
       <comment-reply-card :reply-data="rp"
                           :comment-id="comment_id"
+                          :post-id="postId"
                           @rreply-event="pushReplyQuest"></comment-reply-card>
     </div>
   </b-card>
@@ -76,7 +80,7 @@ import ReplyInput from "@/components/post/replyInput";
 export default {
   name: "commentCard",
   components: {ReplyInput, CommentReplyCard},
-  props: ['commentData'],
+  props: ['commentData', 'postId'],
   data() {
     return {
       // comment_id: this.commentData.comment_id,
@@ -185,9 +189,8 @@ export default {
           console.log(failResponse)
         })
     },
-    pushReplyQuest() {
-      this.$emit('reply-event')
-      this.$nextTick()
+    pushReplyQuest(data) {
+      this.$emit('reply-event', data)
     },
     hideModal() {
       this.$refs['delete-comment-modal-'+this.comment_id+0].hide()

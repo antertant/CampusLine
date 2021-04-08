@@ -21,11 +21,11 @@
       <b-card>
         <b-form @submit="sendPost" @reset="resetPContent">
           <b-form-group :id="'hot-text-area'+modName">
-            <rich-text-editor :text-pipe="postContent" @rich-input-content="updatePContent" />
+            <rich-text-editor :id="'hot-text-editor-'+modName" :mod-name="modName" :text-pipe="postContent" @rich-input-content="updatePContent" />
           </b-form-group>
           <div class="mt-2 mb-0 float-right">
             <b-button class="shadow-sm" variant="danger" type="reset">Reset</b-button>
-            <b-button class="shadow-sm" variant="warning" type="submit">Post</b-button>
+            <b-button :id="'hot-text-submit-'+modName" class="shadow-sm" variant="warning" type="submit">Post</b-button>
           </div>
         </b-form>
       </b-card>

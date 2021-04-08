@@ -49,7 +49,7 @@ export default {
     }
   },
   created() {
-    document.title = 'UWSK - News Posts'
+    document.title = 'CampusLine - News Posts'
   },
   mounted() {
     this.getFollowPost()

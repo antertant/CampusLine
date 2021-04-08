@@ -5,11 +5,11 @@
      <b-col cols="auto" class="mx-3">
        <!--       Enter the module-->
        <div>
-         <hot-card-title :mod-name="hotData[0].module_name"/>
+         <hot-card-title id="lifeEnterButton" :mod-name="hotData[0].module_name"/>
        </div>
        <!--       module post list-->
        <b-card :style=innerCardStyle class="mb-3" no-body>
-         <hot-card-input v-if="currentUser" class="mt-2 mx-2" :mod-name="hotData[0].module_name" />
+         <hot-card-input id="hot-life-input" v-if="currentUser" class="mt-2 mx-2" :mod-name="hotData[0].module_name" />
          <post-card v-for="singlePost in hotData[0].posts"
                     :post-content="singlePost"
                     :key="singlePost.post_id"
@@ -18,7 +18,7 @@
      </b-col>
      <b-col cols="auto">
        <div>
-         <hot-card-title style="width: 55rem" mod-name="Knowledge"/>
+         <hot-card-title id="knowledgeEnterButton" style="width: 55rem" mod-name="Knowledge"/>
        </div>
         <b-tabs active-nav-item-class="font-weight-bold text-uppercase text-dark bg-white"
                 v-model="tabIndex"

@@ -1,39 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites errors="0"
-            failures="1"
-            tests="1">
+            failures="0"
+            tests="0">
 
   <testsuite name="homePage_test"
-    errors="0" failures="1" hostname="" id="" package="homePage_test" skipped="2"
-    tests="1" time="11.53" timestamp="">
-  
-    <testcase name="Correctly change hot posts tabs and enter the corresponding module page" classname="homePage_test" time="11.53" assertions="3">
-
-    
-
-      <failure message="Timed out while waiting for element &lt;#lifeEnterButton&gt; to be present for 5000 milliseconds. - expected &#34;visible&#34; but got: &#34;not found&#34; (5187ms)">    at Object.Correctly change hot posts tabs and enter the corresponding module page (F:\ECE_651\Project_dev\ece651-project\vue-project\e2e_test\homePage_test.js:8:8)
-    at processTicksAndRejections (internal/process/task_queues.js:93:5)</failure>
-
-    
-    </testcase>
+    errors="0" failures="0" hostname="" id="" package="homePage_test" skipped="0"
+    tests="0" time="0.000" timestamp="">
   
 
   
 
     
 
-  
-    
-    <testcase
-      name="Sticky header routing test" classname="homePage_test">
-      <skipped />
-    </testcase>
-    
-    <testcase
-      name=" Search function test " classname="homePage_test">
-      <skipped />
-    </testcase>
-    
   
   </testsuite>
 </testsuites>

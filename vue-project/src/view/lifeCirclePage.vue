@@ -24,18 +24,22 @@
           </b-list-group-item>
 
           <b-list-group-item v-if="currentUser !== ''" style="text-align: center">
-            <b-button variant="warning" :pressed="ownPosts" @click="ownPosts=true">Self Posts</b-button>
-            <b-button variant="warning" :pressed="!ownPosts" @click="ownPosts=false">All Posts</b-button>
+            <b-button id="life-self-button" variant="warning" :pressed="ownPosts" @click="ownPosts=true">Self Posts</b-button>
+            <b-button id="life-all-button" variant="warning" :pressed="!ownPosts" @click="ownPosts=false">All Posts</b-button>
           </b-list-group-item>
         </b-list-group>
       </b-collapse>
 
 <!--      post creator-->
-      <post-rich-input :module-name="null"/>
+      <post-rich-input v-if="!ownPosts" :module-name="null"/>
 
 <!--      post list-->
-      <div v-for="list in postList">
-        <post-card :post-content="list" :is-mod="true" class="mx-auto" />
+      <div id="life-post-list">
+        <post-card v-for="list in postList"
+                   :post-content="list"
+                   :is-mod="true"
+                   :key="list.post_id"
+                   class="mx-auto" />
       </div>
     </b-col>
     <b-col cols="auto">
@@ -109,7 +113,7 @@ export default {
     }
   },
   created() {
-    document.title = 'UWSK - Life Circle'
+    document.title = 'CampusLine - Life Circle'
   },
   mounted() {
     this.$store.dispatch("lifePostInfo/getlifePostfromServer")

@@ -119,11 +119,11 @@
             </b-button-group>
 <!--            Login popover for user-->
             <b-button-group vertical v-show="loginState">
-              <b-button class="mb-1" :to="'/profile='+loginName" variant="dark" style="text-align: left">
+              <b-button id="navBar-user-profile" class="mb-1" :to="'/profile='+loginName" variant="dark" style="text-align: left">
                 <b-icon icon="person" aria-hidden="true" variant="warning"></b-icon>
                 Profile
               </b-button>
-              <b-button @click="logout" variant="dark" style="text-align: left">
+              <b-button id="navBar-user-logout" @click="logout" variant="dark" style="text-align: left">
                 <b-icon icon="power" aria-hidden="true" variant="danger"></b-icon>
                 Logout
               </b-button>
@@ -141,11 +141,11 @@
               <b-form-select-option id="selectPost" value="searchpost">Post</b-form-select-option>
             </b-form-select>
 
-            <b-button variant="outline-dark"
+            <b-button variant="white"
                       id="searchButton"
                       class="my-2 my-sm-0"
                       type="submit">
-              <b-icon icon="search" variant="light" />
+              <b-icon icon="search" variant="dark" />
             </b-button>
           </b-nav-form>
         </b-navbar-nav>

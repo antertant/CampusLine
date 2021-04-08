@@ -38,7 +38,7 @@ export default {
     }
   },
   created() {
-    document.title = 'UWSK - Profile_' + this.profileUser
+    document.title = 'CampusLine - Profile_' + this.profileUser
     window.addEventListener("resize", this.getHeight)
     this.getHeight()
   },
