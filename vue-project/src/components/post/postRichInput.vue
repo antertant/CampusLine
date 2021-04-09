@@ -2,7 +2,7 @@
   <b-card class="border-secondary shadow" bg-variant="light">
     <b-form @submit="sendPost" @reset="resetPContent">
       <b-form-group id="test-area-1">
-        <rich-text-editor :mod-name="moduleName" :text-pipe="postContent" @rich-input-content="updatePContent" />
+        <rich-text-editor :own-flag="ownFlag" :mod-name="moduleName" :text-pipe="postContent" @rich-input-content="updatePContent" />
       </b-form-group>
       <div class="mt-2 mb-0 float-right">
         <b-button class="shadow-sm" variant="danger" type="reset">Reset</b-button>
@@ -21,7 +21,7 @@ import RichTextEditor from "@/components/rich-text/tinymceEditor";
 export default {
   name: "postRichInput",
   components: {RichTextEditor},
-  props: ['moduleName'],
+  props: ['moduleName', 'ownFlag'],
   data() {
     return {
       postContent: ''

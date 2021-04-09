@@ -24,6 +24,7 @@
                 v-model="tabIndex"
                 justified>
           <b-tab v-for="singleKnowModule in hotKnowData"
+                 :id="'knowledge-tab-'+singleKnowModule.module_name"
                  :key="singleKnowModule.module_name">
             <template #title>
               <b style="color: #000000">
@@ -32,6 +33,7 @@
             </template>
             <b-card :style=innerKnowCardStyle  no-body>
               <hot-card-input v-if="currentUser"
+                              :id="'hot-card-input-'+singleKnowModule.module_name"
                               class="mt-2 mx-2"
                               :mod-name="singleKnowModule.module_name" />
               <post-card v-for="singlePost in singleKnowModule.posts"

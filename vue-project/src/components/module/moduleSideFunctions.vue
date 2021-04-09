@@ -11,15 +11,15 @@
         ADMIN
       </template>
 <!--      Apply for manager-->
-      <b-button block variant="warning" v-if="role === 'user'" @click="applyAdmin">
+      <b-button :id="'manager-apply-'+moduleName" block variant="warning" v-if="role === 'user'" @click="applyAdmin">
         Apply
       </b-button>
 <!--      Retire from manager-->
-      <b-button block variant="danger" v-if="role === 'admin'" @click="retireAdmin">
+      <b-button :id="'manager-quit-'+moduleName" block variant="danger" v-if="role === 'admin'" @click="retireAdmin">
         Quit
       </b-button>
 <!--      Manage the module-->
-      <b-button block variant="warning" v-if="role === 'admin'"
+      <b-button :id="'manager-manage-'+moduleName" block variant="warning" v-if="role === 'admin'"
                 :to="'/module_management=' + moduleName">
         Manage
       </b-button>

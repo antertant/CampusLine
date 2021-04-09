@@ -36,6 +36,7 @@
 <!--            Delete Button-->
             <b-button v-b-modal="'delete-comment-modal-'+comment_id+0"
                       variant="white"
+                      :id="'comment-delete-'+comment_id"
                       v-if="current_user===comment_user">
               <b-icon icon="trash" variant="danger"></b-icon>
             </b-button>
@@ -46,8 +47,8 @@
                      centered>
               Are you sure to delete the comment?
               <template #modal-footer>
-                <b-button @click="hideModal">No</b-button>
-                <b-button @click="deleteComment" variant="danger">Yes</b-button>
+                <b-button id="comment-delete-no-button" @click="hideModal">No</b-button>
+                <b-button id="comment-delete-yes-button" @click="deleteComment" variant="danger">Yes</b-button>
               </template>
             </b-modal>
 

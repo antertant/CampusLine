@@ -14,13 +14,25 @@
       <b-collapse id="life-header-toggle" class="mb-2">
         <b-list-group>
 <!--        current administrators-->
-          <b-list-group-item>
-            <b>Current Administrator in this module:</b>
-            <span v-for="admin in adminList">{{ admin }} || </span>
-            <span v-if="adminList.length === 0">
-            There is no administrator in this module currently.
-              <b-icon icon="exclamation-octagon"></b-icon>
-            </span>
+          <b-list-group-item id="admin-list-life">
+            <div v-if="adminList.length !== 0" style="text-align: center">
+              <b><em>Current Administrators in this module:</em></b>
+              <b-button v-for="admin in adminList"
+                        style="text-align: center;"
+                        variant="dark"
+                        :to="'/profile='+admin"
+                        class="mx-1">
+                @{{ admin }}
+              </b-button>
+            </div>
+            <div style="text-align: center" v-else>
+              <b>
+                <em>
+                  There is no administrator in this module currently.
+                  <b-icon icon="exclamation-octagon"></b-icon>
+                </em>
+              </b>
+            </div>
           </b-list-group-item>
 
           <b-list-group-item v-if="currentUser !== ''" style="text-align: center">
@@ -31,7 +43,7 @@
       </b-collapse>
 
 <!--      post creator-->
-      <post-rich-input v-if="!ownPosts" :module-name="null"/>
+      <post-rich-input :own-flag="ownPosts" module-name="life"/>
 
 <!--      post list-->
       <div id="life-post-list">

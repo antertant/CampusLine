@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="min-width: 50rem">
       <post-card v-for="selfPost in selfPostList"
                  :key="selfPost.post_id"
                  :post-content="selfPost" />
