@@ -139,8 +139,7 @@
 
   <select id="getallnewchat" resultType="com.example.project.entity.ChatMessage">
     select * from  chat_message a
-    where a.send_time in (select max(send_time) date from chat_message group by from_user)
-      and to_user=#{username}
+    where a.send_time in (select max(send_time) date from chat_message where to_user=#{username} group by from_user)
     order by send_time desc
   </select>
 
