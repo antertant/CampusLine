@@ -131,6 +131,44 @@
     select username,email,module_admin from user_info
     where username!="systemadmin"
   </select>
+
+  <insert id="insertChat" parameterType="com.example.project.entity.ChatMessage">
+    insert into chat_message(from_user,to_user,content,send_time)
+    values (#{chatmessage.fromUser},#{chatmessage.toUser},#{chatmessage.content},UTC_TIMESTAMP)
+  </insert>
+
+  <select id="getunreadlist" resultType="com.example.project.entity.ChatMessage">
+    select message_id,from_user,to_user,content,send_time from chat_message
+    where to_user=#{username} and unread="1"
+    order by send_time desc
+  </select>
+
+  <select id="countunreadchat_all" resultType="java.lang.Integer">
+    select count(1) from chat_message
+    where to_user=#{username} and unread="1"
+    order by send_time desc
+  </select>
+
+  <select id="countunreadchat" resultType="java.lang.Integer">
+    select count(1) from chat_message
+    where to_user=#{username} and unread="1" and from_user=#{from_user}
+    order by send_time desc
+  </select>
+
+  <select id="getchat" resultType="com.example.project.entity.ChatMessage">
+    select message_id,from_user,to_user,content,send_time,unread from chat_message
+    where (to_user=#{username} and from_user=#{from_user}) or (to_user=#{from_user} and from_user=#{username})
+    order by send_time desc
+  </select>
+
+  <update id="setunread">
+    update chat_message
+    set unread=0
+    where to_user=#{username}
+  </update>
+
+
+
 <!--  <insert id="insert" parameterType="com.example.project.entity.User">-->
 <!--    insert into user_info (username, password)-->
 <!--    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR})-->
