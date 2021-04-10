@@ -42,7 +42,7 @@ public interface UserMapper {
 
     List<User> getUsers();
     void insertChat(@Param(value = "chatmessage")ChatMessage chatMessage);
-    List<ChatMessage> getunreadlist(@Param(value = "username")String username);
+    List<ChatMessage> getallnewchat(@Param(value = "username")String username);
     int countunreadchat_all(@Param(value = "username")String username);
     int countunreadchat(@Param(value = "username")String username,@Param(value = "from_user")String from_user);
     List<ChatMessage> getchat(@Param(value = "username")String username,@Param(value = "from_user")String from_user);
