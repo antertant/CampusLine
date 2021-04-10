@@ -1,21 +1,42 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : mydatabase
+ Source Server         : Mysql
  Source Server Type    : MySQL
- Source Server Version : 80011
+ Source Server Version : 50515
  Source Host           : localhost:3306
  Source Schema         : project
 
  Target Server Type    : MySQL
- Target Server Version : 80011
+ Target Server Version : 50515
  File Encoding         : 65001
 
- Date: 25/03/2021 07:47:22
+ Date: 10/04/2021 14:10:59
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for chat_message
+-- ----------------------------
+DROP TABLE IF EXISTS `chat_message`;
+CREATE TABLE `chat_message`  (
+  `message_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '聊天内容id',
+  `from_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '发送者',
+  `to_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '接收者',
+  `content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '聊天内容',
+  `send_time` datetime NOT NULL COMMENT '发送时间',
+  `unread` int(11) NOT NULL DEFAULT 1 COMMENT '消息类型',
+  PRIMARY KEY (`message_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of chat_message
+-- ----------------------------
+INSERT INTO `chat_message` VALUES (17, 'gang', 'meng', 'string', '2021-04-09 06:41:11', 1);
+INSERT INTO `chat_message` VALUES (18, 'meng', 'gang', 'sss', '2021-04-09 15:22:07', 1);
+INSERT INTO `chat_message` VALUES (19, 'gang', 'Mao', 'dsss', '2021-04-09 15:22:23', 1);
 
 -- ----------------------------
 -- Table structure for comment_like
@@ -24,7 +45,7 @@ DROP TABLE IF EXISTS `comment_like`;
 CREATE TABLE `comment_like`  (
   `comment_id` int(11) NOT NULL,
   `clike_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `clike_time` datetime(0) NULL DEFAULT NULL,
+  `clike_time` datetime NULL DEFAULT NULL,
   `viewed` int(11) NULL DEFAULT 0,
   INDEX `like_user`(`clike_user`) USING BTREE,
   INDEX `comment_id`(`comment_id`) USING BTREE,
@@ -50,7 +71,7 @@ CREATE TABLE `comment_reply`  (
   `reply_id` int(11) NOT NULL AUTO_INCREMENT,
   `comment_id` int(11) NOT NULL,
   `creply_content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `creply_time` datetime(0) NULL DEFAULT NULL,
+  `creply_time` datetime NULL DEFAULT NULL,
   `from_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `to_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `viewed` int(11) NULL DEFAULT 0,
@@ -119,7 +140,7 @@ CREATE TABLE `module_creation`  (
   `module_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `request_count` int(11) NULL DEFAULT 1,
   PRIMARY KEY (`module_name`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of module_creation
@@ -137,7 +158,7 @@ CREATE TABLE `post`  (
   `module_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `post_content` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   `post_author` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `post_createtime` datetime(0) NULL DEFAULT NULL,
+  `post_createtime` datetime NULL DEFAULT NULL,
   `post_likes` int(11) NULL DEFAULT 0 COMMENT 'number of like',
   `post_comments` int(11) NULL DEFAULT 0 COMMENT 'number of comment',
   `post_collections` int(11) NULL DEFAULT 0 COMMENT 'number of collection',
@@ -190,7 +211,7 @@ CREATE TABLE `post_comment`  (
   `post_id` int(11) NOT NULL,
   `comment_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `comment_content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `comment_time` datetime(0) NULL DEFAULT NULL,
+  `comment_time` datetime NULL DEFAULT NULL,
   `viewed` int(11) NULL DEFAULT 0,
   PRIMARY KEY (`comment_id`) USING BTREE,
   INDEX `comment_user`(`comment_user`) USING BTREE,
@@ -215,7 +236,7 @@ DROP TABLE IF EXISTS `post_like`;
 CREATE TABLE `post_like`  (
   `post_id` int(11) NOT NULL,
   `like_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'user that likes this post',
-  `like_time` datetime(0) NULL DEFAULT NULL,
+  `like_time` datetime NULL DEFAULT NULL,
   `viewed` int(11) NULL DEFAULT 0,
   PRIMARY KEY (`post_id`, `like_user`) USING BTREE,
   INDEX `like_user`(`like_user`) USING BTREE,
@@ -276,6 +297,7 @@ CREATE TABLE `user_info`  (
 -- Records of user_info
 -- ----------------------------
 INSERT INTO `user_info` VALUES ('gang', '123', '1', 'springboot');
+INSERT INTO `user_info` VALUES ('h349wu', '123456789', 'h349wu@uwaterloo.ca', NULL);
 INSERT INTO `user_info` VALUES ('Mao', '1234', '', NULL);
 INSERT INTO `user_info` VALUES ('meng', '123', '', 'life');
 INSERT INTO `user_info` VALUES ('ppp', '123', ' ', NULL);
