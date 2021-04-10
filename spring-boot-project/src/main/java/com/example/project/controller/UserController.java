@@ -166,11 +166,11 @@ public class UserController {
     }
 
     @CrossOrigin
-    @ApiOperation(value = "get unread chat list")
-    @RequestMapping(value = "/api/getunreadchatlist", method = RequestMethod.GET)
+    @ApiOperation(value = "get all newest chat list")
+    @RequestMapping(value = "/api/getallnewestchat", method = RequestMethod.GET)
     @ResponseBody
-    public Result getunreadchatlist(@RequestParam("username")String username){
-        List<ChatMessage> chatMessages= userMapper.getunreadlist(username);
+    public Result getallnewestchat(@RequestParam("username")String username){
+        List<ChatMessage> chatMessages= userMapper.getallnewchat(username);
         return Result.ok(chatMessages);
     }
 

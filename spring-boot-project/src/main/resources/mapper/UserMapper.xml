@@ -137,9 +137,10 @@
     values (#{chatmessage.fromUser},#{chatmessage.toUser},#{chatmessage.content},UTC_TIMESTAMP)
   </insert>
 
-  <select id="getunreadlist" resultType="com.example.project.entity.ChatMessage">
-    select message_id,from_user,to_user,content,send_time from chat_message
-    where to_user=#{username} and unread="1"
+  <select id="getallnewchat" resultType="com.example.project.entity.ChatMessage">
+    select * from  chat_message a
+    where a.send_time in (select max(send_time) date from chat_message group by from_user)
+      and to_user=#{username}
     order by send_time desc
   </select>
 
