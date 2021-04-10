@@ -134,7 +134,7 @@
 
   <insert id="insertChat" parameterType="com.example.project.entity.ChatMessage">
     insert into chat_message(from_user,to_user,content,send_time)
-    values (#{chatmessage.fromUser},#{chatmessage.toUser},#{chatmessage.content},UTC_TIMESTAMP)
+    values (#{chatmessage.from_user},#{chatmessage.to_user},#{chatmessage.content},UTC_TIMESTAMP)
   </insert>
 
   <select id="getunreadlist" resultType="com.example.project.entity.ChatMessage">

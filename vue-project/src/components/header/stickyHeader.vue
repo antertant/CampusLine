@@ -68,27 +68,47 @@
             </b>
             <b-badge variant="danger" id="message-badge"
                      v-if="newsCounter.cnewpostcomment+newsCounter.cnewcommentreply
-            +newsCounter.cnewlpost+newsCounter.cnewlcomment!==0 && loginState">
+            +newsCounter.cnewlpost+newsCounter.cnewlcomment+newChatCounter!==0 && loginState">
               {{ newsCounter.cnewpostcomment+newsCounter.cnewcommentreply
-            +newsCounter.cnewlpost+newsCounter.cnewlcomment }}
+            +newsCounter.cnewlpost+newsCounter.cnewlcomment+newChatCounter }}
             </b-badge>
           </b-nav-item>
           <b-popover target="message-popover" placement="buttom" triggers="focus">
             <b-list-group style="font-size: medium; color: black">
-              <b-list-group-item id="message-comment-popover" to="/messages=comment" class="border-0 py-2">
+
+              <b-list-group-item id="message-comment-popover"
+                                 to="/messages=comment"
+                                 class="border-0 py-2">
                 Comment
-                <b-badge id="message-comment-badge" variant="danger" v-if="newsCounter.cnewpostcomment+newsCounter.cnewcommentreply!==0 && loginState">
+                <b-badge id="message-comment-badge"
+                         variant="danger"
+                         v-if="newsCounter.cnewpostcomment+newsCounter.cnewcommentreply!==0 && loginState">
                 {{newsCounter.cnewpostcomment+newsCounter.cnewcommentreply}}
                 </b-badge>
               </b-list-group-item>
-<!--              <b-list-group-item to="/messages=repost" class="border-0 py-2">Repost</b-list-group-item>-->
-              <b-list-group-item id="message-like-popover" to="/messages=like" class="border-0 py-2">
+
+              <b-list-group-item id="message-like-popover"
+                                 to="/messages=like"
+                                 class="border-0 py-2">
                 Like
-                <b-badge id="message-like-badge" variant="danger" v-if="newsCounter.cnewlpost+newsCounter.cnewlcomment!==0 && loginState">
+                <b-badge id="message-like-badge"
+                         variant="danger"
+                         v-if="newsCounter.cnewlpost+newsCounter.cnewlcomment!==0 && loginState">
                   {{newsCounter.cnewlpost+newsCounter.cnewlcomment}}
                 </b-badge>
               </b-list-group-item>
-<!--              <b-list-group-item to="/messages=message" class="border-0 py-2">Message</b-list-group-item>-->
+
+              <b-list-group-item id="message-chat-popover"
+                                 to="/messages=chat"
+                                 class="border-0 py-2">
+                Chat
+                <b-badge id="message-chat-badge"
+                         variant="danger"
+                         v-if="newChatCounter!==0 && loginState">
+                  {{newChatCounter}}
+                </b-badge>
+              </b-list-group-item>
+
             </b-list-group>
           </b-popover>
         </b-navbar-nav>
@@ -173,7 +193,8 @@ export default {
     ...mapGetters({
       loginName: "loginInfo/getLUName",
       loginState: "loginInfo/getLoginState",
-      newsCounter: "newMessage/getNewMessageCount"
+      newsCounter: "newMessage/getNewMessageCount",
+      newChatCounter: 'newMessage/getNewChatMessageCount'
     })
   },
   methods: {
@@ -198,9 +219,11 @@ export default {
   mounted() {
     if(this.loginState){
       this.$store.dispatch("newMessage/getNewMessageCountFS", this.loginName)
+      this.$store.dispatch('newMessage/getNewChatMessageCountFS', this.loginName)
       // update message notifications every 5 minutes
       this.interval = setInterval(()=>{
         this.$store.dispatch("newMessage/getNewMessageCountFS", this.loginName)
+        this.$store.dispatch('newMessage/getNewChatMessageCountFS', this.loginName)
       }, 1000*60*5)
     }
     else{

@@ -18,10 +18,11 @@
             <div v-if="adminList.length !== 0" style="text-align: center">
               <b><em>Current Administrators in this module:</em></b>
               <b-button v-for="admin in adminList"
-                      style="text-align: center;"
-                      variant="dark"
-                      :to="'/profile='+admin"
-                      class="mx-1">
+                        :key="admin[0]"
+                        style="text-align: center;"
+                        variant="dark"
+                        :to="'/profile='+admin"
+                        class="mx-1">
               @{{ admin }}
               </b-button>
             </div>
