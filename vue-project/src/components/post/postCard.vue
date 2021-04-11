@@ -8,7 +8,9 @@
     v-if="showPost" no-body>
 <!--    Pinned Bar-->
     <b-card style="border-radius: 14px 14px 0 0;" no-body>
-      <b-button variant="white" :disabled="!admin || !postContent.if_top" @click="$bvModal.show('cancel-top-'+postId)">
+      <b-button :id="'unpin-button-'+postContent.post_id"
+                variant="white" :disabled="!admin || !postContent.if_top"
+                @click="$bvModal.show('cancel-top-'+postId)">
         <b><em v-if="postContent.module_name===null">Life</em></b>
         <b><em>{{ postContent.module_name }}</em></b>
         <span v-if="postContent.if_top & isMod">
@@ -21,8 +23,12 @@
         Are you sure to cancel the pin?
       </b>
       <template #modal-footer>
-        <b-button @click="$bvModal.hide('cancel-top-'+postId)">No</b-button>
-        <b-button @click="pinPostToTop(); $bvModal.hide('cancel-top-'+postId)"
+        <b-button id="unpin-cancel-button"
+                  @click="$bvModal.hide('cancel-top-'+postId)">
+          No
+        </b-button>
+        <b-button id="unpin-confirm-button"
+                  @click="pinPostToTop(); $bvModal.hide('cancel-top-'+postId)"
                   variant="info">
           Yes
         </b-button>
@@ -30,7 +36,9 @@
     </b-modal>
 
     <b-card style="border-radius: 0" v-if="admin & !postContent.if_top" no-body>
-      <b-button variant="white" @click="$bvModal.show('to-top-'+postId)">
+      <b-button :id="'pin-button-'+postContent.post_id"
+                variant="white"
+                @click="$bvModal.show('to-top-'+postId)">
         <b-icon variant="success" icon="unlock-fill"/> CLICK TO PIN
       </b-button>
     </b-card>
@@ -39,8 +47,12 @@
         Are you sure to pin the post?
       </b>
       <template #modal-footer>
-        <b-button @click="$bvModal.hide('to-top-'+postId)">No</b-button>
-        <b-button @click="pinPostToTop(); $bvModal.hide('to-top-'+postId)"
+        <b-button id="pin-cancel-button"
+                  @click="$bvModal.hide('to-top-'+postId)">
+          No
+        </b-button>
+        <b-button id="pin-confirm-button"
+                  @click="pinPostToTop(); $bvModal.hide('to-top-'+postId)"
                   variant="info">
           Yes
         </b-button>

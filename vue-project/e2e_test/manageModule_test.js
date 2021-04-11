@@ -30,6 +30,20 @@ module.exports = {
       .click('#manager-manage-life')
       .waitForElementVisible('#module-intro-input-life')
 
+    // pin post test
+      .click('#pin-button-15')
+      .waitForElementVisible('#to-top-15')
+      .click('#pin-confirm-button')
+      .assert.visible('#pin-button-15')
+      .click('#unpin-button-12')
+      .waitForElementVisible('#cancel-top-12')
+      .click('#unpin-confirm-button')
+      .assert.visible('#pin-button-12')
+      .click('#pin-button-12')
+      .waitForElementVisible('#to-top-12')
+      .click('#pin-confirm-button')
+      .assert.visible('#unpin-button-12')
+
     // delete normal user's post
       .assert.visible('#postCard_12')
       .click('#delete-post-button-12')
