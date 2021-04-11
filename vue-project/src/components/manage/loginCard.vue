@@ -1,6 +1,10 @@
 <template>
-  <div>
-    <b-card style="max-width: 28rem; margin-top: 8rem" header-tag="loginHeader" class="mx-auto">
+  <div id="loginCard">
+    <b-card style="max-width: 28rem;"
+            header-tag="loginHeader"
+            header-bg-variant="dark"
+            header-text-variant="light"
+            class="mx-auto border-dark">
 
       <b-alert v-model="showLoginError" variant="danger" dismissible fade>
         Incorrect username/password.
@@ -9,20 +13,19 @@
 <!--      Card Header-->
       <template #header>
         <h5 class="mb-0">
-          <b-icon icon="card-checklist" variant="primary"></b-icon>
+          <b-icon icon="card-checklist" variant="warning"></b-icon>
           Login
         </h5>
       </template>
       <b-form @submit="onSubmit" @reset="onReset" v-if="show">
         <b-form-group
           id="input-group-1"
-          label="Username:"
+          label="Username / Email Address:"
           label-for="input-1"
         >
-
 <!--          Username/Email input-->
           <b-form-input
-            id="input-1"
+            id="input-username"
             v-model="loginInfo.username"
             type="text"
             placeholder="Enter email address or username"
@@ -33,7 +36,7 @@
 <!--        Password input-->
         <b-form-group id="input-group-2" label="Password" label-for="input-2">
           <b-form-input
-            id="input-2"
+            id="input-password"
             v-model="loginInfo.password"
             type="password"
             placeholder="Enter password"
@@ -46,9 +49,9 @@
         </div>
 
 <!--        Buttons-->
-        <b-button type="submit" variant="primary">Login</b-button>
-        <b-button type="reset" variant="warning">Reset</b-button>
-        <b-button href="/register" variant="info" style="float:right;">Register</b-button>
+        <b-button id="loginSubmit" type="submit" variant="warning">Login</b-button>
+        <b-button id="loginReset" type="reset" variant="dark">Reset</b-button>
+        <b-button id="loginRegister" href="/register" variant="danger" style="float:right;">Register</b-button>
       </b-form>
     </b-card>
 
@@ -56,6 +59,8 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
 name: "loginCard",
   data(){
@@ -69,7 +74,14 @@ name: "loginCard",
   methods:{
     onSubmit(event) {
       event.preventDefault()
-      // http request-url&params
+      let emailReg = /^[a-zA-Z0-9_-]+@uwaterloo\.ca$/
+      if(emailReg.test(this.loginInfo.username)){
+        this.loginWithEmail()
+        return
+      }
+      this.loginWithName()
+    },
+    loginWithName() {
       this.$axios
         .post('/login',{
           username:this.loginInfo.username,
@@ -81,11 +93,41 @@ name: "loginCard",
             //this.responseResult = JSON.stringify(successResponse.data)
             this.$router.replace({path:'/home'})
             this.$store.commit('loginInfo/setLUName', this.loginInfo.username)
+            this.$nextTick(()=>{
+              this.$store.dispatch("newMessage/getNewMessageCountFS", this.loginInfo.username)
+            })
           }
           else{
             this.showLoginError = true
             this.loginInfo.username = ''
             this.loginInfo.password = ''
+            this.loginInfo.email = ''
+          }
+        })
+        .catch(failResponse=>{
+          console.log(failResponse)
+        })
+    },
+    loginWithEmail() {
+      this.$axios
+        .post('/login_mail', {
+          email:this.loginInfo.username,
+          password:this.loginInfo.password
+        })
+        .then(response=>{
+          console.log(response)
+          if(response.data.code === 200){
+            this.$router.replace({path:'/home'})
+            this.$store.commit('loginInfo/setLUName', response.data.data.username)
+            this.$nextTick(()=>{
+              this.$store.dispatch("newMessage/getNewMessageCountFS", response.data.data.username)
+            })
+          }
+          else{
+            this.showLoginError = true
+            this.loginInfo.username = ''
+            this.loginInfo.password = ''
+            this.loginInfo.email = ''
           }
         })
         .catch(failResponse=>{

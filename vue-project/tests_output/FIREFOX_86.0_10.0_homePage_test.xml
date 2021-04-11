@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="1"
+            tests="1">
+
+  <testsuite name="homePage_test"
+    errors="0" failures="1" hostname="" id="" package="homePage_test" skipped="0"
+    tests="1" time="7.112" timestamp="">
+  
+    <testcase name="Sticky header routing test without sign in" classname="homePage_test" time="7.112" assertions="2">
+
+      <failure message="Timed out while waiting for element &lt;[aria-label=newspaper]&gt; to be present for 5000 milliseconds. - expected &#34;found&#34; but got: &#34;not found&#34; (5341ms)">    at Object.Sticky header routing test without sign in (F:\ECE_651\Project_dev\ece651-project\vue-project\e2e_test\homePage_test.js:55:8)
+    at processTicksAndRejections (internal/process/task_queues.js:93:5)</failure>
+
+    
+    </testcase>
+  
+
+  
+
+    
+
+  
+  </testsuite>
+</testsuites>

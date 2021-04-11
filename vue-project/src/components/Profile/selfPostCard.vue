@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <div v-for="selfPost in selfPostList" key="1">
-      <post-card :post-content="selfPost"></post-card>
-    </div>
+  <div style="min-width: 50rem">
+      <post-card v-for="selfPost in selfPostList"
+                 :key="selfPost.post_id"
+                 :post-content="selfPost" />
   </div>
 </template>
 
@@ -26,8 +26,7 @@ export default {
   methods: {
     getselfPostList() {
       axios
-        .get('/getselfposts', {params:{
-            module_name: 'life',
+        .get('/getpostbyauthor', {params:{
             username: this.profileUser}})
         .then(response=>{
           console.log(response)

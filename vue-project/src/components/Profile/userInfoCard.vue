@@ -1,8 +1,13 @@
 <template>
-  <b-card align="center" class="shadow" bg-variant="light" style="min-width: 13rem">
+  <b-card body-bg-variant="light"
+          body-text-variant="dark"
+          align="center"
+          class="shadow border-white"
+          style="min-width: 13rem; border-radius: 6px">
 <!--    Avatar-->
 <!--    follow user-->
     <b-avatar :badge-variant="avColor"
+              id="profile-avatar"
               button
               @click="followUser"
               v-if="!sameUser">
@@ -20,24 +25,28 @@
     <div v-if="sameUser">
 <!--      Follower list button-->
       <div class="mb-2">
-        <b-button variant="info" v-b-modal="'follower-modal'" block>
+        <b-button id="profile-follower-button" variant="warning" v-b-modal="'follower-modal'" block>
           Follower
           <b-badge>{{followerCounter}}</b-badge>
         </b-button>
       </div>
 <!--      Follow list button-->
       <div class="mb-2">
-        <b-button variant="info" v-b-modal="'following-modal'" block>
+        <b-button id="profile-following-button" variant="warning" v-b-modal="'following-modal'" block>
           Following
           <b-badge>{{followingCounter}}</b-badge>
         </b-button>
       </div>
 <!--      Collection button-->
       <div>
-        <b-button variant="success" v-b-modal="'collection-modal'" block>
+        <b-button id="profile-collection-button" variant="danger" v-b-modal="'collection-modal'" block>
           Collection
-          <b-badge>5</b-badge>
+          <b-badge>{{collectCounter}}</b-badge>
         </b-button>
+      </div>
+<!--      Change password-->
+      <div>
+        <a :href="'change_password='+currentUser">Change Password</a>
       </div>
     </div>
 
@@ -45,16 +54,22 @@
     <div v-if="!sameUser">
 <!--      Follower list button-->
       <div class="mb-2">
-        <b-button variant="info" v-b-modal="'follower-modal'" block>
+        <b-button variant="dark" v-b-modal="'follower-modal'" block>
           Follower
-          <b-badge>{{followerCounter}}</b-badge>
+          <b-badge variant="warning">{{followerCounter}}</b-badge>
         </b-button>
       </div>
 <!--      Follow list button-->
-      <div>
-        <b-button variant="info" v-b-modal="'following-modal'" block>
+      <div class="mb-2">
+        <b-button variant="dark" v-b-modal="'following-modal'" block>
           Following
-          <b-badge>{{followingCounter}}</b-badge>
+          <b-badge variant="warning">{{followingCounter}}</b-badge>
+        </b-button>
+      </div>
+<!--      Send message button-->
+      <div>
+        <b-button variant="dark" @click="showChatModal()" block>
+          Chat
         </b-button>
       </div>
     </div>
@@ -62,7 +77,7 @@
 <!--    Modals-->
 <!--    Follower List-->
     <b-modal id="follower-modal"
-             hide-backdrop
+
              content-class="shadow"
              hide-footer centered lazy>
       <template #modal-header>
@@ -73,7 +88,7 @@
 <!--    Following List-->
     <b-modal id="following-modal"
              ref="following-modal"
-             hide-backdrop
+
              content-class="shadow"
              hide-footer centered lazy>
       <template #modal-header>
@@ -83,7 +98,7 @@
     </b-modal>
 <!--    Collection List-->
     <b-modal id="collection-modal"
-             hide-backdrop
+
              content-class="shadow"
              size="lg"
              scrollable
@@ -93,6 +108,11 @@
       </template>
       <collection-card :profile-user="profileUser"></collection-card>
     </b-modal>
+<!--    Chat windows-->
+    <chat-item-modal :from-user="profileUser"
+                     :to-user="currentUser"
+                     :user-name="currentUser"
+                     v-if="chatModalFlag" />
   </b-card>
 </template>
 
@@ -102,17 +122,21 @@ import axios from "axios";
 import FollowerCard from "@/components/Profile/followerCard";
 import FollowingCard from "@/components/Profile/followingCard";
 import CollectionCard from "@/components/Profile/collectionCard";
+import UpdatePasswordCard from "@/components/manage/updatePasswordCard";
+import ChatItemModal from "@/components/messages/chatItemModal";
 
 export default {
   name: "userInfoCard",
-  components: {CollectionCard, FollowingCard, FollowerCard},
+  components: {ChatItemModal, UpdatePasswordCard, CollectionCard, FollowingCard, FollowerCard},
   props: ['profileUser'],
   data() {
     return{
       followed: false,
-      avColor: "primary",
+      avColor: "warning",
       followerCounter: 0,
-      followingCounter: 0
+      followingCounter: 0,
+      collectCounter: 0,
+      chatModalFlag: false
     }
   },
   computed: {
@@ -127,9 +151,30 @@ export default {
     profileUser() {
       this.getFollowingCount()
       this.getFollowerCount()
+      this.getCollectCount()
+      this.isFollowed()
     }
   },
   methods: {
+    isFollowed() {
+      axios
+        .get('/isfollowed', {params:{
+            username: this.currentUser,
+            follower: this.profileUser
+          }})
+        .then(response=>{
+          console.log(response)
+          if(response.data.code === 200)
+            if(response.data.data === 1){
+              this.followed = true
+              this.avColor = "danger"
+            }
+            else {
+              this.followed = false
+              this.avColor = "warning"
+            }
+        })
+    },
     followUser() {
       axios
         .post('/follow', null, {params:{
@@ -140,11 +185,11 @@ export default {
           if(response.data.code === 200){
             if(response.data.data === "follow successfully"){
               this.followed = true
-              this.avColor = "success"
+              this.avColor = "danger"
             }
             if(response.data.data === "cancel follow successfully"){
               this.followed = false
-              this.avColor = "primary"
+              this.avColor = "warning"
             }
           }
         })
@@ -176,6 +221,18 @@ export default {
           console.log(failResponse)
         })
     },
+    getCollectCount() {
+      axios
+        .get('/countcollects', {params:{username: this.profileUser}})
+        .then(response=>{
+          console.log(response)
+          if(response.data.code === 200)
+            this.collectCounter = response.data.data
+        })
+        .catch(failResponse=>{
+          console.log(failResponse)
+        })
+    },
     hideModal(ref) {
       this.$nextTick(()=>{
         this.$bvModal.hide(ref)
@@ -183,19 +240,23 @@ export default {
       this.followed = false
       this.avColor = "primary"
     },
-    // hideCollectionModal() {
-    //   this.$nextTick(()=>{
-    //     this.$bvModal.hide('collection-modal')
-    //   })
-    //   this.followed = false
-    //   this.avColor = "primary"
-    // }
+    showChatModal() {
+      this.chatModalFlag = true
+      this.$nextTick(()=>{
+        this.$bvModal.show('chat-messenger'+this.profileUser)
+      })
+    }
   },
   mounted() {
+    this.$root.$on('bv::modal::hide', (bvEvent, modalId) => {
+      this.chatModalFlag = false
+    })
     this.followed = false
     this.avColor = "primary"
     this.getFollowingCount()
     this.getFollowerCount()
+    this.getCollectCount()
+    this.isFollowed()
   }
 }
 </script>

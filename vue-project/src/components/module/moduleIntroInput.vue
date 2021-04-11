@@ -1,8 +1,11 @@
 <template>
-  <b-card class="border-secondary shadow" bg-variant="light">
-    <template #header>
-      <h3>Edit Introduction of {{ moduleName.toUpperCase() }} Module</h3>
-    </template>
+  <b-card :id="'module-intro-input-'+moduleName" class="border-light shadow-sm" bg-variant="light">
+    <b-card-header class="mb-2" style="text-align: center">
+      <h3>Edit Introduction of {{ String(moduleName).toUpperCase() }} Module</h3>
+    </b-card-header>
+<!--    <template #header>-->
+<!--      <h3>Edit Introduction of {{ moduleName.toUpperCase() }} Module</h3>-->
+<!--    </template>-->
     <b-card-text>
       <h5>Old Intro:</h5>
       {{ moduleIntro }}
@@ -10,14 +13,15 @@
     <b-form @submit="sendIntro" @reset="resetIContent">
       <b-form-group id="test-area-1">
         <b-form-textarea placeholder="Write the Introduction..."
+                         :id="'module-intro-input-textarea-'+moduleName"
                          rows="5"
                          v-model="introContent"
                          required>
         </b-form-textarea>
       </b-form-group>
       <div class="mt-2 mb-0 float-right">
-        <b-button class="shadow-sm" variant="warning" type="reset">Reset</b-button>
-        <b-button class="shadow-sm" variant="primary" type="submit">Post</b-button>
+        <b-button id="module-intro-input-button-reset" class="shadow-sm" variant="warning" type="reset">Reset</b-button>
+        <b-button id="module-intro-input-button-post" class="shadow-sm" variant="primary" type="submit">Post</b-button>
       </div>
     </b-form>
   </b-card>

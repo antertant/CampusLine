@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="1"
+            failures="0"
+            tests="0">
+
+  <testsuite name="test"
+    errors="1" failures="0" hostname="" id="" package="test" skipped="1"
+    tests="0" time="0.000" timestamp="">
+  
+
+  
+    <system-err>
+        Error: An error occurred while retrieving a new session
+       at endReadableNT (internal/streams/readable.js:1327:12)
+       at processTicksAndRejections (internal/process/task_queues.js:80:21)
+    </system-err>
+  
+
+    
+    <error message="An error occurred while retrieving a new session"><![CDATA[
+      Error: An error occurred while retrieving a new session
+    at WebdriverProtocol.handleSessionCreateError (F:\ECE_651\Project_dev\ece651-project\vue-project\node_modules\nightwatch\lib\transport\transport.js:103:15)
+    at HttpRequest.&lt;anonymous&gt; (F:\ECE_651\Project_dev\ece651-project\vue-project\node_modules\nightwatch\lib\transport\transport.js:168:16)
+    at HttpRequest.emit (events.js:315:20)
+    at HttpResponse.&lt;anonymous&gt; (F:\ECE_651\Project_dev\ece651-project\vue-project\node_modules\nightwatch\lib\http\request.js:142:19)
+    at HttpResponse.emit (events.js:315:20)
+    at IncomingMessage.&lt;anonymous&gt; (F:\ECE_651\Project_dev\ece651-project\vue-project\node_modules\nightwatch\lib\http\response.js:58:14)
+    at IncomingMessage.emit (events.js:327:22)
+    at endReadableNT (internal/streams/readable.js:1327:12)
+    at processTicksAndRejections (internal/process/task_queues.js:80:21)
+      ]]></error>  
+
+  
+    
+    <testcase
+      name="Demo test ecosia.org" classname="test">
+      <skipped />
+    </testcase>
+    
+  
+  </testsuite>
+</testsuites>

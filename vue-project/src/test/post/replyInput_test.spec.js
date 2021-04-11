@@ -1,18 +1,18 @@
-import { shallowMount, createLocalVue, mount } from "@vue/test-utils";
+import {shallowMount, createLocalVue} from "@vue/test-utils";
 import {expect} from "chai";
 import Vuex from "vuex";
+import replyInput from "@/components/post/replyInput";
 import VueRouter from "vue-router";
-import commentCard from "@/components/post/commentCard";
 import moment from "moment";
 
 const localVue = createLocalVue();
 
 localVue.use(Vuex, VueRouter, moment);
 
-describe('commentCard.vue', () =>{
+describe('replyInput.vue', () => {
   let getters;
   let store;
-  let name = ''
+  let name = 'testUser'
 
   beforeEach(() => {
     // Contruct virtual vuex
@@ -23,13 +23,14 @@ describe('commentCard.vue', () =>{
     store = new Vuex.Store({
       getters
     })
-
   })
 
-  it('cc test', async () => {
-    const wrapper = mount(commentCard, {store, localVue,
-      propsData: {
-        commentData: {post_createtime: 0}
-      }});
+  it('reset works well', ()=>{
+    const wrapper = shallowMount(replyInput, {store, localVue})
+    wrapper.vm.postReplyContent = 'testContent'
+    wrapper.vm.resetCModal()
+
+    expect(wrapper.vm.postReplyContent).to.be.empty
   })
+
 })

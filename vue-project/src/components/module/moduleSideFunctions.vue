@@ -2,9 +2,7 @@
   <b-card no-body style="min-width: 9rem">
 <!--    Point info-->
     <b-card align="center">
-      <template #header>
-        POINT
-      </template>
+      <b-card-header>POINT</b-card-header>
       <b>{{ points }}</b>
     </b-card>
 <!--    Manager info-->
@@ -13,15 +11,15 @@
         ADMIN
       </template>
 <!--      Apply for manager-->
-      <b-button block variant="info" v-if="role === 'user'" @click="applyAdmin">
+      <b-button :id="'manager-apply-'+moduleName" block variant="warning" v-if="role === 'user'" @click="applyAdmin">
         Apply
       </b-button>
 <!--      Retire from manager-->
-      <b-button block variant="danger" v-if="role === 'admin'" @click="retireAdmin">
+      <b-button :id="'manager-quit-'+moduleName" block variant="danger" v-if="role === 'admin'" @click="retireAdmin">
         Quit
       </b-button>
 <!--      Manage the module-->
-      <b-button block variant="primary" v-if="role === 'admin'"
+      <b-button :id="'manager-manage-'+moduleName" block variant="warning" v-if="role === 'admin'"
                 :to="'/module_management=' + moduleName">
         Manage
       </b-button>
@@ -127,6 +125,7 @@ export default {
         'module has had enough admins ,or do not have enough points ' +
         'to become an admin',{
           title: [errTitle],
+          class: 'error-toast',
           toaster: 'b-toaster-top-center',
           variant: 'danger',
           solid: true

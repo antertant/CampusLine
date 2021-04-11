@@ -1,34 +1,83 @@
 <template>
-  <b-row align-h="center" style="margin-top: 6rem">
-<!--    message side bar-->
-    <b-col lg="2" sm="3" md="3">
-      <message-side-bar class="position-fixed" :m-type="mType"></message-side-bar>
-    </b-col>
+  <div style="padding-bottom: 6rem; padding-top: 6rem">
+    <b-card id="visitorMessageInfo" v-if="!loginState" align="center">
+      <b-icon icon="exclamation-diamond" variant="danger"></b-icon>
+      Please login before browsing message box.
+    </b-card>
+    <b-row align-h="center" v-if="loginState">
+      <!--    message side bar-->
+      <b-col cols="auto">
+        <message-side-bar :m-type="mType"
+                          :chat-count="newChatMessageCount"
+                          :like-count="newMessageCount.cnewlpost + newMessageCount.cnewlcomment"
+                          :comment-count="newMessageCount.cnewpostcomment + newMessageCount.cnewcommentreply"/>
+      </b-col>
 
-<!--    message content card-->
-    <b-col sm="8" md="6" class="">
-<!--      comment list card-->
-      <message-comment-card v-if="mType === 'comment'"></message-comment-card>
-<!--      repost list card-->
-      <message-repost-card v-if="mType === 'repost'"></message-repost-card>
-<!--      like list card-->
-      <mesage-like-card v-if="mType === 'like'"></mesage-like-card>
-<!--      messager card-->
-      <message-m-card v-if="mType === 'message'"></message-m-card>
-    </b-col>
-  </b-row>
+      <!--    message content card-->
+      <b-col cols="auto">
+        <!--      comment list card-->
+        <message-comment-card :style="cardStyle"
+                              v-if="mType === 'comment'"
+                              :post-c="newMessageCount.cnewpostcomment"
+                              :comment-r="newMessageCount.cnewcommentreply"/>
+        <!--      like list card-->
+        <mesage-like-card :style="cardStyle"
+                          v-if="mType === 'like'"
+                          :post-l="newMessageCount.cnewlpost"
+                          :comment-l="newMessageCount.cnewlcomment"/>
+        <!--      chat list card-->
+        <message-chat-card :style="cardStyle"
+                           v-if="mType === 'chat'"
+                           :user-name="currentUser"/>
+      </b-col>
+    </b-row>
+  </div>
 </template>
 
 <script>
 import MessageSideBar from "@/components/messages/messageSideBar";
 import MessageCommentCard from "@/components/messages/messageCommentCard";
-import MessageRepostCard from "@/components/messages/messageRepostCard";
 import MesageLikeCard from "@/components/messages/mesageLikeCard";
-import MessageMCard from "@/components/messages/messageMCard";
+import {mapGetters} from "vuex";
+import axios from "axios";
+import MessageChatCard from "@/components/messages/messageChatCard";
 export default {
   name: "messagePage",
-  components: {MessageMCard, MesageLikeCard, MessageRepostCard, MessageCommentCard, MessageSideBar},
+  components: {MessageChatCard, MesageLikeCard, MessageCommentCard, MessageSideBar},
   props: ['mType'],
+  data() {
+    return{
+      cardStyle:{
+        'min-width': '50rem',
+        'height': '',
+        'overflow-y': 'auto'
+      }
+    }
+  },
+  computed:{
+    ...mapGetters({
+      currentUser: "loginInfo/getLUName",
+      loginState: "loginInfo/getLoginState",
+      newMessageCount: "newMessage/getNewMessageCount",
+      newChatMessageCount: 'newMessage/getNewChatMessageCount'
+    })
+  },
+  methods:{
+    getHeight(){
+      this.cardStyle.height = (window.innerHeight-180).toString()+'px'
+    }
+  },
+  created() {
+    document.title = 'CampusLine - Message Box'
+    window.addEventListener("resize", this.getHeight)
+    this.getHeight()
+  },
+  mounted() {
+    this.$store.dispatch("newMessage/getNewMessageCountFS", this.currentUser)
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.getHeight)
+  }
 }
 </script>
 

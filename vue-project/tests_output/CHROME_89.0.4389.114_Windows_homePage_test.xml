@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="0"
+            tests="1">
+
+  <testsuite name="homePage_test"
+    errors="0" failures="0" hostname="" id="" package="homePage_test" skipped="0"
+    tests="1" time="9.881" timestamp="">
+  
+    <testcase name="Correctly change hot posts tabs and enter the corresponding module page" classname="homePage_test" time="9.881" assertions="27">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+
+  
+
+    
+
+  
+  </testsuite>
+</testsuites>

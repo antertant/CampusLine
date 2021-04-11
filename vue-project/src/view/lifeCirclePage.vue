@@ -1,9 +1,10 @@
 <template>
-  <b-row align-h="center" style="margin-top: 5rem">
+  <b-row align-h="center" style="padding-top: 6rem; padding-bottom: 6rem">
     <b-col lg="5" sm="8">
 <!--      header button-->
       <b-button v-b-toggle="'life-header-toggle'"
-                variant="info"
+                id="lifeHeader"
+                variant="dark"
                 class="mb-2"
                 block>
         <span class="h3"><b-icon icon="justify" class="float-left"></b-icon></span>
@@ -13,28 +14,45 @@
       <b-collapse id="life-header-toggle" class="mb-2">
         <b-list-group>
 <!--        current administrators-->
-          <b-list-group-item>
-            <b>Current Administrator in this module:</b>
-            <span v-for="admin in adminList">{{ admin }} || </span>
-            <span v-if="adminList.length === 0">
-            There is no administrator in this module currently.
-              <b-icon icon="exclamation-octagon"></b-icon>
-            </span>
+          <b-list-group-item id="admin-list-life">
+            <div v-if="adminList.length !== 0" style="text-align: center">
+              <b><em>Current Administrators in this module:</em></b>
+              <b-button v-for="admin in adminList"
+                        :key="admin[0]"
+                        style="text-align: center;"
+                        variant="dark"
+                        :to="'/profile='+admin"
+                        class="mx-1">
+                @{{ admin }}
+              </b-button>
+            </div>
+            <div style="text-align: center" v-else>
+              <b>
+                <em>
+                  There is no administrator in this module currently.
+                  <b-icon icon="exclamation-octagon"></b-icon>
+                </em>
+              </b>
+            </div>
           </b-list-group-item>
 
           <b-list-group-item v-if="currentUser !== ''" style="text-align: center">
-            <b-button variant="info" :pressed="ownPosts" @click="ownPosts=true">Self Posts</b-button>
-            <b-button variant="info" :pressed="!ownPosts" @click="ownPosts=false">All Posts</b-button>
+            <b-button id="life-self-button" variant="warning" :pressed="ownPosts===1" @click="ownPosts=1">Self Posts</b-button>
+            <b-button id="life-all-button" variant="warning" :pressed="ownPosts===0" @click="ownPosts=0">All Posts</b-button>
           </b-list-group-item>
         </b-list-group>
       </b-collapse>
 
 <!--      post creator-->
-      <post-input :module-name="null"></post-input>
+      <post-rich-input v-if="ownPosts===0" :own-flag="ownPosts" module-name="life"/>
 
 <!--      post list-->
-      <div v-for="list in postList">
-        <post-card :post-content="list"></post-card>
+      <div id="life-post-list">
+        <post-card v-for="list in postList"
+                   :post-content="list"
+                   :is-mod="true"
+                   :key="list.post_id"
+                   class="mx-auto" />
       </div>
     </b-col>
     <b-col cols="auto">
@@ -53,13 +71,15 @@ import {mapGetters} from "vuex";
 import PostInput from "@/components/post/postInput";
 import ModuleSideFunctions from "@/components/module/moduleSideFunctions";
 import axios from "axios";
+import PostRichInput from "@/components/post/postRichInput";
+
 export default {
   name: "lifeCirclePage",
-  components: {ModuleSideFunctions, PostInput, PostCard},
+  components: {PostRichInput, ModuleSideFunctions, PostInput, PostCard},
   data() {
     return {
       adminList: [],
-      ownPosts: false,
+      ownPosts: 0,
       selfPosts: []
     }
   },
@@ -69,7 +89,7 @@ export default {
       currentUser: "loginInfo/getLUName"
     }),
     postList: function () {
-      if(!this.ownPosts)
+      if(this.ownPosts === 0)
         return this.lifePostList
       else
         return this.selfPosts
@@ -104,6 +124,9 @@ export default {
           console.log(failResponse)
         })
     }
+  },
+  created() {
+    document.title = 'CampusLine - Life Circle'
   },
   mounted() {
     this.$store.dispatch("lifePostInfo/getlifePostfromServer")

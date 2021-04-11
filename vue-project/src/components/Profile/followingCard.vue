@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="profile-following-card">
     <b-card v-for="following in followingList" key="1">
       <b-avatar @click="goProfile(following)" button></b-avatar>
       {{ following }}
