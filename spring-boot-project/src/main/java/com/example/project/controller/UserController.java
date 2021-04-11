@@ -198,7 +198,7 @@ public class UserController {
     @ResponseBody
     public Result getchat(@RequestParam("username")String username,@RequestParam("from_user")String from_user){
         List<ChatMessage> chat = userMapper.getchat(username,from_user);
-        userMapper.setunread(username);
+        userMapper.setunread(username, from_user);
         return Result.ok(chat);
     }
 

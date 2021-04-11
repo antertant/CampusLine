@@ -74,7 +74,6 @@ export default {
   },
   mounted() {
     this.$store.dispatch("newMessage/getNewMessageCountFS", this.currentUser)
-    this.$store.dispatch("newMessage/getNewChatMessageCountFS", this.currentUser)
   },
   destroyed() {
     window.removeEventListener("resize", this.getHeight)

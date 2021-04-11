@@ -42,7 +42,7 @@ export default {
           console.log(response)
           if(response.data.code === 200){
             if(response.data.data > 0)
-              this.unreadCount = response.data.data
+              this.unreadCount = Number(response.data.data)
             else
               this.unreadCount = false
           }
@@ -54,7 +54,7 @@ export default {
   },
   mounted() {
     this.getUnreadCount()
-    this.interval = setInterval(this.getUnreadCount, 1000*5)
+    this.interval = setInterval(this.getUnreadCount, 1000)
   },
   beforeDestroy() {
     clearInterval(this.interval)

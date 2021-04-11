@@ -1,7 +1,7 @@
 <template>
   <b-modal size="lg" style="padding: 0"
            :id="'chat-messenger'+fromUser"
-           :lazy="true">
+           centered>
 
     <template #modal-header>
       <b style="font-size: larger"><em>
@@ -11,16 +11,16 @@
 
     <b-card class="border-0">
       <div v-for="singleMessage in chatMessageList">
-        <b-row v-if="singleMessage.to_user === userName" align-h="end">
+        <b-row v-show="singleMessage.to_user === userName" align-h="end" class="mb-3">
           <b-col cols="auto">
             <b-card style="background-color: #f3da86; max-width: 20rem; border-radius: 10px; padding:0.7rem" no-body>
               {{singleMessage.content}}
             </b-card>
           </b-col>
-          <b-avatar/>
+          <b-avatar :to="'/profile='+fromUser" :title="fromUser" />
         </b-row>
-        <b-row v-else class="align-left">
-          <b-avatar/>
+        <b-row v-show="singleMessage.to_user !== userName" class="mb-3">
+          <b-avatar :title="toUser" />
           <b-col cols="auto">
             <b-card style="background-color: #e3e3e3; max-width: 20rem; border-radius: 10px;padding: 0.7rem" no-body>
               {{singleMessage.content}}
@@ -76,8 +76,8 @@ export default {
     sendChatMessage() {
       axios
         .post('/chatsend', {
-          to_user: this.toUser,
-          from_user: this.fromUser,
+          to_user: this.fromUser,
+          from_user: this.toUser,
           content: this.currentChatContent
         })
         .then(response=>{

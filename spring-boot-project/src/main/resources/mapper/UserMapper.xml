@@ -140,6 +140,7 @@
   <select id="getallnewchat" resultType="com.example.project.entity.ChatMessage">
     select * from  chat_message a
     where a.send_time in (select max(send_time) date from chat_message where to_user=#{username} group by from_user)
+    and to_user=#{username}
     order by send_time desc
   </select>
 
@@ -164,7 +165,7 @@
   <update id="setunread">
     update chat_message
     set unread=0
-    where to_user=#{username}
+    where to_user=#{username} and from_user=#{from_user}
   </update>
 
 
