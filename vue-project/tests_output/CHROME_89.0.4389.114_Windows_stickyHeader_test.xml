@@ -5,11 +5,9 @@
 
   <testsuite name="stickyHeader_test"
     errors="0" failures="0" hostname="" id="" package="stickyHeader_test" skipped="0"
-    tests="1" time="13.12" timestamp="">
+    tests="1" time="11.67" timestamp="">
   
-    <testcase name="Sticky header routing test" classname="stickyHeader_test" time="13.12" assertions="59">
-
-    
+    <testcase name="Sticky header routing test" classname="stickyHeader_test" time="11.67" assertions="58">
 
     
 

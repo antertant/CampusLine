@@ -48,6 +48,7 @@
     </b-modal>
 <!--    post editor button-->
     <b-button variant="white"
+              :id="'post-editor-'+postContent.post_id"
               v-b-toggle="'post-editor-'+postContent.post_id"
               v-if="current_user===postContent.post_author"
               style="position: absolute; right: 0.6rem; top: 0.1rem"
@@ -59,9 +60,12 @@
       <b-card class="border-bottom bg-light mb-3" no-body>
         <h4 style="text-align: center" class="mt-2">Post Editor</h4>
         <rich-text-editor v-if="editorState"
+                          :mod-name="postContent.module_name"
+                          :own-flag="'2-'+postContent.post_id"
                           :text-pipe="postContent.post_content"
                           @rich-input-content="updatePostContent" />
         <b-button style="margin: 4px"
+                  :id="'post-editor-update-button-'+postContent.post_id"
                   class="float-right my-1"
                   variant="warning"
                   @click="$bvModal.show('update-post-'+postContent.post_id)">
@@ -87,8 +91,8 @@
     <b-modal :id="'update-post-'+postContent.post_id" hide-header centered>
       Are you sure to update the post?
       <template #modal-footer>
-        <b-button @click="$bvModal.hide('update-post-'+postContent.post_id)">No</b-button>
-        <b-button @click="updatePost" variant="success">Yes</b-button>
+        <b-button :id="'editor-update-cancel-button-'+postContent.post_id" @click="$bvModal.hide('update-post-'+postContent.post_id)">No</b-button>
+        <b-button :id="'editor-update-confirm-button-'+postContent.post_id" @click="updatePost" variant="success">Yes</b-button>
       </template>
     </b-modal>
 <!--    logo-->
@@ -256,7 +260,7 @@ export default {
       showPost: true,
       likePress: false,  // Like pressed flag
       likes: [],  // Like lists
-      editorState: true,
+      editorState: true
     }
   },
   computed: {

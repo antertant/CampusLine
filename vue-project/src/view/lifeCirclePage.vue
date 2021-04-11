@@ -37,14 +37,14 @@
           </b-list-group-item>
 
           <b-list-group-item v-if="currentUser !== ''" style="text-align: center">
-            <b-button id="life-self-button" variant="warning" :pressed="ownPosts" @click="ownPosts=true">Self Posts</b-button>
-            <b-button id="life-all-button" variant="warning" :pressed="!ownPosts" @click="ownPosts=false">All Posts</b-button>
+            <b-button id="life-self-button" variant="warning" :pressed="ownPosts===1" @click="ownPosts=1">Self Posts</b-button>
+            <b-button id="life-all-button" variant="warning" :pressed="ownPosts===0" @click="ownPosts=0">All Posts</b-button>
           </b-list-group-item>
         </b-list-group>
       </b-collapse>
 
 <!--      post creator-->
-      <post-rich-input :own-flag="ownPosts" module-name="life"/>
+      <post-rich-input v-if="ownPosts===0" :own-flag="ownPosts" module-name="life"/>
 
 <!--      post list-->
       <div id="life-post-list">
@@ -79,7 +79,7 @@ export default {
   data() {
     return {
       adminList: [],
-      ownPosts: false,
+      ownPosts: 0,
       selfPosts: []
     }
   },
@@ -89,7 +89,7 @@ export default {
       currentUser: "loginInfo/getLUName"
     }),
     postList: function () {
-      if(!this.ownPosts)
+      if(this.ownPosts === 0)
         return this.lifePostList
       else
         return this.selfPosts

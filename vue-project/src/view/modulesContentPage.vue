@@ -37,14 +37,14 @@
           </b-list-group-item>
 
           <b-list-group-item v-if="currentUser !== ''" style="text-align: center">
-            <b-button variant="warning" :pressed="ownPosts" @click="ownPosts=true">Self Posts</b-button>
-            <b-button variant="warning" :pressed="!ownPosts" @click="ownPosts=false">All Posts</b-button>
+            <b-button variant="warning" :pressed="ownPosts===1" @click="ownPosts=1">Self Posts</b-button>
+            <b-button variant="warning" :pressed="ownPosts===0" @click="ownPosts=0">All Posts</b-button>
           </b-list-group-item>
         </b-list-group>
       </b-collapse>
 
 <!--      module posts creator-->
-      <post-rich-input :own-flag="ownPosts" :module-name="modName"/>
+      <post-rich-input v-if="ownPosts===0" :own-flag="ownPosts" :module-name="modName"/>
 
 <!--      post list-->
       <div v-for="list in postList">
@@ -76,7 +76,7 @@ export default {
   data() {
     return {
       adminList: [],
-      ownPosts: false,
+      ownPosts: 0,
       selfPosts: []
     }
   },
@@ -86,7 +86,7 @@ export default {
       currentUser: "loginInfo/getLUName"
     }),
     postList: function (){
-      if(!this.ownPosts)
+      if(this.ownPosts === 0)
         return this.modulePostList
       else
         return this.selfPosts
@@ -129,9 +129,9 @@ export default {
     this.$store.dispatch("modulePostInfo/getModulePostfromServer", this.modName)
     this.getOwnPosts()
     this.getAdminList()
-    this.ownPosts = !this.ownPosts
+    this.ownPosts = 1
     this.$nextTick(()=>{
-      this.ownPosts = !this.ownPosts
+      this.ownPosts = 0
     })
   }
 }

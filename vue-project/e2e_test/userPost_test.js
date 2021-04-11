@@ -22,7 +22,7 @@ module.exports = {
       .assert.urlContains('home')
       .assert.containsText('#navBar-user-popover', 'Mao')
 
-    // sending post test
+    // send post test
       .assert.visible('#hot-life-input')
       .click('#hot-life-input')
       .frame('my-tinymce-life-0_ifr', function (result){console.log(result)})
@@ -35,13 +35,26 @@ module.exports = {
       .assert.visible('#life-post-list')
       .assert.containsText('#life-post-list', 'This is an E2E testing post.')
 
+    // edit post test
+      .assert.visible('#post-editor-25')
+      .click('#post-editor-25')
+      .frame('my-tinymce-null-2-25_ifr', function (result){console.log(result)})
+      .assert.visible('#tinymce')
+      .assert.containsText('#tinymce', 'This is an E2E testing post.')
+      .setValue('#tinymce', 'This is an E2E testing edited post.')
+      .frameParent(function(result) {console.log(result)})
+      .click('#post-editor-update-button-25')
+      .waitForElementVisible('#update-post-25')
+      .click('#editor-update-confirm-button-25')
+      .assert.containsText('#life-post-list', 'This is an E2E testing edited post.')
+
     // delete post test
       .click('#delete-post-button-25')
       .assert.visible('#delete-post-modal-250')
       .click('#delete-post-modal-button-yes')
-      .assert.not.containsText('#life-post-list', 'This is an E2E testing post.')
+      .assert.not.containsText('#life-post-list', 'This is an E2E testing edited post.')
 
-    // liking post test
+    // like post test
       .assert.visible('#pc-like-16')
       .assert.containsText('#pc-like-16', '0')
       .click('#pc-like-16')

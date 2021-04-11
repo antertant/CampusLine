@@ -21,7 +21,7 @@
       <b-card>
         <b-form @submit="sendPost" @reset="resetPContent">
           <b-form-group :id="'hot-text-area'+modName">
-            <rich-text-editor :id="'hot-text-editor-'+modName" :own-flag="false" :mod-name="modName" :text-pipe="postContent" @rich-input-content="updatePContent" />
+            <rich-text-editor :id="'hot-text-editor-'+modName" :own-flag="0" :mod-name="modName" :text-pipe="postContent" @rich-input-content="updatePContent" />
           </b-form-group>
           <div class="mt-2 mb-0 float-right">
             <b-button class="shadow-sm" variant="danger" type="reset">Reset</b-button>

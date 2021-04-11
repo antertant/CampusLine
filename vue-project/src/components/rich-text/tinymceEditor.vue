@@ -60,10 +60,7 @@ export default {
   props:['textPipe', 'modName', 'ownFlag'],
   computed:{
     ownCode() {
-      if(this.ownFlag)
-        return 1
-      else
-        return 0
+      return this.ownFlag
     }
   },
   watch:{

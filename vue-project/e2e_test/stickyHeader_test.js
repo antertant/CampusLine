@@ -7,7 +7,6 @@ module.exports = {
       .waitForElementPresent('body')
       .waitForElementPresent('[aria-label=newspaper]')
       .click('[aria-label=newspaper]')
-      .waitForElementNotPresent('#lifeEnterButton')
       .assert.urlContains('/login')
 
       // test modules popover -- life
