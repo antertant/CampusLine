@@ -7,6 +7,7 @@
 <!--    Avatar-->
 <!--    follow user-->
     <b-avatar :badge-variant="avColor"
+              id="profile-avatar"
               button
               @click="followUser"
               v-if="!sameUser">
@@ -24,21 +25,21 @@
     <div v-if="sameUser">
 <!--      Follower list button-->
       <div class="mb-2">
-        <b-button variant="warning" v-b-modal="'follower-modal'" block>
+        <b-button id="profile-follower-button" variant="warning" v-b-modal="'follower-modal'" block>
           Follower
           <b-badge>{{followerCounter}}</b-badge>
         </b-button>
       </div>
 <!--      Follow list button-->
       <div class="mb-2">
-        <b-button variant="warning" v-b-modal="'following-modal'" block>
+        <b-button id="profile-following-button" variant="warning" v-b-modal="'following-modal'" block>
           Following
           <b-badge>{{followingCounter}}</b-badge>
         </b-button>
       </div>
 <!--      Collection button-->
       <div>
-        <b-button variant="danger" v-b-modal="'collection-modal'" block>
+        <b-button id="profile-collection-button" variant="danger" v-b-modal="'collection-modal'" block>
           Collection
           <b-badge>{{collectCounter}}</b-badge>
         </b-button>
@@ -53,16 +54,22 @@
     <div v-if="!sameUser">
 <!--      Follower list button-->
       <div class="mb-2">
-        <b-button variant="info" v-b-modal="'follower-modal'" block>
+        <b-button variant="dark" v-b-modal="'follower-modal'" block>
           Follower
-          <b-badge>{{followerCounter}}</b-badge>
+          <b-badge variant="warning">{{followerCounter}}</b-badge>
         </b-button>
       </div>
 <!--      Follow list button-->
-      <div>
-        <b-button variant="info" v-b-modal="'following-modal'" block>
+      <div class="mb-2">
+        <b-button variant="dark" v-b-modal="'following-modal'" block>
           Following
-          <b-badge>{{followingCounter}}</b-badge>
+          <b-badge variant="warning">{{followingCounter}}</b-badge>
+        </b-button>
+      </div>
+<!--      Send message button-->
+      <div>
+        <b-button variant="dark" @click="showChatModal()" block>
+          Chat
         </b-button>
       </div>
     </div>
@@ -101,6 +108,11 @@
       </template>
       <collection-card :profile-user="profileUser"></collection-card>
     </b-modal>
+<!--    Chat windows-->
+    <chat-item-modal :from-user="profileUser"
+                     :to-user="currentUser"
+                     :user-name="currentUser"
+                     v-if="chatModalFlag" />
   </b-card>
 </template>
 
@@ -111,10 +123,11 @@ import FollowerCard from "@/components/Profile/followerCard";
 import FollowingCard from "@/components/Profile/followingCard";
 import CollectionCard from "@/components/Profile/collectionCard";
 import UpdatePasswordCard from "@/components/manage/updatePasswordCard";
+import ChatItemModal from "@/components/messages/chatItemModal";
 
 export default {
   name: "userInfoCard",
-  components: {UpdatePasswordCard, CollectionCard, FollowingCard, FollowerCard},
+  components: {ChatItemModal, UpdatePasswordCard, CollectionCard, FollowingCard, FollowerCard},
   props: ['profileUser'],
   data() {
     return{
@@ -122,7 +135,8 @@ export default {
       avColor: "warning",
       followerCounter: 0,
       followingCounter: 0,
-      collectCounter: 0
+      collectCounter: 0,
+      chatModalFlag: false
     }
   },
   computed: {
@@ -226,15 +240,17 @@ export default {
       this.followed = false
       this.avColor = "primary"
     },
-    // hideCollectionModal() {
-    //   this.$nextTick(()=>{
-    //     this.$bvModal.hide('collection-modal')
-    //   })
-    //   this.followed = false
-    //   this.avColor = "primary"
-    // }
+    showChatModal() {
+      this.chatModalFlag = true
+      this.$nextTick(()=>{
+        this.$bvModal.show('chat-messenger'+this.profileUser)
+      })
+    }
   },
   mounted() {
+    this.$root.$on('bv::modal::hide', (bvEvent, modalId) => {
+      this.chatModalFlag = false
+    })
     this.followed = false
     this.avColor = "primary"
     this.getFollowingCount()

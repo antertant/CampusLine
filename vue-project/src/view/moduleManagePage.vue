@@ -62,7 +62,7 @@ export default {
     }
   },
   created() {
-    document.title = 'UWSK - Module Management'
+    document.title = 'CampusLine - Module Management'
   },
   mounted() {
     this.$store.dispatch("modulePostInfo/getModulePostfromServer", this.modName)

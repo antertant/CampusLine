@@ -13,7 +13,9 @@
         </b-col>
 <!--        Reply button-->
         <b-col cols="auto">
-          <b-button variant="white" size="sm"
+          <b-button variant="white"
+                    size="sm"
+                    :id="'comment-reply-button-'+commentId+reply_id"
                     v-b-modal="'reply-modal-'+commentId+reply_id">
             <b-icon icon="chat-left-text" variant="dark"></b-icon>
           </b-button>
@@ -21,11 +23,13 @@
 <!--          Child component: reply input-->
           <reply-input :comment-id="commentId"
                        :reply-id="reply_id"
+                       :post-id="postId"
                        :from-user="reply_from_user"
-                       @rreply="replyComment"></reply-input>
+                       @r-reply="replyComment"></reply-input>
 <!--          Delete Button-->
           <b-button variant="white"
                     size="sm"
+                    :id="'reply-delete-button-'+commentId+reply_id"
                     v-b-modal="'delete-reply-modal-'+commentId+reply_id"
                     v-if="current_user === reply_from_user">
             <b-icon icon="trash" variant="danger"></b-icon>
@@ -37,8 +41,8 @@
                    centered>
             Are you sure to delete the reply?
             <template #modal-footer>
-              <b-button @click="hideModal">No</b-button>
-              <b-button @click="deleteReply" variant="danger">Yes</b-button>
+              <b-button id="reply-delete-no-button" @click="hideModal">No</b-button>
+              <b-button id="reply-delete-yes-button" @click="deleteReply" variant="danger">Yes</b-button>
             </template>
           </b-modal>
 
@@ -62,7 +66,7 @@ import axios from "axios";
 export default {
   name: "commentReplyCard",
   components: {ReplyInput},
-  props: ['replyData', 'commentId'],
+  props: ['replyData', 'commentId', 'postId'],
   data() {
     return {
       // reply_id: this.replyData.reply_id,
@@ -95,9 +99,8 @@ export default {
     },
   },
   methods: {
-    replyComment() {
-      this.$emit('rreply-event')
-      this.$nextTick()
+    replyComment(data) {
+      this.$emit('rreply-event', data)
     },
     deleteReply() {
       axios

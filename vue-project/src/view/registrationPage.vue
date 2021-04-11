@@ -8,7 +8,7 @@ export default {
   name: "registrationPage",
   components: {RegisterCard},
   created() {
-    document.title = 'UWSK - Registration'
+    document.title = 'CampusLine - Registration'
   },
 }
 </script>

@@ -1,10 +1,12 @@
 package com.example.project.controller;
 
+import com.example.project.entity.ChatMessage;
 import com.example.project.entity.User;
 import com.example.project.mapper.UserMapper;
 import com.example.project.result.Result;
 import com.example.project.service.IUserService;
 import com.example.project.service.Impl.IUserServiceImpl;
+import com.example.project.utils.HTMLUtils;
 import com.power.common.util.RandomUtil;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -152,6 +154,52 @@ public class UserController {
         else
             msg = "cancel follow successfully";
         return Result.ok(msg);
+    }
+
+    @CrossOrigin
+    @ApiOperation(value = "send message to another user")
+    @RequestMapping(value = "/api/chatsend", method = RequestMethod.POST)
+    @ResponseBody
+    public Result chatsend(@RequestBody ChatMessage chatMessage){
+        userMapper.insertChat(chatMessage);
+        return Result.ok("send chat successfully");
+    }
+
+    @CrossOrigin
+    @ApiOperation(value = "get all newest chat list")
+    @RequestMapping(value = "/api/getallnewestchat", method = RequestMethod.GET)
+    @ResponseBody
+    public Result getallnewestchat(@RequestParam("username")String username){
+        List<ChatMessage> chatMessages= userMapper.getallnewchat(username);
+        return Result.ok(chatMessages);
+    }
+
+    @CrossOrigin
+    @ApiOperation(value = "count all unread chat of a user")
+    @RequestMapping(value = "/api/countunreadchat_all", method = RequestMethod.GET)
+    @ResponseBody
+    public Result countunreadchat_all(@RequestParam("username")String username){
+        int count = userMapper.countunreadchat_all(username);
+        return Result.ok(count);
+    }
+
+    @CrossOrigin
+    @ApiOperation(value = "count unread chat of one user to one user")
+    @RequestMapping(value = "/api/countunreadchat", method = RequestMethod.GET)
+    @ResponseBody
+    public Result countunreadchat(@RequestParam("username")String username,@RequestParam("from_user")String from_user){
+        int count = userMapper.countunreadchat(username,from_user);
+        return Result.ok(count);
+    }
+
+    @CrossOrigin
+    @ApiOperation(value = "cycle: get chat content && set unread==0")
+    @RequestMapping(value = "/api/getchat", method = RequestMethod.GET)
+    @ResponseBody
+    public Result getchat(@RequestParam("username")String username,@RequestParam("from_user")String from_user){
+        List<ChatMessage> chat = userMapper.getchat(username,from_user);
+        userMapper.setunread(username, from_user);
+        return Result.ok(chat);
     }
 
     @CrossOrigin

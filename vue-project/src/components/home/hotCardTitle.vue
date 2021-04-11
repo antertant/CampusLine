@@ -2,6 +2,7 @@
   <b-button variant="warning"
             v-if="modName === 'life'"
             :to="'/life'"
+            id="lifeEnterButton"
             style="border-radius: 8px; box-shadow: 0px 0px 8px #4a4a4a"
             class="border-right-0 border-left-0 border-top-0"
             block>
@@ -13,6 +14,7 @@
   <b-button variant="warning"
             v-else
             :to="'/knowledge-modules/'"
+            id="knowledgeEnterButton"
             style="border-radius: 8px; box-shadow: 0px 0px 8px #4a4a4a"
             class="border-right-0 border-left-0 border-top-0"
             block>

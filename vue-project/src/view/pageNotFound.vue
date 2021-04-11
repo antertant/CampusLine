@@ -9,7 +9,7 @@
 export default {
   name: "pageNotFound",
   created() {
-    document.title = 'UWSK - 404_Page_Not_Found'
+    document.title = 'CampusLine - 404_Page_Not_Found'
   },
 }
 </script>

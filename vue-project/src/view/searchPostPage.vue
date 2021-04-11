@@ -44,7 +44,7 @@ export default {
     }
   },
   created() {
-    document.title = 'UWSK - SearchPost_' + this.searchKey
+    document.title = 'CampusLine - SearchPost_' + this.searchKey
   },
   mounted() {
     this.getSearchResult()

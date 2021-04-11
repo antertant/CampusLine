@@ -8,8 +8,9 @@
       <!--    message side bar-->
       <b-col cols="auto">
         <message-side-bar :m-type="mType"
+                          :chat-count="newChatMessageCount"
                           :like-count="newMessageCount.cnewlpost + newMessageCount.cnewlcomment"
-                          :comment-count="newMessageCount.cnewpostcomment + newMessageCount.cnewcommentreply"></message-side-bar>
+                          :comment-count="newMessageCount.cnewpostcomment + newMessageCount.cnewcommentreply"/>
       </b-col>
 
       <!--    message content card-->
@@ -18,16 +19,16 @@
         <message-comment-card :style="cardStyle"
                               v-if="mType === 'comment'"
                               :post-c="newMessageCount.cnewpostcomment"
-                              :comment-r="newMessageCount.cnewcommentreply"></message-comment-card>
-        <!--      repost list card-->
-<!--        <message-repost-card v-if="mType === 'repost'"></message-repost-card>-->
+                              :comment-r="newMessageCount.cnewcommentreply"/>
         <!--      like list card-->
         <mesage-like-card :style="cardStyle"
                           v-if="mType === 'like'"
                           :post-l="newMessageCount.cnewlpost"
-                          :comment-l="newMessageCount.cnewlcomment"></mesage-like-card>
-        <!--      messager card-->
-<!--        <message-m-card v-if="mType === 'message'"></message-m-card>-->
+                          :comment-l="newMessageCount.cnewlcomment"/>
+        <!--      chat list card-->
+        <message-chat-card :style="cardStyle"
+                           v-if="mType === 'chat'"
+                           :user-name="currentUser"/>
       </b-col>
     </b-row>
   </div>
@@ -36,14 +37,13 @@
 <script>
 import MessageSideBar from "@/components/messages/messageSideBar";
 import MessageCommentCard from "@/components/messages/messageCommentCard";
-import MessageRepostCard from "@/components/messages/messageRepostCard";
 import MesageLikeCard from "@/components/messages/mesageLikeCard";
-import MessageMCard from "@/components/messages/messageMCard";
 import {mapGetters} from "vuex";
 import axios from "axios";
+import MessageChatCard from "@/components/messages/messageChatCard";
 export default {
   name: "messagePage",
-  components: {MessageMCard, MesageLikeCard, MessageRepostCard, MessageCommentCard, MessageSideBar},
+  components: {MessageChatCard, MesageLikeCard, MessageCommentCard, MessageSideBar},
   props: ['mType'],
   data() {
     return{
@@ -58,7 +58,8 @@ export default {
     ...mapGetters({
       currentUser: "loginInfo/getLUName",
       loginState: "loginInfo/getLoginState",
-      newMessageCount: "newMessage/getNewMessageCount"
+      newMessageCount: "newMessage/getNewMessageCount",
+      newChatMessageCount: 'newMessage/getNewChatMessageCount'
     })
   },
   methods:{
@@ -67,7 +68,7 @@ export default {
     }
   },
   created() {
-    document.title = 'UWSK - Message Box'
+    document.title = 'CampusLine - Message Box'
     window.addEventListener("resize", this.getHeight)
     this.getHeight()
   },

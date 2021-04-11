@@ -3,11 +3,25 @@
             failures="0"
             tests="1">
 
-  <testsuite name="homePage_test"
-    errors="0" failures="0" hostname="" id="" package="homePage_test" skipped="0"
-    tests="1" time="10.55" timestamp="">
+  <testsuite name="manageModule_test"
+    errors="0" failures="0" hostname="" id="" package="manageModule_test" skipped="0"
+    tests="1" time="17.51" timestamp="">
   
-    <testcase name="Correctly change hot posts tabs and enter the corresponding module page" classname="homePage_test" time="10.55" assertions="27">
+    <testcase name="Managing module test" classname="manageModule_test" time="17.51" assertions="34">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
 
     
 

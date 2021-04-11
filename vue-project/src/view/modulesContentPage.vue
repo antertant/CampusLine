@@ -3,7 +3,8 @@
     <b-col lg="5" sm="8" cols="auto">
 <!--      header button-->
       <b-button v-b-toggle="'life-header-toggle'"
-                variant="info"
+                variant="dark"
+                :id="'module-title-'+modName"
                 class="mb-2"
                 block>
         <span class="h3"><b-icon icon="justify" class="float-left"></b-icon></span>
@@ -13,24 +14,37 @@
       <b-collapse id="life-header-toggle" class="mb-2">
         <b-list-group>
 <!--        current administrators-->
-          <b-list-group-item>
-            <b>Current Administrator in this module:</b>
-            <span v-for="admin in adminList">{{ admin }} || </span>
-            <span v-if="adminList.length === 0">
-            There is no administrator in this module currently.
-              <b-icon icon="exclamation-octagon"></b-icon>
-            </span>
+          <b-list-group-item :id="'admin-list-'+modName">
+            <div v-if="adminList.length !== 0" style="text-align: center">
+              <b><em>Current Administrators in this module:</em></b>
+              <b-button v-for="admin in adminList"
+                        :key="admin[0]"
+                        style="text-align: center;"
+                        variant="dark"
+                        :to="'/profile='+admin"
+                        class="mx-1">
+              @{{ admin }}
+              </b-button>
+            </div>
+            <div style="text-align: center" v-else>
+              <b>
+                <em>
+                  There is no administrator in this module currently.
+                  <b-icon icon="exclamation-octagon"></b-icon>
+                </em>
+              </b>
+            </div>
           </b-list-group-item>
 
           <b-list-group-item v-if="currentUser !== ''" style="text-align: center">
-            <b-button variant="info" :pressed="ownPosts" @click="ownPosts=true">Self Posts</b-button>
-            <b-button variant="info" :pressed="!ownPosts" @click="ownPosts=false">All Posts</b-button>
+            <b-button variant="warning" :pressed="ownPosts" @click="ownPosts=true">Self Posts</b-button>
+            <b-button variant="warning" :pressed="!ownPosts" @click="ownPosts=false">All Posts</b-button>
           </b-list-group-item>
         </b-list-group>
       </b-collapse>
 
 <!--      module posts creator-->
-      <post-rich-input :module-name="modName"/>
+      <post-rich-input :own-flag="ownPosts" :module-name="modName"/>
 
 <!--      post list-->
       <div v-for="list in postList">
@@ -109,12 +123,16 @@ export default {
     }
   },
   created() {
-    document.title = 'UWSK - Knowledge_' + String(this.modName).toUpperCase()
+    document.title = 'CampusLine - Knowledge_' + String(this.modName).toUpperCase()
   },
   mounted() {
     this.$store.dispatch("modulePostInfo/getModulePostfromServer", this.modName)
     this.getOwnPosts()
     this.getAdminList()
+    this.ownPosts = !this.ownPosts
+    this.$nextTick(()=>{
+      this.ownPosts = !this.ownPosts
+    })
   }
 }
 </script>

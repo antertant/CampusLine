@@ -68,27 +68,47 @@
             </b>
             <b-badge variant="danger" id="message-badge"
                      v-if="newsCounter.cnewpostcomment+newsCounter.cnewcommentreply
-            +newsCounter.cnewlpost+newsCounter.cnewlcomment!==0 && loginState">
+            +newsCounter.cnewlpost+newsCounter.cnewlcomment+newChatCounter!==0 && loginState">
               {{ newsCounter.cnewpostcomment+newsCounter.cnewcommentreply
-            +newsCounter.cnewlpost+newsCounter.cnewlcomment }}
+            +newsCounter.cnewlpost+newsCounter.cnewlcomment+newChatCounter }}
             </b-badge>
           </b-nav-item>
           <b-popover target="message-popover" placement="buttom" triggers="focus">
             <b-list-group style="font-size: medium; color: black">
-              <b-list-group-item id="message-comment-popover" to="/messages=comment" class="border-0 py-2">
+
+              <b-list-group-item id="message-comment-popover"
+                                 to="/messages=comment"
+                                 class="border-0 py-2">
                 Comment
-                <b-badge id="message-comment-badge" variant="danger" v-if="newsCounter.cnewpostcomment+newsCounter.cnewcommentreply!==0 && loginState">
+                <b-badge id="message-comment-badge"
+                         variant="danger"
+                         v-if="newsCounter.cnewpostcomment+newsCounter.cnewcommentreply!==0 && loginState">
                 {{newsCounter.cnewpostcomment+newsCounter.cnewcommentreply}}
                 </b-badge>
               </b-list-group-item>
-<!--              <b-list-group-item to="/messages=repost" class="border-0 py-2">Repost</b-list-group-item>-->
-              <b-list-group-item id="message-like-popover" to="/messages=like" class="border-0 py-2">
+
+              <b-list-group-item id="message-like-popover"
+                                 to="/messages=like"
+                                 class="border-0 py-2">
                 Like
-                <b-badge id="message-like-badge" variant="danger" v-if="newsCounter.cnewlpost+newsCounter.cnewlcomment!==0 && loginState">
+                <b-badge id="message-like-badge"
+                         variant="danger"
+                         v-if="newsCounter.cnewlpost+newsCounter.cnewlcomment!==0 && loginState">
                   {{newsCounter.cnewlpost+newsCounter.cnewlcomment}}
                 </b-badge>
               </b-list-group-item>
-<!--              <b-list-group-item to="/messages=message" class="border-0 py-2">Message</b-list-group-item>-->
+
+              <b-list-group-item id="message-chat-popover"
+                                 to="/messages=chat"
+                                 class="border-0 py-2">
+                Chat
+                <b-badge id="message-chat-badge"
+                         variant="danger"
+                         v-if="newChatCounter!==0 && loginState">
+                  {{newChatCounter}}
+                </b-badge>
+              </b-list-group-item>
+
             </b-list-group>
           </b-popover>
         </b-navbar-nav>
@@ -119,11 +139,11 @@
             </b-button-group>
 <!--            Login popover for user-->
             <b-button-group vertical v-show="loginState">
-              <b-button class="mb-1" :to="'/profile='+loginName" variant="dark" style="text-align: left">
+              <b-button id="navBar-user-profile" class="mb-1" :to="'/profile='+loginName" variant="dark" style="text-align: left">
                 <b-icon icon="person" aria-hidden="true" variant="warning"></b-icon>
                 Profile
               </b-button>
-              <b-button @click="logout" variant="dark" style="text-align: left">
+              <b-button id="navBar-user-logout" @click="logout" variant="dark" style="text-align: left">
                 <b-icon icon="power" aria-hidden="true" variant="danger"></b-icon>
                 Logout
               </b-button>
@@ -141,11 +161,11 @@
               <b-form-select-option id="selectPost" value="searchpost">Post</b-form-select-option>
             </b-form-select>
 
-            <b-button variant="outline-dark"
+            <b-button variant="white"
                       id="searchButton"
                       class="my-2 my-sm-0"
                       type="submit">
-              <b-icon icon="search" variant="light" />
+              <b-icon icon="search" variant="dark" />
             </b-button>
           </b-nav-form>
         </b-navbar-nav>
@@ -173,7 +193,8 @@ export default {
     ...mapGetters({
       loginName: "loginInfo/getLUName",
       loginState: "loginInfo/getLoginState",
-      newsCounter: "newMessage/getNewMessageCount"
+      newsCounter: "newMessage/getNewMessageCount",
+      newChatCounter: 'newMessage/getNewChatMessageCount'
     })
   },
   methods: {
@@ -198,9 +219,11 @@ export default {
   mounted() {
     if(this.loginState){
       this.$store.dispatch("newMessage/getNewMessageCountFS", this.loginName)
+      this.$store.dispatch('newMessage/getNewChatMessageCountFS', this.loginName)
       // update message notifications every 5 minutes
       this.interval = setInterval(()=>{
         this.$store.dispatch("newMessage/getNewMessageCountFS", this.loginName)
+        this.$store.dispatch('newMessage/getNewChatMessageCountFS', this.loginName)
       }, 1000*60*5)
     }
     else{

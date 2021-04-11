@@ -8,7 +8,10 @@
 import ForgetPasswordCard from "@/components/manage/forgetPasswordCard";
 export default {
 name: "forgetPasswordPage",
-  components: {ForgetPasswordCard}
+  components: {ForgetPasswordCard},
+  created() {
+    document.title = 'CampusLine - Forget Password'
+  }
 }
 </script>
 

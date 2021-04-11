@@ -1,5 +1,6 @@
 package com.example.project.mapper;
 
+import com.example.project.entity.ChatMessage;
 import com.example.project.entity.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,5 +41,11 @@ public interface UserMapper {
     void updatePassword_email(@Param(value = "email")String email,@Param(value = "password")String password);
 
     List<User> getUsers();
+    void insertChat(@Param(value = "chatmessage")ChatMessage chatMessage);
+    List<ChatMessage> getallnewchat(@Param(value = "username")String username);
+    int countunreadchat_all(@Param(value = "username")String username);
+    int countunreadchat(@Param(value = "username")String username,@Param(value = "from_user")String from_user);
+    List<ChatMessage> getchat(@Param(value = "username")String username,@Param(value = "from_user")String from_user);
+    void setunread(@Param(value = "username")String username, @Param(value = "from_user")String from_user);
 
 }
