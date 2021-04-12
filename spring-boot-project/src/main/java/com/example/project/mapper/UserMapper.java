@@ -47,5 +47,6 @@ public interface UserMapper {
     int countunreadchat(@Param(value = "username")String username,@Param(value = "from_user")String from_user);
     List<ChatMessage> getchat(@Param(value = "username")String username,@Param(value = "from_user")String from_user);
     void setunread(@Param(value = "username")String username, @Param(value = "from_user")String from_user);
+    void setunread1(@Param(value = "username")String username, @Param(value = "from_user")String from_user);
 
 }

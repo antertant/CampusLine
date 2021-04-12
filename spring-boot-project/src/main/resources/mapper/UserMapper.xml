@@ -168,6 +168,12 @@
     where to_user=#{username} and from_user=#{from_user}
   </update>
 
+  <update id="setunread1">
+    update chat_message
+    set unread=1
+    where to_user=#{username} and from_user=#{from_user}
+  </update>
+
 
 
 <!--  <insert id="insert" parameterType="com.example.project.entity.User">-->
