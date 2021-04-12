@@ -23,6 +23,14 @@ class PostMapperTest {
 //    @Test
 //    void insertPost() {
 //    }
+    @Test//edit post
+    void editPost(){
+        Post p = postMapper.getPost(4);
+        p.setPost_content("Test");
+        postMapper.updatePost(p);
+        Post p1 = postMapper.getPost(4);
+        Assertions.assertEquals("Test",p1.getPost_content());
+    }
 
     @Test//get a post by its id
     void getPost() throws ParseException {
@@ -116,8 +124,8 @@ class PostMapperTest {
 //        list.add(post1);
 
         List<Integer> list = new ArrayList<>();
-        list.add(12); list.add(9);
-        List<Post> list1 = postMapper.getPosts("ppp","life");
+        list.add(8); list.add(6);
+        List<Post> list1 = postMapper.getPosts("meng","java");
         Assertions.assertEquals(list.size(),list1.size());
         for(int i=0;i<list.size();i++){
             Assertions.assertEquals(list.get(i),(list1.get(i)).getPost_id());
@@ -129,10 +137,6 @@ class PostMapperTest {
         Assertions.assertEquals(1,postMapper.existLike(2,"Mao"));
         Assertions.assertEquals(0,postMapper.existLike(2,"ppp"));
     }
-
-//    @Test
-//    void existCollect() {
-//    }
 
     @Test
     void test_getpostbyauthor(){
@@ -168,7 +172,7 @@ class PostMapperTest {
 
     @Test
     void test_getNew2(){
-        Assertions.assertEquals(0,postMapper.getNew2("Mao"));
+        Assertions.assertEquals(2,postMapper.getNew2("Mao"));
     }
 
     @Test
