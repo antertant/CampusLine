@@ -67,6 +67,7 @@
     <select id="getAdmins" resultType="java.lang.String">
         select username from user_info
         where  module_admin = #{module_name}
+        order by username asc
     </select>
 
     <select id="searchModule" resultType="com.example.project.entity.Module">

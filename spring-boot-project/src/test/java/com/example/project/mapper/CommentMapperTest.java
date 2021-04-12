@@ -50,7 +50,7 @@ class CommentMapperTest {
 
     @Test//get the like count of a comment
     void getLikeCount() {
-        Assertions.assertEquals(1,commentMapper.getLikeCount(5));
+        Assertions.assertEquals(2,commentMapper.getLikeCount(5));
     }
 
     @Test//get replies of a comment

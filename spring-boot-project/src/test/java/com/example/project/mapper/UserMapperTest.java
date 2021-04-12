@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 @SpringBootTest
 class UserMapperTest {
     @Resource
@@ -76,12 +77,12 @@ class UserMapperTest {
     @Test
     void getallnewchat(){
         List<ChatMessage> chat=userMapper.getallnewchat("Mao");
-        Assertions.assertEquals("dsss",chat.get(0).getContent());
+        Assertions.assertEquals("hi!",chat.get(0).getContent());
     }
 
     @Test
     void countunreadchat_all(){
-        Assertions.assertEquals(1,userMapper.countunreadchat_all("Mao"));
+        Assertions.assertEquals(2,userMapper.countunreadchat_all("Mao"));
     }
 
     @Test
@@ -93,7 +94,7 @@ class UserMapperTest {
     void getchat(){
         List<ChatMessage> chat=userMapper.getchat("Mao","gang");
         String s=chat.get(0).getContent();
-        Assertions.assertEquals("dddd",s);
+        Assertions.assertEquals("dsss",s);
 
         userMapper.setunread1("Mao","gang");
         userMapper.setunread1("gang","Mao");
