@@ -1,4 +1,5 @@
 package com.example.project.mapper;
+import com.example.project.entity.ChatMessage;
 import com.example.project.entity.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -70,5 +71,43 @@ class UserMapperTest {
         Assertions.assertEquals(1,userMapper.checkVcode("1234@qq.com","1234"));
         Assertions.assertEquals(0,userMapper.checkVcode("1234@qq.com","123"));
         Assertions.assertEquals(0,userMapper.checkVcode("124@qq.com","1234"));
+    }
+
+    @Test
+    void getallnewchat(){
+        List<ChatMessage> chat=userMapper.getallnewchat("Mao");
+        Assertions.assertEquals("dsss",chat.get(0).getContent());
+    }
+
+    @Test
+    void countunreadchat_all(){
+        Assertions.assertEquals(1,userMapper.countunreadchat_all("Mao"));
+    }
+
+    @Test
+    void countunreadchat(){
+        Assertions.assertEquals(1,userMapper.countunreadchat("Mao","gang"));
+    }
+
+    @Test
+    void getchat(){
+        List<ChatMessage> chat=userMapper.getchat("Mao","gang");
+        String s=chat.get(0).getContent();
+        Assertions.assertEquals("dddd",s);
+
+        userMapper.setunread1("Mao","gang");
+        userMapper.setunread1("gang","Mao");
+    }
+
+    @Test
+    void setunread1(){
+        userMapper.setunread1("Mao","gang");
+        List<ChatMessage> chat=userMapper.getchat("Mao","gang");
+        int s=chat.get(0).getUnread();
+        Assertions.assertEquals(1,s);
+
+        userMapper.setunread1("Mao","gang");
+        userMapper.setunread1("gang","Mao");
+
     }
 }
