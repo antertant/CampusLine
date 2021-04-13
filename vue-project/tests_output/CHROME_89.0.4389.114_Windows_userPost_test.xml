@@ -5,9 +5,9 @@
 
   <testsuite name="userPost_test"
     errors="0" failures="0" hostname="" id="" package="userPost_test" skipped="0"
-    tests="1" time="28.44" timestamp="">
+    tests="1" time="33.25" timestamp="">
   
-    <testcase name="Post actions test" classname="userPost_test" time="28.44" assertions="64">
+    <testcase name="Post actions test" classname="userPost_test" time="33.25" assertions="64">
 
     
 

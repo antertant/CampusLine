@@ -5,9 +5,9 @@
 
   <testsuite name="homePage_test"
     errors="0" failures="0" hostname="" id="" package="homePage_test" skipped="0"
-    tests="1" time="9.881" timestamp="">
+    tests="1" time="14.46" timestamp="">
   
-    <testcase name="Correctly change hot posts tabs and enter the corresponding module page" classname="homePage_test" time="9.881" assertions="27">
+    <testcase name="Correctly change hot posts tabs and enter the corresponding module page" classname="homePage_test" time="14.46" assertions="27">
 
     
 
