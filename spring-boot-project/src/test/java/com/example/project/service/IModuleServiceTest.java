@@ -50,6 +50,11 @@ class IModuleServiceTest {
     void getModules() {
         List<Module> list = iModuleService.getModules();
         List<Module> list1 = new ArrayList<>();
+        Module module3 = new Module();
+        module3.setModule_name("django");
+        module3.setModule_intro("default module introduction");
+        module3.setMax_adminNumber(5);
+
         Module module0 = new Module();
         module0.setModule_name("java");
         module0.setModule_intro("Java Is the Language of Possibilities. Java is powering the innovation behind our digital world. Harness this potential with Java resources for student coders, hobbyists, developers, and IT leaders.");
@@ -64,12 +69,20 @@ class IModuleServiceTest {
         module2.setModule_name("vue");
         module2.setModule_intro("Vue (pronounced /vjuː/, like view) is a progressive framework for building user interfaces. It is designed from the ground up to be incrementally adoptable, and can easily scale between a library and a framework depending on different use cases. It consists of an approachable core library that focuses on the view layer only, and an ecosystem of supporting libraries that helps you tackle complexity in large Single-Page Applications.");
         module2.setMax_adminNumber(5);
-        list1.add(module0); list1.add(module1); list1.add(module2);
-        Assertions.assertEquals(list.size(),list1.size());
+        list1.add(module3);;list1.add(module0); list1.add(module1); list1.add(module2);
+        Assertions.assertEquals(list1.size(),list.size());
         for(int i=0;i<list.size();i++){
-            Assertions.assertEquals(list.get(i),list1.get(i));
+            Assertions.assertEquals(list1.get(i),list.get(i));
         }
 
+    }
+
+    @Test//request to create a module
+    void createModule(){
+        int res = iModuleService.createModule("vue");
+        Assertions.assertEquals(1,res);
+        int res1 = iModuleService.createModule("h");
+        Assertions.assertEquals(0,res1);
     }
 
     @Test//search know modules
@@ -91,7 +104,7 @@ class IModuleServiceTest {
     @Test
     void getPoints() {
         //
-        Assertions.assertEquals(6,iModuleService.getPoints("ppp","life"));
+        Assertions.assertEquals(2,iModuleService.getPoints("ppp","life"));
     }
 
     @Test//apply to be an admin of a module

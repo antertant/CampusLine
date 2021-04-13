@@ -29,7 +29,7 @@ public class IUserServiceTest {
 
     @Test
     void testgetpassword_email(){
-        Assertions.assertEquals("123",iUserService.getpassword_email("1"));
+        Assertions.assertEquals("123",iUserService.getpassword_email("1@qq.com"));
     }
 
     @Test

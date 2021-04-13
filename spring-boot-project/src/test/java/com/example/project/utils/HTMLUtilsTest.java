@@ -17,15 +17,15 @@ class HTMLUtilsTest {
 
     @Test
     void tohtml_eacape() {
-        Post post = postMapper.getPost(15);
+        Post post = postMapper.getPost(6);
 
         Post htmlpost = HTMLUtils.tohtml(post);
         String content_html = htmlpost.getPost_content();
         Post escapepost = HTMLUtils.escape(htmlpost);
         String content_escape = escapepost.getPost_content();
 
-        Assertions.assertEquals("<title>hello</title>",content_html);
-        Assertions.assertEquals("&lt;title&gt;hello&lt;/title&gt;",content_escape);
+        Assertions.assertEquals("<h1>hello java</h1>",content_html);
+        Assertions.assertEquals("&lt;h1&gt;hello java&lt;/h1&gt;",content_escape);
     }
 
 }
