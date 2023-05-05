@@ -17,6 +17,13 @@
         </template>
         <module-request-card/>
       </b-tab>
+      <b-tab>
+        <template #title>
+          <b-icon icon="tag" variant="primary"></b-icon>
+          <b>Module Management</b>
+        </template>
+        <module-management-card/>
+      </b-tab>
 
     </b-tabs>
   </b-card>
@@ -26,9 +33,10 @@
 import UserItemCard from "@/components/administrator/userItemCard";
 import axios from "axios";
 import ModuleRequestCard from "@/components/administrator/moduleRequestCard";
+import ModuleManagementCard from "@/components/administrator/moduleManagementCard.vue";
 export default {
   name: "adminTabs",
-  components: {ModuleRequestCard, UserItemCard},
+  components: {ModuleManagementCard, ModuleRequestCard, UserItemCard},
   data() {
     return{
       userInfo:[{

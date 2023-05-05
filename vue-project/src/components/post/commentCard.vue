@@ -81,7 +81,7 @@ import ReplyInput from "@/components/post/replyInput";
 export default {
   name: "commentCard",
   components: {ReplyInput, CommentReplyCard},
-  props: ['commentData', 'postId'],
+  props: ['commentData','postId'],
   data() {
     return {
       // comment_id: this.commentData.comment_id,
@@ -118,7 +118,7 @@ export default {
     },
     comment_replies() {
       return this.commentData.replies
-    },
+    }
   },
   mounted() {
     this.postTime = moment(new Date(this.comment_time)).format("MMM Do YYYY, HH:mm")

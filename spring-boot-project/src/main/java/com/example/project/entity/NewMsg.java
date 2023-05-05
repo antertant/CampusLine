@@ -7,7 +7,7 @@ public class NewMsg {
     private int cnewcommentreply=0;//count new commentreply
 
     public void setcnewlpost(int count){this.cnewlpost=count;}
-    public int getCnewlpost(){return cnewlpost;};
+    public int getCnewlpost(){return cnewlpost;}
 
     public void setcnewlcomment(int count){this.cnewlcomment=count;}
     public int getCnewlcomment(){return cnewlcomment;}

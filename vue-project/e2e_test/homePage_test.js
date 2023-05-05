@@ -4,7 +4,7 @@ module.exports = {
       .maximizeWindow()
       .url('http://localhost:8080/')
       .waitForElementVisible('body')
-      .assert.titleContains('CampusLine - Home')
+      .assert.titleContains('Asuka - Home')
 
     // sign in
       .click('#navBar-user-popover')
@@ -27,26 +27,26 @@ module.exports = {
       .click('#lifeEnterButton')
       .waitForElementNotPresent('#lifeEnterButton')
       .assert.urlContains('life')
-      .assert.titleContains('CampusLine - Life Circle')
+      .assert.titleContains('Asuka - Life Circle')
       .click('#headerHome')
       .waitForElementVisible('body')
-      .assert.titleContains('CampusLine - Home')
+      .assert.titleContains('Asuka - Home')
 
-    // knowledge hot card test
-      .waitForElementVisible('#knowledge-tab-java___BV_tab_button__')
-      .click('#knowledge-tab-java___BV_tab_button__')
+    // module hot card test
+      .waitForElementVisible('#module-tab-java___BV_tab_button__')
+      .click('#module-tab-java___BV_tab_button__')
       .assert.containsText('#hot-card-input-java', 'Write your own post on <JAVA>')
-      .waitForElementVisible('#knowledge-tab-springboot___BV_tab_button__')
-      .click('#knowledge-tab-springboot___BV_tab_button__')
+      .waitForElementVisible('#module-tab-springboot___BV_tab_button__')
+      .click('#module-tab-springboot___BV_tab_button__')
       .assert.containsText('#hot-card-input-springboot', 'Write your own post on <SPRINGBOOT>')
-      .waitForElementVisible('#knowledge-tab-vue___BV_tab_button__')
-      .click('#knowledge-tab-vue___BV_tab_button__')
+      .waitForElementVisible('#module-tab-vue___BV_tab_button__')
+      .click('#module-tab-vue___BV_tab_button__')
       .assert.containsText('#hot-card-input-vue', 'Write your own post on <VUE>')
-      .waitForElementVisible('#knowledgeEnterButton')
-      .assert.containsText('#knowledgeEnterButton', 'KNOWLEDGE')
-      .click('#knowledgeEnterButton')
-      .waitForElementNotPresent('#knowledgeEnterButton')
-      .assert.urlContains('knowledge-modules')
+      .waitForElementVisible('#moduleEnterButton')
+      .assert.containsText('#moduleEnterButton', 'module')
+      .click('#moduleEnterButton')
+      .waitForElementNotPresent('#moduleEnterButton')
+      .assert.urlContains('module-modules')
 
       .end();
   }

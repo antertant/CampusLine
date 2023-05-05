@@ -12,12 +12,12 @@
     where email = #{email}
   </select>
 
-  <insert id="createVcode">
+  <insert id="createVerifyCode">
     insert into email_verify
     values (#{email},#{verifycode})
   </insert>
 
-  <select id="checkVcode" resultType="java.lang.Integer">
+  <select id="checkVerifyCode" resultType="java.lang.Integer">
     select count(*) from email_verify
     where email = #{email} and verifycode = #{verifycode}
   </select>
@@ -32,12 +32,12 @@
     where email = #{email}
   </select>
 
-  <select id="existVemail" resultType="java.lang.Integer">
+  <select id="existVerifyEmail" resultType="java.lang.Integer">
     select count(*) from email_verify
     where email = #{email}
   </select>
 
-  <update id="updateVcode">
+  <update id="updateVerifyCode">
     update email_verify set verifycode = #{verifycode} where email = #{email}
   </update>
 
@@ -51,7 +51,7 @@
     where username=#{username}
   </delete>
 
-  <delete id="deleteVcode">
+  <delete id="deleteVerifyCode">
     delete from email_verify
     where email=#{email}
   </delete>
@@ -69,7 +69,7 @@
   </update>
 
   <select id="selectFollow" resultType="java.lang.String">
-    select follow from user_follow
+    select follower from user_follower
     where username = #{username}
   </select>
 
@@ -137,38 +137,38 @@
     values (#{chatmessage.from_user},#{chatmessage.to_user},#{chatmessage.content},UTC_TIMESTAMP)
   </insert>
 
-  <select id="getallnewchat" resultType="com.example.project.entity.ChatMessage">
+  <select id="getAllNewChat" resultType="com.example.project.entity.ChatMessage">
     select * from  chat_message a
     where a.send_time in (select max(send_time) date from chat_message where to_user=#{username} group by from_user)
     and to_user=#{username}
     order by send_time desc
   </select>
 
-  <select id="countunreadchat_all" resultType="java.lang.Integer">
+  <select id="countUnreadChat_All" resultType="java.lang.Integer">
     select count(1) from chat_message
     where to_user=#{username} and unread="1"
     order by send_time desc
   </select>
 
-  <select id="countunreadchat" resultType="java.lang.Integer">
+  <select id="countUnreadChat" resultType="java.lang.Integer">
     select count(1) from chat_message
     where to_user=#{username} and unread="1" and from_user=#{from_user}
     order by send_time desc
   </select>
 
-  <select id="getchat" resultType="com.example.project.entity.ChatMessage">
+  <select id="getChat" resultType="com.example.project.entity.ChatMessage">
     select message_id,from_user,to_user,content,send_time,unread from chat_message
     where (to_user=#{username} and from_user=#{from_user}) or (to_user=#{from_user} and from_user=#{username})
     order by send_time desc
   </select>
 
-  <update id="setunread">
+  <update id="setUnread">
     update chat_message
     set unread=0
     where to_user=#{username} and from_user=#{from_user}
   </update>
 
-  <update id="setunread1">
+  <update id="etUnread1">
     update chat_message
     set unread=1
     where to_user=#{username} and from_user=#{from_user}

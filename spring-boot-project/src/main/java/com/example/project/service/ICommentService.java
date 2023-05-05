@@ -3,7 +3,6 @@ package com.example.project.service;
 import com.example.project.entity.CommentLike;
 import com.example.project.entity.CommentReply;
 import com.example.project.entity.PostComment;
-import com.example.project.entity.PostLike;
 
 import java.util.List;
 

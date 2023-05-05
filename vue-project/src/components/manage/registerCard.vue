@@ -55,11 +55,11 @@
   <!--      Email Address-->
         <b-form-group label-for="registerEmail"
                       label="Email:"
-                      description="Only email address from @uwaterloo.ca is acceptable.">
+                      description="You must enter a correct email and ensure that you receive the verification code.">
           <b-form-input id="registerEmail"
                         type="email"
                         :state="emailState"
-                        placeholder="<example@uwaterloo.ca>"
+                        placeholder="<example@gmail.com>"
                         v-model="registerForm.email"
                         required>
           </b-form-input>
@@ -132,7 +132,7 @@ export default {
   },
   computed:{
     emailState() {
-      let emailReg = /^[a-zA-Z0-9_-]+@uwaterloo\.ca$/
+      let emailReg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
       if(this.registerFeedback === "E-mail existed!")
         return false
       if(!this.registerForm.email)

@@ -13,7 +13,6 @@ import com.example.project.service.ICommentService;
 import com.example.project.service.IPostService;
 import com.example.project.utils.HTMLUtils;
 import io.swagger.annotations.ApiOperation;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +35,7 @@ public class PostController {
     @ApiOperation("post a new post")
     @RequestMapping(value = "/api/createpost", method = RequestMethod.POST)
     @ResponseBody
-    public Result createpost(@RequestBody Post post){
+    public Result createPost(@RequestBody Post post){
         iPostService.insertPost(post);
         return Result.ok("post successfully");
     }
@@ -45,7 +44,7 @@ public class PostController {
     @ApiOperation("edit a post")
     @RequestMapping(value = "/api/editpost", method = RequestMethod.POST)
     @ResponseBody
-    public Result editpost(@RequestBody Post post){//post_id,content
+    public Result editPost(@RequestBody Post post){//post_id,content
         Post post_ = HTMLUtils.escape(post);
         postMapper.updatePost(post_);
         return Result.ok("edit successfully");
@@ -55,7 +54,7 @@ public class PostController {
     @ApiOperation("get post by its id")
     @RequestMapping(value = "/api/getpost", method = RequestMethod.GET)
     @ResponseBody
-    public Result getpost(@RequestParam("post_id")int post_id){
+    public Result getPost(@RequestParam("post_id")int post_id){
         Post post = postMapper.getPost(post_id);
         return Result.ok(HTMLUtils.tohtml(post));
     }
@@ -64,8 +63,8 @@ public class PostController {
     @ApiOperation("get posts by their author")
     @RequestMapping(value = "/api/getpostbyauthor", method = RequestMethod.GET)
     @ResponseBody
-    public Result getpostsbyauthor(@RequestParam("username")String username){
-        List<Post> posts = postMapper.getPostsbyAuthor(username);
+    public Result getPostsByAuthor(@RequestParam("username")String username){
+        List<Post> posts = postMapper.getPostsByAuthor(username);
         return Result.ok(HTMLUtils.tohtmls(posts));
     }
 
@@ -73,7 +72,7 @@ public class PostController {
     @ApiOperation("get posts with search key")
     @RequestMapping(value = "/api/searchpost", method = RequestMethod.GET)
     @ResponseBody
-    public Result searchpost(@RequestParam("key")String key){
+    public Result searchPost(@RequestParam("key")String key){
         List<Post> posts = postMapper.searchPosts(key);
         return Result.ok(HTMLUtils.tohtmls(posts));
     }
@@ -82,7 +81,7 @@ public class PostController {
     @ApiOperation("delete post")
     @RequestMapping(value = "/api/deletepost", method = RequestMethod.POST)
     @ResponseBody
-    public Result deletepost(@RequestParam("post_id")int post_id){
+    public Result deletePost(@RequestParam("post_id")int post_id){
         int flag = iPostService.deletePost(post_id);
         if(flag == 1)
             return Result.ok("delete successfully");
@@ -94,7 +93,7 @@ public class PostController {
     @ApiOperation("like or cancel like")
     @RequestMapping(value = "/api/likepost", method = RequestMethod.POST)
     @ResponseBody
-    public Result likepost(@RequestParam("post_id")int post_id,
+    public Result likePost(@RequestParam("post_id")int post_id,
                            @RequestParam("username")String username){
         //utilize UTC time as like_time
         int flag = iPostService.likepost(post_id,username);
@@ -110,7 +109,7 @@ public class PostController {
     @ApiOperation("get the like_list of a post")
     @RequestMapping(value = "/api/getlikes", method = RequestMethod.GET)
     @ResponseBody
-    public Result getlikes(@RequestParam("post_id")int post_id){
+    public Result getLikes(@RequestParam("post_id")int post_id){
         List<String> likes = iPostService.getlikes(post_id);
         return Result.ok(likes);
     }
@@ -119,37 +118,37 @@ public class PostController {
     @ApiOperation("get counts of 4 unviewed message:likedpost,likedcomment,postccomment,commentreply")
     @RequestMapping(value = "/api/getcountnew", method = RequestMethod.GET)
     @ResponseBody
-    public Result getcountnew(@RequestParam("username")String username){
-        NewMsg countnew = new NewMsg();
-        countnew.setcnewlpost(postMapper.getNew1(username));
-        countnew.setcnewlcomment(postMapper.getNew2(username));
-        countnew.setcnewpostcomment(postMapper.getNew3(username));
-        countnew.setcnewcommentreply(postMapper.getNew4(username));
-        return Result.ok(countnew);
+    public Result getCountNew(@RequestParam("username")String username){
+        NewMsg countNew = new NewMsg();
+        countNew.setcnewlpost(postMapper.getNew1(username));
+        countNew.setcnewlcomment(postMapper.getNew2(username));
+        countNew.setcnewpostcomment(postMapper.getNew3(username));
+        countNew.setcnewcommentreply(postMapper.getNew4(username));
+        return Result.ok(countNew);
     }
 
     @CrossOrigin
     @ApiOperation("get the new message of a user")
     @RequestMapping(value = "/api/getnewlist", method = RequestMethod.GET)
     @ResponseBody
-    public Result getnewlist(@RequestParam("username")String username,@RequestParam("choice")Integer choice){
+    public Result getNewList(@RequestParam("username")String username, @RequestParam("choice")Integer choice){
         if (choice==1){
             //choice=1, get the newest list of PostLike
-            List<PostLike> likedpost = iPostService.getlikedpost(username);
+            List<PostLike> likedPost = iPostService.getlikedpost(username);
             postMapper.updateV(username,choice);
-            return Result.ok(likedpost);
+            return Result.ok(likedPost);
         }
         else if (choice==2){
             //choice=2, get the newest list of CommentLike
-            List<CommentLike> likedcomment=iCommentService.getlikedcomment(username);
+            List<CommentLike> likedComment=iCommentService.getlikedcomment(username);
             postMapper.updateV(username,choice);
-            return Result.ok(likedcomment);
+            return Result.ok(likedComment);
         }
         else if (choice==3){
             //choice=3, get the newest list of PostComment
-            List<PostComment> postcomment=commentMapper.getPostComment(username);
+            List<PostComment> postComment=commentMapper.getPostComment(username);
             postMapper.updateV(username,choice);
-            return Result.ok(postcomment);
+            return Result.ok(postComment);
         }
         else if (choice==4){
             //choice=4, get the newest list of CommentReply
@@ -179,7 +178,7 @@ public class PostController {
     @ApiOperation("get the collect_list of a user")
     @RequestMapping(value = "/api/getcollects", method = RequestMethod.GET)
     @ResponseBody
-    public Result getcollects(@RequestParam("username")String username){
+    public Result getCollects(@RequestParam("username")String username){
         List<Post> collects = iPostService.getCollects(username);
         return Result.ok(HTMLUtils.tohtmls(collects));
     }
@@ -188,9 +187,9 @@ public class PostController {
     @ApiOperation("count the user's collections")
     @RequestMapping(value = "/api/countcollects", method = RequestMethod.GET)
     @ResponseBody
-    public Result countcollect(@RequestParam("username")String username){
-        int countcollect=iPostService.countCollect(username);
-        return Result.ok(countcollect);
+    public Result countCollect(@RequestParam("username")String username){
+        int countCollect=iPostService.countCollect(username);
+        return Result.ok(countCollect);
 
     }
 
@@ -198,9 +197,9 @@ public class PostController {
     @ApiOperation("get followed users' 10 newest post")
     @RequestMapping(value = "/api/getfollowpost", method = RequestMethod.GET)
     @ResponseBody
-    public Result getfollowpost(@RequestParam("follower")String follower){
-        List<Post> followposts = postMapper.getFollowPost(follower);
-        return Result.ok(HTMLUtils.tohtmls(followposts));
+    public Result getFollowPost(@RequestParam("follower")String follower){
+        List<Post> followPosts = postMapper.getFollowPost(follower);
+        return Result.ok(HTMLUtils.tohtmls(followPosts));
     }
 
 }

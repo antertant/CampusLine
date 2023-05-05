@@ -42,7 +42,7 @@ export default {
     }
   },
   created() {
-    document.title = 'CampusLine - SearchModule_' + this.searchKey
+    document.title = 'Asuka - SearchModule_' + this.searchKey
   },
   mounted() {
     this.getSearchResult()

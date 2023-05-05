@@ -28,9 +28,12 @@
         </b-form-textarea>
       </b-form-group>
     </form>
-    <div class="float-right">
+    <div class="float-right" v-if="loginState">
       <b-button id="reply-cancel" @click="$bvModal.hide('reply-modal-'+commentId+replyId)" variant="dark">Cancel</b-button>
       <b-button id="reply-submit" @click="handleCSubmit" variant="warning">Submit</b-button>
+    </div>
+    <div class="float-right" v-if="!loginState">
+      <b-button id="reply--visitor-cancel" @click="$bvModal.hide('reply-modal-'+commentId+replyId)" variant="warning">Confirm</b-button>
     </div>
   </b-modal>
 </template>
@@ -45,6 +48,7 @@ export default {
   computed: {
     ...mapGetters({
       current_user: "loginInfo/getLUName",
+      loginState: "loginInfo/getLoginState",
     }),
   },
   data () {

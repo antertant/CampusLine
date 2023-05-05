@@ -3,7 +3,7 @@ export default {
 
   state: {
     loginUserName: '',
-    loginState: false
+    loginState: false,
   },
   getters:{
     getLUName: state => {

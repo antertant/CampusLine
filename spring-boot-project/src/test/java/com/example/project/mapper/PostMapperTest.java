@@ -13,8 +13,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
 class PostMapperTest {
     @Resource
@@ -142,7 +140,7 @@ class PostMapperTest {
     void test_getpostbyauthor(){
         List<Integer> list = new ArrayList<>();
         list.add(12); list.add(9);list.add(3);
-        List<Post> list1 = postMapper.getPostsbyAuthor("ppp");
+        List<Post> list1 = postMapper.getPostsByAuthor("ppp");
         Assertions.assertEquals(list.size(),list1.size());
         for(int i=0;i<list.size();i++){
             Assertions.assertEquals(list.get(i),(list1.get(i)).getPost_id());

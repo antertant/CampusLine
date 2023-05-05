@@ -4,7 +4,7 @@ module.exports = {
       .maximizeWindow()
       .url('http://localhost:8080')
       .waitForElementVisible('body')
-      .assert.titleContains('CampusLine - Home')
+      .assert.titleContains('Asuka - Home')
 
     // sign in
       .click('#navBar-user-popover')

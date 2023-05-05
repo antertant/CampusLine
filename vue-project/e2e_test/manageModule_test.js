@@ -4,7 +4,7 @@ module.exports = {
       .maximizeWindow()
       .url('http://localhost:8080')
       .waitForElementVisible('body')
-      .assert.titleContains('CampusLine - Home')
+      .assert.titleContains('Asuka - Home')
 
     // sign in
       .click('#navBar-user-popover')
@@ -56,7 +56,7 @@ module.exports = {
       .waitForElementVisible('#modulePopKnow')
       .click('#modulePopKnow')
       .waitForElementPresent('#springboot_block')
-      .assert.urlContains('/knowledge-modules')
+      .assert.urlContains('/module-modules')
       .click('#springboot_button')
       .waitForElementVisible('#module-title-springboot')
       .assert.urlContains('springboot')

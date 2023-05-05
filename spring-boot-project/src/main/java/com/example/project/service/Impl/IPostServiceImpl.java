@@ -1,14 +1,12 @@
 package com.example.project.service.Impl;
 
 import com.example.project.entity.Post;
-import com.example.project.entity.PostComment;
 import com.example.project.entity.PostLike;
 import com.example.project.mapper.ModuleMapper;
 import com.example.project.mapper.PostMapper;
 import com.example.project.service.IPostService;
 import com.example.project.utils.HTMLUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.web.util.HtmlUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -30,8 +28,7 @@ public class IPostServiceImpl implements IPostService {
 
     @Override
     public int deletePost(int post_id){
-        int flag = postMapper.deletePost(post_id);
-        return flag;
+        return postMapper.deletePost(post_id);
     }
 
     @Override
@@ -55,8 +52,7 @@ public class IPostServiceImpl implements IPostService {
 
     @Override
     public List<String> getlikes(int post_id){
-        List<String> likes = postMapper.getLikes(post_id);
-        return likes;
+        return postMapper.getLikes(post_id);
     }
 
 
@@ -81,8 +77,7 @@ public class IPostServiceImpl implements IPostService {
 
     @Override
     public List<Post> getCollects(String username){
-        List<Post> collects= postMapper.getCollects(username);
-        return collects;
+        return postMapper.getCollects(username);
     }
 
     @Override

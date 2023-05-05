@@ -1,7 +1,6 @@
 <template>
   <b-card>
     <b-row>
-
       <b-col cols="auto">
         <b-avatar :badge="unreadCount" badge-variant="danger" />
       </b-col>

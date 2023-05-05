@@ -34,7 +34,7 @@ export default {
     }
   },
   created() {
-    document.title = 'CampusLine - Home'
+    document.title = 'Asuka - Home'
   }
 }
 </script>

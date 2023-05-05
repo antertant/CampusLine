@@ -77,22 +77,44 @@ export default {
         })
     },
     applyAdmin() {
-      axios
-        .post('/applyadmin', null, {params:{
-            username: this.currentUser,
-            module_name: this.moduleName}})
-        .then(response=>{
-          console.log(response)
-          if(response.data.code === 200){
-            this.getRole()
+      const crtEl = this.$createElement
+      const errTitle = crtEl(
+        'p',
+        { class: ['text-center', 'mb-0'] },
+        [
+          crtEl('b-icon', { props:{ icon: 'exclamation-diamond', small: true } }),
+          crtEl('strong', ' Error')
+        ]
+      )
+      if(this.currentUser === '')
+        this.$bvToast.toast(
+          'Please login before applying for an module administrators.',{
+            title: [errTitle],
+            toaster: 'b-toaster-top-center',
+            variant: 'danger',
+            solid: true
           }
-          else if(response.data.code === 400){
-            this.constructError()
-          }
-        })
-      .catch(failResponse=>{
-        console.log(failResponse)
-      })
+        )
+      else {
+        axios
+          .post('/applyadmin', null, {
+            params: {
+              username: this.currentUser,
+              module_name: this.moduleName
+            }
+          })
+          .then(response => {
+            console.log(response)
+            if (response.data.code === 200) {
+              this.getRole()
+            } else if (response.data.code === 400) {
+              this.constructError()
+            }
+          })
+          .catch(failResponse => {
+            console.log(failResponse)
+          })
+      }
     },
     retireAdmin() {
       axios

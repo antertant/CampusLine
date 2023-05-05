@@ -3,7 +3,6 @@ package com.example.project.mapper;
 import com.example.project.entity.Post;
 import com.example.project.entity.PostLike;
 import org.apache.ibatis.annotations.Param;
-import com.example.project.entity.NewMsg;
 
 import java.util.List;
 
@@ -14,7 +13,7 @@ public interface PostMapper {
 
     Post getPost(@Param(value = "post_id")int post_id);
 
-    List<Post> getPostsbyAuthor(@Param(value = "username")String username);
+    List<Post> getPostsByAuthor(@Param(value = "username")String username);
     List<Post> getFollowPost(@Param(value = "follower")String follower);
 
     List<Post> searchPosts(@Param(value = "key")String key);

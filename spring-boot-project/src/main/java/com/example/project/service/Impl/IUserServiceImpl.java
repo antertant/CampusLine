@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class IUserServiceImpl implements IUserService {
@@ -29,13 +30,15 @@ public class IUserServiceImpl implements IUserService {
     }
 
     @Override
-    public void updatePassword_email(String email,String password){userMapper.updatePassword_email(email,password);};
+    public void updatePassword_email(String email,String password){userMapper.updatePassword_email(email,password);}
     @Override
     public User getuser(String username) {
         User user = userMapper.selectByPrimaryKey(username);
-        //user.setFollows(userMapper.selectFollow(username));
-        user.setFollowers(userMapper.selectFollower(username));
-        user.setCollections(userMapper.selectCollection(username));
+        Optional<User> optionalUser = Optional.ofNullable(user);
+        optionalUser.ifPresent(userValues -> {
+            userValues.setFollowers(userMapper.selectFollower(username));
+            userValues.setCollections(userMapper.selectCollection(username));
+        });
         return user;
     }
 
@@ -43,7 +46,6 @@ public class IUserServiceImpl implements IUserService {
     public User getuser_email(String email) {
         String username=userMapper.usernameByEmail(email);
         User user = userMapper.selectByPrimaryKey(username);
-        //user.setFollows(userMapper.selectFollow(username));
         user.setFollowers(userMapper.selectFollower(username));
         user.setCollections(userMapper.selectCollection(username));
         return user;

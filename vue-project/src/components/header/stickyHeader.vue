@@ -12,14 +12,14 @@
 <!--        Menu-->
         <b-navbar-nav class="mx-auto">
 <!--          Website Logo-->
-          <b-navbar-brand href="/">
+          <b-navbar-brand href="/home">
             <em>
               <b>
-                CampusLine
+                University Forum
               </b>
             </em>
-            <b-img src="https://upload.wikimedia.org/wikipedia/en/thumb/6/6e/University_of_Waterloo_seal.svg/1200px-University_of_Waterloo_seal.svg.png"
-                   alt="University of Waterloo seal.svg"
+            <b-img src="~@/assets/eva.jpg"
+                   alt="NEON GENESIS EVANGELION Ayanami Rei.svg"
                    width="36"
                    height="36" class="d-inline-block align-top"/>
           </b-navbar-brand>
@@ -55,13 +55,13 @@
               <b-list-group-item to="/life" class="border-0 py-2" id="modulePopLife">
                 Life
               </b-list-group-item>
-              <b-list-group-item to="/knowledge-modules" class="border-0 py-2" id="modulePopKnow">
-                Knowledge
+              <b-list-group-item to="/module-modules" class="border-0 py-2" id="modulePopKnow">
+                module
               </b-list-group-item>
             </b-list-group>
           </b-popover>
 <!--          Message Button-->
-          <b-nav-item id="message-popover">
+          <b-nav-item v-if="loginState" id="message-popover">
             <b-icon variant="warning" icon="bell"></b-icon>
             <b>
               Notifications
@@ -73,7 +73,13 @@
             +newsCounter.cnewlpost+newsCounter.cnewlcomment+newChatCounter }}
             </b-badge>
           </b-nav-item>
-          <b-popover target="message-popover" placement="buttom" triggers="focus">
+          <b-nav-item to="/login" v-if="!loginState" id="VisitorMessage">
+            <b-icon variant="warning" icon="bell"></b-icon>
+            <b>
+              Notifications
+            </b>
+          </b-nav-item>
+          <b-popover target="message-popover" placement="buttom" triggers="focus" v-if="loginState">
             <b-list-group style="font-size: medium; color: black">
 
               <b-list-group-item id="message-comment-popover"
@@ -108,11 +114,9 @@
                   {{newChatCounter}}
                 </b-badge>
               </b-list-group-item>
-
             </b-list-group>
           </b-popover>
         </b-navbar-nav>
-
         <b-navbar-nav class="mx-auto">
 <!--          Login/Logout and Profile Button-->
           <b-nav-item id="navBar-user-popover" class="mr-3">
@@ -186,7 +190,7 @@ export default {
       searchKey: null,
       searchResult: [],
       counter: 0,
-      interval: ''
+      interval: '',
     }
   },
   computed: {
@@ -194,7 +198,7 @@ export default {
       loginName: "loginInfo/getLUName",
       loginState: "loginInfo/getLoginState",
       newsCounter: "newMessage/getNewMessageCount",
-      newChatCounter: 'newMessage/getNewChatMessageCount'
+      newChatCounter: 'newMessage/getNewChatMessageCount',
     })
   },
   methods: {

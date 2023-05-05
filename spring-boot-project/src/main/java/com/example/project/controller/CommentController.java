@@ -35,7 +35,7 @@ public class CommentController {
     @ApiOperation(value = "reply comment/reply")
     @RequestMapping(value = "/api/likecomment", method = RequestMethod.POST)
     @ResponseBody
-    public Result likecomment(@RequestParam("comment_id")int comment_id,
+    public Result likeComment(@RequestParam("comment_id")int comment_id,
                               @RequestParam("clike_user")String clike_user){
         int flag = iCommentService.likecomment(comment_id,clike_user);//or cancel
         if(flag == 0)
@@ -48,7 +48,7 @@ public class CommentController {
     @ApiOperation(value = "reply comment/reply")
     @RequestMapping(value = "/api/commentreply", method = RequestMethod.POST)
     @ResponseBody
-    public Result commentreply(@RequestBody CommentReply reply){
+    public Result commentReply(@RequestBody CommentReply reply){
         iCommentService.commentreply(reply);
         return Result.ok("reply successfully");
     }
@@ -57,7 +57,7 @@ public class CommentController {
     @ApiOperation(value = "reply comment/reply")
     @RequestMapping(value = "/api/deletereply", method = RequestMethod.POST)
     @ResponseBody
-    public Result deletereply(@RequestParam("reply_id")int reply_id){
+    public Result deleteReply(@RequestParam("reply_id")int reply_id){
         int ret = commentMapper.deleteReply(reply_id);
         if (ret==1)
             return Result.ok("delete reply successfully");
@@ -70,7 +70,7 @@ public class CommentController {
     @ApiOperation(value = "delete comment")
     @RequestMapping(value = "/api/deletecomment", method = RequestMethod.POST)
     @ResponseBody
-    public Result deletecomment(@RequestParam("comment_id")int comment_id){
+    public Result deleteComment(@RequestParam("comment_id")int comment_id){
         iCommentService.deletecomment(comment_id);
         return Result.ok("delete successfully");
     }
@@ -79,7 +79,7 @@ public class CommentController {
     @ApiOperation("get the comment_list&replies&comment_likes of a post")
     @RequestMapping(value = "/api/getcomments", method = RequestMethod.GET)
     @ResponseBody
-    public Result getcomments(@RequestParam("post_id")int post_id){
+    public Result getComments(@RequestParam("post_id")int post_id){
         List<PostComment> comments = iCommentService.getcomments(post_id);
         return Result.ok(comments);
     }

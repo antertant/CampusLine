@@ -20,7 +20,7 @@ export default {
     })
   },
   created() {
-    document.title = 'CampusLine - Sign in'
+    document.title = 'Asuka - Sign in'
   },
 }
 </script>

@@ -40,4 +40,5 @@ public class Result {
     public static Result fail(Object data){
         return new Result(400,"fail",data);
     }
+
 }

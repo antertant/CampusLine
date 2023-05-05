@@ -1,7 +1,5 @@
 package com.example.project.entity;
 
-import java.util.List;
-
 public class Module {
     private String module_name;
     private String module_intro;

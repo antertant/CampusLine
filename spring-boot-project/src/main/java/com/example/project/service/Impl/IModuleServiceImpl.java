@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class IModuleServiceImpl implements IModuleService {
@@ -29,9 +30,9 @@ public class IModuleServiceImpl implements IModuleService {
         if(moduleMapper.getModule(module_name)==null){
             //...
             if(moduleMapper.existModule(module_name)==0)
-                moduleMapper.createModulerequest(module_name);
+                moduleMapper.createModuleRequest(module_name);
             else
-                moduleMapper.updateModulerequest(module_name);
+                moduleMapper.updateModuleRequest(module_name);
             return 0;
         }
         else
@@ -40,8 +41,7 @@ public class IModuleServiceImpl implements IModuleService {
 
     @Override
     public List<Post> getPosts(String module_name){
-        List<Post> posts = moduleMapper.getPosts(module_name);
-        return posts;
+        return moduleMapper.getPosts(module_name);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class IModuleServiceImpl implements IModuleService {
         else{
             String module_name = (postMapper.getPost(post_id)).getModule_name();
             //the number of top posts at a module
-            int count = moduleMapper.getTopc(module_name);
+            int count = moduleMapper.getTops(module_name);
             if(count>=3)
                 return 1;
             else{
@@ -66,14 +66,12 @@ public class IModuleServiceImpl implements IModuleService {
 
     @Override
     public List<Module> getModules(){
-        List<Module> modules = moduleMapper.getModules();
-        return modules;
+        return moduleMapper.getModules();
     }
 
     @Override
     public List<Module> searchModule(String key){
-        List<Module> modules = moduleMapper.searchModule(key);
-        return modules;
+        return moduleMapper.searchModule(key);
     }
 
     @Override
@@ -84,18 +82,18 @@ public class IModuleServiceImpl implements IModuleService {
             int likes = p.getPost_likes();
             int collects = p.getPost_collections();
             int comments = p.getPost_comments();
-            points += likes*2+comments*1+collects*3;
+            points += (likes*2 + comments + collects*3)/2;
         }
         return points;
     }
 
     @Override
-    public int applym(String username, String module_name){
-        int leastpoint = 2;//minimum points to become an admin
+    public int applyAdmin(String username, String module_name){
+        int leastpoint = 1000;//minimum points to become an admin
         User user = userMapper.selectByPrimaryKey(username);
         int managers = moduleMapper.getAdmins(module_name).size();
         int maxadmins = moduleMapper.getModule(module_name).getMax_adminNumber();
-        if(user.getModule_admin()!=null && user.getModule_admin()!=""){
+        if(user.getModule_admin()!=null && !Objects.equals(user.getModule_admin(), "")){
             return 1;//you have been manager of some module
         }
         else if(managers>=maxadmins){
@@ -103,7 +101,7 @@ public class IModuleServiceImpl implements IModuleService {
         }
 
         else if(this.getPoints(username,module_name)<leastpoint){
-            return 3;//dont have enough points to apply for a manager
+            return 3;//don't have enough points to apply for a manager
         }
         else{
 //            ModuleManagement mm = new ModuleManagement();
@@ -122,70 +120,95 @@ public class IModuleServiceImpl implements IModuleService {
     }
 
     @Override
-    public void editintro(String module_name,String new_intro){
+    public void editIntro(String module_name, String new_intro){
         moduleMapper.editIntro(module_name,new_intro);
     }
 
-    public List<Post> gethots(String module_name,int count){
+
+    public List<Post> getHots(String module_name, int count){
+        /*
+        get hotPosts by module_name
+        @param module_name
+        @param count: Posts count
+        @return List<Post>: a list content HotPosts
+        */
+        // get all posts by module_name
         List<Post> posts = moduleMapper.getPosts(module_name);
+
         //"post_id": int
         // "like_count/comment_count"-"count(1)":int
-        List<HashMap<String,Object>> likecounts = moduleMapper.postlikecount(module_name);
-        List<HashMap<String,Object>> commentcounts = moduleMapper.postcommentcount(module_name);
-        HashMap<Integer,Integer> likecount = HashmapUtils.trans(likecounts);
-        HashMap<Integer,Integer> commentcount = HashmapUtils.trans(commentcounts);
+        //get like_count/comment_count by all posts in module_name
+        List<HashMap<String,Object>> likeCounts = moduleMapper.postLikeCount(module_name);
+        List<HashMap<String,Object>> commentCounts = moduleMapper.postCommentCount(module_name);
 
-        //post_id:total_like&comment&reply_counts within 24hrs
-        HashMap<Integer,Integer> hashMap = new HashMap();
-        for(int i=0;i<posts.size();i++){
-            int post_id = posts.get(i).getPost_id();
-            int like_count = (likecount.get(post_id)==null)?0:likecount.get(post_id);
-            int comment_count = (commentcount.get(post_id)==null)?0:commentcount.get(post_id);
-            int reply_count = moduleMapper.commentreplycount(post_id);
-            int total_count = like_count+comment_count+reply_count;
-            hashMap.put(post_id,total_count);
+        //take list convert to map
+        //postId : likeCount/commentCount
+        HashMap<Integer,Integer> likeCountMap = HashmapUtils.trans(likeCounts);
+        HashMap<Integer,Integer> commentCountMap = HashmapUtils.trans(commentCounts);
+
+        //post_id:total_like & comment & reply_counts within 24hrs
+        HashMap<Integer,Integer> hashMap = new HashMap<>();
+        for (Post post : posts) {
+            int post_id = post.getPost_id();
+            int like_count = (likeCountMap.get(post_id) == null) ? 0 : likeCountMap.get(post_id);
+            int comment_count = (commentCountMap.get(post_id) == null) ? 0 : commentCountMap.get(post_id);
+            int reply_count = moduleMapper.commentReplyCount(post_id);
+            int total_count = like_count + comment_count + reply_count;
+            hashMap.put(post_id, total_count);
         }
         //post_id:count
-        List<Post> hotposts = new ArrayList<>();
-        List<Map.Entry<Integer,Integer>> list = HashmapUtils.sort(hashMap,count);
-        for(Map.Entry<Integer,Integer> m:list){
-            hotposts.add(postMapper.getPost(m.getKey()));
-        }
-        return HTMLUtils.tohtmls(hotposts);
+        //sort posts map and put id & post to the list
+        List<Post> hotPosts = HashmapUtils.sort(hashMap, count).stream()
+                .map(entry -> postMapper.getPost(entry.getKey()))
+                .collect(Collectors.toList());
+        return HTMLUtils.tohtmls(hotPosts);
+
     }
 
     @Override
-    public List<HotModule> gethotmodules(){
-        int life_hot_posts = 5;
-        int know_hot_modules = 4, know_hot_posts = 3;
-        List<HotModule> hotModules = new ArrayList();
-        List<String> knowmodules = new ArrayList<>();
+    public List<HotModule> getHotModules(){
+        int hot_posts = 5;
+        int know_hot_modules = 4;
+        List<HotModule> hotModules = new ArrayList<>();
+        List<String> knowModules = new ArrayList<>();
         //module_name:""
         // post_count:""
-        List<HashMap<String,String>> module_names = moduleMapper.gethotmodules(know_hot_modules);
-        for(int i=0;i<module_names.size();i++){
-            HashMap h = module_names.get(i);
-            String module_name = (String) h.get("module_name");
-            knowmodules.add(module_name);
-        }
+        List<HashMap<String,String>> module_names = moduleMapper.getHotModules(know_hot_modules);
 
-        for(int i=0;i<1+knowmodules.size();i++){
-            List<Post> posts = new ArrayList<>();
-            if(i == 0){
-                posts = this.gethots("life",life_hot_posts);
+        module_names.forEach((stringStringHashMap -> {
+            String module_name = stringStringHashMap.get("module_name");
+            knowModules.add(module_name);
+        }));
+
+        if (knowModules.stream()
+                .findFirst()
+                .orElse("life")
+                .equals("life"))
+        {
+            knowModules.forEach(s -> {
+                List<Post> posts;
                 HotModule hm = new HotModule();
-                hm.setModule_name("life");
+                posts = this.getHots(s,hot_posts);
+                hm.setModule_name(s);
                 hm.setPosts(posts);
                 hotModules.add(hm);
-            }
-            else{
-                String module_name = knowmodules.get(i-1);
-                posts = this.gethots(module_name,know_hot_posts);
+            });
+        }
+        else {
+            List<Post> lifePosts;
+            HotModule lifeModule = new HotModule();
+            lifePosts = this.getHots("life",hot_posts);
+            lifeModule.setModule_name("life");
+            lifeModule.setPosts(lifePosts);
+            hotModules.add(lifeModule);
+            knowModules.forEach(s -> {
+                List<Post> posts;
                 HotModule hm = new HotModule();
-                hm.setModule_name(module_name);
+                posts = this.getHots(s,hot_posts);
+                hm.setModule_name(s);
                 hm.setPosts(posts);
                 hotModules.add(hm);
-            }
+            });
         }
         return hotModules;
 

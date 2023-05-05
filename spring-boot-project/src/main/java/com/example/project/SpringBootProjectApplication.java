@@ -8,7 +8,8 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 @SpringBootApplication
 @ServletComponentScan
 @MapperScan(value = "com.example.project.mapper")
-public class SpringBootProjectApplication {
+public class
+SpringBootProjectApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SpringBootProjectApplication.class, args);

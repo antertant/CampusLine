@@ -5,20 +5,19 @@ import java.util.*;
 public class HashmapUtils {
     public static HashMap<Integer,Integer> trans(List<HashMap<String,Object>> list){
         HashMap<Integer,Integer> newhash = new HashMap<>();
-        for(int i=0;i<list.size();i++){
-            HashMap<String,Object> hashMap = list.get(i);
+        for (HashMap<String, Object> hashMap : list) {
             Integer K = (Integer) hashMap.get("post_id");
             Long value = (Long) hashMap.get("count(1)");
             Integer V = Integer.parseInt(value.toString());
-            newhash.put(K,V);
+            newhash.put(K, V);
         }
         return newhash;
     }
 
     public static List<Map.Entry<Integer,Integer>> sort(HashMap<Integer,Integer> hashMap,int count){
         HashMap<Integer,Integer> newhash = new HashMap<>();
-        List<Map.Entry<Integer,Integer>> list = new ArrayList<Map.Entry<Integer,Integer>>(hashMap.entrySet());
-        Collections.sort(list, new Comparator<Map.Entry<Integer, Integer>>() {
+        List<Map.Entry<Integer,Integer>> list = new ArrayList<>(hashMap.entrySet());
+        list.sort(new Comparator<>() {
             @Override
             public int compare(Map.Entry<Integer, Integer> o1,
                                Map.Entry<Integer, Integer> o2) {

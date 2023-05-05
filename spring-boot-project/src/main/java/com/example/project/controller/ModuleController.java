@@ -35,7 +35,7 @@ public class ModuleController {
     @ApiOperation("Module Creation Request")
     @RequestMapping(value="/api/createmodulerequest", method = RequestMethod.POST)
     @ResponseBody
-    public Result createmodulerequest(@RequestParam("module_name")String module_name){
+    public Result createModuleRequest(@RequestParam("module_name")String module_name){
         int flag = iModuleService.createModule(module_name);
         if(flag == 1)
             return Result.fail("Module with the same name has existed");
@@ -47,7 +47,7 @@ public class ModuleController {
     @ApiOperation("Get Module Creation Request List")
     @RequestMapping(value = "/api/getrequests",method = RequestMethod.GET)
     @ResponseBody
-    public Result getmodule(){
+    public Result getModule(){
         List<HashMap<String,Object>> list = moduleMapper.getRequests();
         return Result.ok(list);
     }
@@ -56,10 +56,19 @@ public class ModuleController {
     @ApiOperation("Review Module Creation")
     @RequestMapping(value="/api/createmodule", method = RequestMethod.POST)
     @ResponseBody
-    public Result createmodule(@RequestParam("module_name")String module_name){
+    public Result createModule(@RequestParam("module_name")String module_name){
         moduleMapper.insertModule(module_name);
         moduleMapper.deleteRequest(module_name);
         return Result.ok("A new knowledge module is created");
+    }
+
+    @CrossOrigin
+    @ApiOperation("Reject Module Create request")
+    @RequestMapping(value="/api/deleteModuleCreateRequest", method = RequestMethod.POST)
+    @ResponseBody
+    public Result deleteModuleRequest(@RequestParam("module_name")String module_name){
+        moduleMapper.deleteRequest(module_name);
+        return Result.ok("A module create request is deleted");
     }
 
     @CrossOrigin
@@ -67,9 +76,9 @@ public class ModuleController {
             "choice=1-->life choice=2-->knowledge")
     @RequestMapping(value = "/api/getmodule",method = RequestMethod.GET)
     @ResponseBody
-    public Result getmodule(@RequestParam("choice")int choice){
+    public Result getModule(@RequestParam("choice")int choice){
         Result result;
-        if(choice ==1){
+        if(choice == 1){
             //get post list of life module
             List<Post> posts = iModuleService.getPosts("life");
             result = Result.ok(HTMLUtils.tohtmls(posts));
@@ -114,7 +123,7 @@ public class ModuleController {
     @ApiOperation("Search Knowledge Module via search key")
     @RequestMapping(value = "/api/searchmodule",method = RequestMethod.GET)
     @ResponseBody
-    public Result searchmodule(@RequestParam("key")String key){
+    public Result searchModule(@RequestParam("key")String key){
         List<Module> modules = iModuleService.searchModule(key);
         return Result.ok(modules);
     }
@@ -123,7 +132,7 @@ public class ModuleController {
     @ApiOperation("Get posts of a user at a module")
     @RequestMapping(value = "/api/getselfposts",method = RequestMethod.GET)
     @ResponseBody
-    public Result getselfposts(@RequestParam("module_name")String module_name,
+    public Result getSelfPosts(@RequestParam("module_name")String module_name,
                                @RequestParam("username")String username){
         List<Post> posts = postMapper.getPosts(username,module_name);
         return Result.ok(HTMLUtils.tohtmls(posts));
@@ -133,7 +142,7 @@ public class ModuleController {
     @ApiOperation("Get Posts of a mudule by module_name")
     @RequestMapping(value = "/api/getposts",method = RequestMethod.GET)
     @ResponseBody
-    public Result getposts(@RequestParam("module_name")String module_name){
+    public Result getPosts(@RequestParam("module_name")String module_name){
         List<Post> posts = iModuleService.getPosts(module_name);
         return Result.ok(HTMLUtils.tohtmls(posts));
     }
@@ -142,7 +151,7 @@ public class ModuleController {
     @ApiOperation("Pin a post to the top of a module")
     @RequestMapping(value = "/api/totop",method = RequestMethod.POST)
     @ResponseBody
-    public Result totop(@RequestParam("post_id")int post_id){
+    public Result toTop(@RequestParam("post_id")int post_id){
         //refresh the page
         //return Result.ok(HTMLUtils.tohtmls(posts));
         int flag=iModuleService.toTop(post_id);
@@ -159,7 +168,7 @@ public class ModuleController {
     @RequestMapping(value="/api/getpoints", method = RequestMethod.POST)
     @ResponseBody
     //request params: module_name of life module: "life", when frontend send http request
-    public Result getpoints(@RequestParam("username")String username,
+    public Result getPoints(@RequestParam("username")String username,
                             @RequestParam("module_name")String module_name){
         int point = iModuleService.getPoints(username,module_name);
         return Result.ok(point);
@@ -169,9 +178,9 @@ public class ModuleController {
     @ApiOperation("Apply for admin of a module")
     @RequestMapping(value = "/api/applyadmin", method = RequestMethod.POST)
     @ResponseBody
-    public Result applym(@RequestParam("username")String username,
-                         @RequestParam("module_name")String module_name){
-        int res = iModuleService.applym(username,module_name);
+    public Result applyAdmin(@RequestParam("username")String username,
+                             @RequestParam("module_name")String module_name){
+        int res = iModuleService.applyAdmin(username,module_name);
         if(res == 0)
             return Result.ok("apply successfully");
         else if(res == 1)
@@ -186,7 +195,7 @@ public class ModuleController {
     @ApiOperation("Quit module admin")
     @RequestMapping(value = "/api/deladmin", method = RequestMethod.POST)
     @ResponseBody
-    public Result deladmin(@RequestParam("username")String username){
+    public Result deleteAdmin(@RequestParam("username")String username){
         iModuleService.quitAdmin(username);
         return Result.ok("quit successfully");
     }
@@ -195,20 +204,28 @@ public class ModuleController {
     @ApiOperation("Edit module introduction")
     @RequestMapping(value = "/api/editintro", method = RequestMethod.POST)
     @ResponseBody
-    public Result editintro(@RequestParam("module_name")String module_name,
+    public Result editIntro(@RequestParam("module_name")String module_name,
                             @RequestParam("new_intro")String new_intro){
-        iModuleService.editintro(module_name,new_intro);
+        iModuleService.editIntro(module_name,new_intro);
         return Result.ok("modify successfully");
     }
 
     @CrossOrigin
     @ApiOperation("Get Posts of a mudule by module_name")
-    @RequestMapping(value = "/api/homeposts",method = RequestMethod.GET)
+    @RequestMapping(value = "/api/homeposts", method = RequestMethod.GET)
     @ResponseBody
-    public Result homeposts(){
-        List<HotModule> hotmodules = iModuleService.gethotmodules();
-        return Result.ok(hotmodules);
+    public Result homePosts(){
+        List<HotModule> hotModules = iModuleService.getHotModules();
+        return Result.ok(hotModules);
     }
 
+    @CrossOrigin
+    @ApiOperation("Delete Module by module_name")
+    @RequestMapping(value = "/api/deletemodule", method = RequestMethod.POST)
+    @ResponseBody
+    public Result deleteModule(@RequestParam("moduleName")String moduleName){
+        moduleMapper.deleteModule(moduleName);
+        return Result.ok("deleter successfully");
+    }
 
 }

@@ -1,6 +1,6 @@
 <template>
-  <b-card class="border-secondary shadow" bg-variant="light">
-    <b-form @submit="sendPost" @reset="resetPContent">
+  <b-card class="border-secondary shadow" bg-variant="light" v-if="loginState">
+    <b-form @submit="sendPost" @reset="resetPContent" >
       <b-form-group id="test-area-1">
         <rich-text-editor :own-flag="ownFlag" :mod-name="moduleName" :text-pipe="postContent" @rich-input-content="updatePContent" />
       </b-form-group>
@@ -29,7 +29,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      currentUser: "loginInfo/getLUName"
+      currentUser: "loginInfo/getLUName",
+      loginState: "loginInfo/getLoginState",
     })
   },
   methods: {

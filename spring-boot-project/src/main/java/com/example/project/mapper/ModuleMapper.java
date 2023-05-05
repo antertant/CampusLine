@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface ModuleMapper {
     int existModule(@Param(value = "module_name")String module_name);
-    void createModulerequest(@Param(value = "module_name")String module_name);
-    void updateModulerequest(@Param(value = "module_name")String module_name);
+    void createModuleRequest(@Param(value = "module_name")String module_name);
+    void updateModuleRequest(@Param(value = "module_name")String module_name);
 
     List<HashMap<String,Object>> getRequests();
     void insertModule(@Param(value = "module_name")String module_name);
@@ -20,7 +20,7 @@ public interface ModuleMapper {
 
     List<Post> getPosts(@Param(value="module_name")String module_name);
 
-    int getTopc(@Param(value = "module_name")String module_name);
+    int getTops(@Param(value = "module_name")String module_name);
     int ifTop(@Param(value = "post_id")int post_id);
     void setTop(@Param(value = "post_id")int post_id);
 
@@ -39,12 +39,13 @@ public interface ModuleMapper {
                    @Param(value = "new_intro")String new_intro);
 
     //module_name:post_count
-    List<HashMap<String,String>> gethotmodules(@Param("module_count")int module_count);
+    List<HashMap<String,String>> getHotModules(@Param("module_count")int module_count);
     //post_id: like_count/comment_count in 24hrs
-    List<HashMap<String,Object>> postlikecount(@Param(value = "module_name")String module_name);
-    List<HashMap<String,Object>> postcommentcount(@Param(value = "module_name")String module_name);
+    List<HashMap<String,Object>> postLikeCount(@Param(value = "module_name")String module_name);
+    List<HashMap<String,Object>> postCommentCount(@Param(value = "module_name")String module_name);
     //get reply count in 24hrs of a post
-    int commentreplycount(@Param(value = "post_id")int post_id);
+    int commentReplyCount(@Param(value = "post_id")int post_id);
 
+    void deleteModule(@Param(value = "moduleName")String moduleName);
 
 }

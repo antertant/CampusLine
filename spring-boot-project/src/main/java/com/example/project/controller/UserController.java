@@ -5,8 +5,6 @@ import com.example.project.entity.User;
 import com.example.project.mapper.UserMapper;
 import com.example.project.result.Result;
 import com.example.project.service.IUserService;
-import com.example.project.service.Impl.IUserServiceImpl;
-import com.example.project.utils.HTMLUtils;
 import com.power.common.util.RandomUtil;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +16,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -43,14 +42,15 @@ public class UserController {
     @ResponseBody
     public Result login(@RequestBody User loginInfo) {
         User user = iUserService.getuser(loginInfo.getUsername());
+        Optional<User>userOptional = Optional.ofNullable(user);
 
-        String username = loginInfo.getUsername();
-        String password_ = loginInfo.getPassword();
-        if (iUserService.getuser(username)!=null) {
-            String password = iUserService.getpassword(username);
-            if (Objects.equals(password_,password)) {
+        if (userOptional.isPresent()){
+            String passwordLoginIn = loginInfo.getPassword();
+            if (userOptional.stream()
+                    .anyMatch((userValue)->userValue
+                            .getPassword()
+                            .equals(passwordLoginIn)))
                 return Result.ok(user);
-            }
         }
         return Result.fail("fail");
     }
@@ -61,14 +61,15 @@ public class UserController {
     @ResponseBody
     public Result login_mail(@RequestBody User loginInfo) {
         User user = iUserService.getuser_email(loginInfo.getEmail());
+        Optional<User> userOptional = Optional.ofNullable(user);
 
-        String email = loginInfo.getEmail();
-        String password_ = loginInfo.getPassword();
-        if (iUserService.getuser_email(email)!=null) {
-            String password = iUserService.getpassword_email(email);
-            if (Objects.equals(password_,password)) {
+        if (userOptional.isPresent()) {
+            String passwordLoginIn = loginInfo.getPassword();
+            if (userOptional.stream()
+                    .anyMatch(userValue -> userValue
+                            .getPassword()
+                            .equals(passwordLoginIn)))
                 return Result.ok(user);
-            }
         }
         return Result.fail("fail");
     }
@@ -79,16 +80,16 @@ public class UserController {
     @ResponseBody
     public Result sendmail(@RequestParam("email")String email){
         SimpleMailMessage message=new SimpleMailMessage();
-        String verifycode= RandomUtil.randomNumbers(4);
-        message.setSubject("验证码");
-        message.setText(verifycode);
+        String verifyCode= RandomUtil.randomNumbers(4);
+        message.setSubject("VerifyCode");
+        message.setText(verifyCode);
         message.setTo(email);
-        message.setFrom("ece651project@163.com");
+        message.setFrom("Hazixn_foal7713@qq.com");
         mailSender.send(message);
-        if(userMapper.existVemail(email)!=0){
-            userMapper.updateVcode(email,verifycode);
+        if(userMapper.existVerifyEmail(email)!=0){
+            userMapper.updateVerifyCode(email,verifyCode);
         }else
-            userMapper.createVcode(email,verifycode);
+            userMapper.createVerifyCode(email,verifyCode);
         return Result.ok("verify code send successful");
     }
 
@@ -96,11 +97,16 @@ public class UserController {
     @ApiOperation(value = "register")
     @RequestMapping(value = "/api/register",method = RequestMethod.POST)
     @ResponseBody
-    public Result register(@RequestParam("username")String username,@RequestParam("password")String password,@RequestParam("email")String email,@RequestParam("verifycode")String verifycode) {
+    public Result register(@RequestParam("username")String username,
+                           @RequestParam("password")String password,
+                           @RequestParam("email")String email,
+                           @RequestParam("verifycode")String verifycode) {
         if(userMapper.existUser(username)==0){
             if(userMapper.existEmail(email)==0){
-                if(userMapper.checkVcode(email,verifycode)==1){
+                if(userMapper.checkVerifyCode(email,verifycode)==1){
+                    //registration code>>>
                     userMapper.insertUser(username,password,email);
+
                 }else return Result.fail("wrong verify code!");
             }else return Result.fail("email exist!");
         }else return Result.fail("username exist!");
@@ -111,11 +117,11 @@ public class UserController {
     @ApiOperation(value = "update password")
     @RequestMapping(value = "/api/updatepassword", method = RequestMethod.POST)
     @ResponseBody
-    public Result updatepassword(@RequestParam("username")String username,
-                         @RequestParam("password")String password,
+    public Result updatePassword(@RequestParam("username")String username,
+                                 @RequestParam("password")String password,
                                  @RequestParam("oldpassword")String oldpassword){
-        String oldpw=iUserService.getpassword(username);
-        if(Objects.equals(oldpw,oldpassword)){ //verify old password and update new
+        String oldPassword=iUserService.getpassword(username);
+        if(Objects.equals(oldPassword,oldpassword)){ //verify old password and update new
             iUserService.updatePassword(username,password);
             return Result.ok("update password successfully");
         }else
@@ -127,14 +133,14 @@ public class UserController {
     @ApiOperation(value = "update password by email verify code")
     @RequestMapping(value = "/api/updatepassword_email", method = RequestMethod.POST)
     @ResponseBody
-    public Result updatepassword_email(@RequestParam("email")String email,
-                                 @RequestParam("verifycode")String verifycode,
-                                 @RequestParam("password")String password){
-        if(userMapper.checkVcode(email,verifycode)==1){
+    public Result updatePassword_email(@RequestParam("email")String email,
+                                       @RequestParam("verifycode")String verifycode,
+                                       @RequestParam("password")String password){
+        if(userMapper.checkVerifyCode(email,verifycode)==1){
             iUserService.updatePassword_email(email,password);
             //change the verify code in case user use the same verifycode to change password continuously
-            String vcode= RandomUtil.randomNumbers(4);
-            userMapper.updateVcode(email,vcode);
+            String vCode= RandomUtil.randomNumbers(4);
+            userMapper.updateVerifyCode(email,vCode);
 
             return Result.ok("update password successfully");
         }else
@@ -146,7 +152,7 @@ public class UserController {
     @RequestMapping(value = "/api/follow", method = RequestMethod.POST)
     @ResponseBody
     public Result follow(@RequestParam("follower")String follower,
-                          @RequestParam("username")String username){
+                         @RequestParam("username")String username){
         int flag = iUserService.follow(follower,username);
         String msg;
         if(flag == 1)
@@ -160,7 +166,7 @@ public class UserController {
     @ApiOperation(value = "send message to another user")
     @RequestMapping(value = "/api/chatsend", method = RequestMethod.POST)
     @ResponseBody
-    public Result chatsend(@RequestBody ChatMessage chatMessage){
+    public Result chatSend(@RequestBody ChatMessage chatMessage){
         userMapper.insertChat(chatMessage);
         return Result.ok("send chat successfully");
     }
@@ -169,8 +175,8 @@ public class UserController {
     @ApiOperation(value = "get all newest chat list")
     @RequestMapping(value = "/api/getallnewestchat", method = RequestMethod.GET)
     @ResponseBody
-    public Result getallnewestchat(@RequestParam("username")String username){
-        List<ChatMessage> chatMessages= userMapper.getallnewchat(username);
+    public Result getAllNewestChat(@RequestParam("username")String username){
+        List<ChatMessage> chatMessages = userMapper.getAllNewChat(username);
         return Result.ok(chatMessages);
     }
 
@@ -178,8 +184,8 @@ public class UserController {
     @ApiOperation(value = "count all unread chat of a user")
     @RequestMapping(value = "/api/countunreadchat_all", method = RequestMethod.GET)
     @ResponseBody
-    public Result countunreadchat_all(@RequestParam("username")String username){
-        int count = userMapper.countunreadchat_all(username);
+    public Result countUnreadChat_All(@RequestParam("username")String username){
+        int count = userMapper.countUnreadChat_All(username);
         return Result.ok(count);
     }
 
@@ -187,8 +193,9 @@ public class UserController {
     @ApiOperation(value = "count unread chat of one user to one user")
     @RequestMapping(value = "/api/countunreadchat", method = RequestMethod.GET)
     @ResponseBody
-    public Result countunreadchat(@RequestParam("username")String username,@RequestParam("from_user")String from_user){
-        int count = userMapper.countunreadchat(username,from_user);
+    public Result countUnreadChat(@RequestParam("username")String username,
+                                  @RequestParam("from_user")String from_user){
+        int count = userMapper.countUnreadChat(username,from_user);
         return Result.ok(count);
     }
 
@@ -196,9 +203,10 @@ public class UserController {
     @ApiOperation(value = "cycle: get chat content && set unread==0")
     @RequestMapping(value = "/api/getchat", method = RequestMethod.GET)
     @ResponseBody
-    public Result getchat(@RequestParam("username")String username,@RequestParam("from_user")String from_user){
-        List<ChatMessage> chat = userMapper.getchat(username,from_user);
-        userMapper.setunread(username, from_user);
+    public Result getChat(@RequestParam("username")String username,
+                          @RequestParam("from_user")String from_user){
+        List<ChatMessage> chat = userMapper.getChat(username,from_user);
+        userMapper.setUnread(username, from_user);
         return Result.ok(chat);
     }
 
@@ -206,7 +214,7 @@ public class UserController {
     @ApiOperation("get the follower_list of a user")
     @RequestMapping(value = "/api/getfollower", method = RequestMethod.GET)
     @ResponseBody
-    public Result getfollower(@RequestParam("username")String username){
+    public Result getFollower(@RequestParam("username")String username){
         List<String> followers = iUserService.getFollower(username);
         return Result.ok(followers);
     }
@@ -215,16 +223,16 @@ public class UserController {
     @ApiOperation("count the followers")
     @RequestMapping(value="/api/countfollower", method = RequestMethod.GET)
     @ResponseBody
-    public Result countfollower(@RequestParam("username")String username){
-        int countfollower = iUserService.countFollower(username);
-        return Result.ok(countfollower);
+    public Result countFollower(@RequestParam("username")String username){
+        int countFollower = iUserService.countFollower(username);
+        return Result.ok(countFollower);
     }
 
     @CrossOrigin
     @ApiOperation("get the follow_list of a user")
     @RequestMapping(value = "/api/getfollow", method = RequestMethod.GET)
     @ResponseBody
-    public Result getfollow(@RequestParam("username")String username){
+    public Result getFollow(@RequestParam("username")String username){
         List<String> follow = iUserService.getFollow(username);
         return Result.ok(follow);
     }
@@ -233,25 +241,26 @@ public class UserController {
     @ApiOperation("count the follow")
     @RequestMapping(value="/api/countfollow", method = RequestMethod.GET)
     @ResponseBody
-    public Result countfollow(@RequestParam("username")String username){
-        int countfollow = iUserService.countFollow(username);
-        return Result.ok(countfollow);
+    public Result countFollow(@RequestParam("username")String username){
+        int countFollow = iUserService.countFollow(username);
+        return Result.ok(countFollow);
     }
 
     @CrossOrigin
     @ApiOperation("whether followed")
     @RequestMapping(value="/api/isfollowed", method = RequestMethod.GET)
     @ResponseBody
-    public Result isfollowed(@RequestParam("username")String username,@RequestParam("follower")String follower){
-        int isfollowed = iUserService.isFollowed(username,follower);
-        return Result.ok(isfollowed);
+    public Result isFollowed(@RequestParam("username")String username,
+                             @RequestParam("follower")String follower){
+        int isFollowed = iUserService.isFollowed(username,follower);
+        return Result.ok(isFollowed);
     }
 
     @CrossOrigin
     @ApiOperation("get user list for managemant")
     @RequestMapping(value="/api/getusers", method = RequestMethod.GET)
     @ResponseBody
-    public Result getusers(){
+    public Result getUsers(){
         List<User> list = userMapper.getUsers();
         return Result.ok(list);
     }
@@ -260,7 +269,7 @@ public class UserController {
     @ApiOperation("delete user account")
     @RequestMapping(value="/api/deleteuser", method = RequestMethod.POST)
     @ResponseBody
-    public Result deleteuser(@RequestParam("username")String username){
+    public Result deleteUser(@RequestParam("username")String username){
         userMapper.deleteByPrimaryKey(username);
         return Result.ok("delete successfully");
     }

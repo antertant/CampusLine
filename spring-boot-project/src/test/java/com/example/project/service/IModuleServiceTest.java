@@ -2,9 +2,7 @@ package com.example.project.service;
 
 import com.example.project.entity.Post;
 import com.example.project.entity.Module;
-import com.example.project.entity.User;
 import com.example.project.mapper.ModuleMapper;
-import com.example.project.mapper.UserMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +14,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class IModuleServiceTest {
@@ -110,18 +106,18 @@ class IModuleServiceTest {
     @Test//apply to be an admin of a module
     void applym() {
         //you have been manager of some module
-        Assertions.assertEquals(1,iModuleService.applym("meng","java"));
+        Assertions.assertEquals(1,iModuleService.applyAdmin("meng","java"));
         //the module has had enough managers
-        Assertions.assertEquals(2,iModuleService.applym("Mao","vue"));
+        Assertions.assertEquals(2,iModuleService.applyAdmin("Mao","vue"));
         //dont have enough points to apply for a manager
-        Assertions.assertEquals(3,iModuleService.applym("user3","springboot"));
+        Assertions.assertEquals(3,iModuleService.applyAdmin("user3","springboot"));
         //apply successfully
         //Assertions.assertEquals(0,iModuleService.applym("Mao","springboot"));
     }
 
     @Test
     void editintro() {
-        iModuleService.editintro("life","new life_intro");
+        iModuleService.editIntro("life","new life_intro");
         String intro = moduleMapper.getModule("life").getModule_intro();
         Assertions.assertEquals("new life_intro",intro);
     }
