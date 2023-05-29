@@ -39,7 +39,7 @@ class PostMapperTest {
         post.setPost_author("Mao");
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String s = "2021-02-18 00:31:19";
+        String s = "2023-02-18 00:31:19";
         Date date = format.parse(s);
         post.setPost_createtime(date);
 
@@ -51,34 +51,7 @@ class PostMapperTest {
 
     @Test//search posts by key
     void searchPosts() throws ParseException{
-//        Post post0 = new Post();
-//        Post post1 = new Post();
-//        post0.setPost_id(7);
-//        post0.setModule_name("springboot");
-//        post0.setPost_content("spspspspsp");
-//        post0.setPost_author("Mao");
-//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        String s0 = "2021-02-18 00:31:19";
-//        Date date0 = format.parse(s0);
-//        post0.setPost_createtime(date0);
-//        post0.setPost_likes(3);
-//        post0.setPost_comments(0);
-//        post0.setPost_collections(0);
-//
-//        post1.setPost_id(2);
-//        post1.setModule_name("springboot");
-//        post1.setPost_content("springboot is perfect");
-//        post1.setPost_author("meng");
-//        String s1 = "2021-02-05 22:28:00";
-//        Date date1 = format.parse(s1);
-//        post1.setPost_createtime(date1);
-//        post1.setPost_likes(2);
-//        post1.setPost_comments(3);
-//        post1.setPost_collections(0);
-//
-//        List<Post> list = new ArrayList<>();
-//        list.add(post0);
-//        list.add(post1);
+
         List<Integer> list = new ArrayList<>();
         list.add(7); list.add(2);
         List<Post> list1 = postMapper.searchPosts("sp");
@@ -90,36 +63,6 @@ class PostMapperTest {
 
     @Test//get posts of a user at a module
     void getPosts() throws ParseException{
-        //(9, NULL, 'sohai', 'ppp', '2021-02-18 11:15:43', 3, 0, 0);
-        //(12, NULL, 'wuhu', 'ppp', '2021-02-19 00:20:53', 0, 0, 0);
-//        Post post0 = new Post();
-//        Post post1 = new Post();
-//        post0.setPost_id(12);
-//        post0.setModule_name(null);
-//        post0.setPost_content("wuhu");
-//        post0.setPost_author("ppp");
-//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        String s0 = "2021-02-18 19:20:53";
-//        Date date0 = format.parse(s0);
-//        post0.setPost_createtime(date0);
-//        post0.setPost_likes(0);
-//        post0.setPost_comments(0);
-//        post0.setPost_collections(0);
-//
-//        post1.setPost_id(9);
-//        post1.setModule_name(null);
-//        post1.setPost_content("sohai");
-//        post1.setPost_author("ppp");
-//        String s1 = "2021-02-18 06:15:43";
-//        Date date1 = format.parse(s1);
-//        post1.setPost_createtime(date1);
-//        post1.setPost_likes(3);
-//        post1.setPost_comments(0);
-//        post1.setPost_collections(0);
-
-//        List<Post> list = new ArrayList<>();
-//        list.add(post0);
-//        list.add(post1);
 
         List<Integer> list = new ArrayList<>();
         list.add(8); list.add(6);
