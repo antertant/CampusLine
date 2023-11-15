@@ -1,7 +1,6 @@
 package com.example.project.service;
 
 import com.example.project.entity.Post;
-import com.example.project.entity.PostComment;
 import com.example.project.entity.PostLike;
 
 import java.util.List;

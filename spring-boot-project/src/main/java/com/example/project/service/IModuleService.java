@@ -20,11 +20,11 @@ public interface IModuleService {
 
     int getPoints(String username,String module_name);
 
-    int applym(String username,String module_name);
+    int applyAdmin(String username, String module_name);
 
     void quitAdmin(String username);
 
-    void editintro(String module_name,String new_intro);
+    void editIntro(String module_name, String new_intro);
 
-    List<HotModule> gethotmodules();
+    List<HotModule> getHotModules();
 }

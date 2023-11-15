@@ -9,7 +9,7 @@
 export default {
   name: "pageNotFound",
   created() {
-    document.title = 'CampusLine - 404_Page_Not_Found'
+    document.title = 'Asuka - 404_Page_Not_Found'
   },
 }
 </script>

@@ -6,11 +6,11 @@
         select count(1) from module_creation
         where module_name = #{module_name}
     </select>
-    <insert id="createModulerequest">
+    <insert id="createModuleRequest">
         insert into module_creation(module_name)
         values(#{module_name})
     </insert>
-    <update id="updateModulerequest">
+    <update id="updateModuleRequest">
         update module_creation
         set request_count=request_count+1 where module_name = #{module_name}
     </update>
@@ -39,7 +39,7 @@
         order by if_top desc, post_createtime desc
     </select>
 
-    <select id="getTopc" resultType="java.lang.Integer">
+    <select id="getTops" resultType="java.lang.Integer">
         select count(1) from post
         where module_name =#{module_name}
         <if test="module_name == null">
@@ -72,7 +72,7 @@
 
     <select id="searchModule" resultType="com.example.project.entity.Module">
         select * from module
-        where module_name like "%"#{key}"%"
+        where module_name like #{key}
         and module_name != 'life'
         order by module_name asc
     </select>
@@ -92,7 +92,7 @@
         where module_name = #{module_name}
     </update>
 
-    <select id="gethotmodules" resultType="java.util.HashMap">
+    <select id="getHotModules" resultType="java.util.HashMap">
         select module.module_name,count(1)
         from module INNER JOIN post
         on module.module_name = post.module_name
@@ -100,7 +100,7 @@
         order by count(1) desc limit 0,#{module_count}
     </select>
 
-    <select id="postlikecount" resultType="java.util.HashMap">
+    <select id="postLikeCount" resultType="java.util.HashMap">
         select post.post_id,count(1)
         from post INNER JOIN post_like
         on post.post_id = post_like.post_id
@@ -113,7 +113,7 @@
         order by post.post_id asc
     </select>
 
-    <select id="postcommentcount" resultType="java.util.HashMap">
+    <select id="postCommentCount" resultType="java.util.HashMap">
         select post.post_id,count(1)
         from post INNER JOIN post_comment
         on post.post_id = post_comment.post_id
@@ -126,11 +126,17 @@
         order by post.post_id asc
     </select>
 
-    <select id="commentreplycount" resultType="java.lang.Integer">
+    <select id="commentReplyCount" resultType="java.lang.Integer">
         select count(1)
         from post_comment INNER JOIN comment_reply
         on post_comment.comment_id = comment_reply.comment_id
         where post_comment.post_id = #{post_id}
         and comment_reply.creply_time >= DATE_ADD(UTC_TIMESTAMP,INTERVAL -1 DAY)
     </select>
+
+    <delete id="deleteModule">
+        delete from module
+        where module_name = #{moduleName}
+    </delete>
+
 </mapper>

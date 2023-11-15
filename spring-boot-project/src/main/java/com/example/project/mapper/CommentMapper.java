@@ -2,7 +2,6 @@ package com.example.project.mapper;
 
 import com.example.project.entity.CommentLike;
 import com.example.project.entity.CommentReply;
-import com.example.project.entity.Post;
 import com.example.project.entity.PostComment;
 import org.apache.ibatis.annotations.Param;
 

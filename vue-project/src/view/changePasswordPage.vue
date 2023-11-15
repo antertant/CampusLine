@@ -27,7 +27,7 @@ export default {
     })
   },
   created() {
-    document.title = 'CampusLine - Password Modification'
+    document.title = 'Asuka - Password Modification'
   }
 }
 </script>

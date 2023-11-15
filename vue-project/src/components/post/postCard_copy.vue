@@ -99,8 +99,8 @@
     </b-card-text>
 <!--    <b-img src="https://placekitten.com/380/200" class="border-secondary shadow" center></b-img>-->
     <div style="text-align: right">
-      <b-img src="https://upload.wikimedia.org/wikipedia/en/thumb/6/6e/University_of_Waterloo_seal.svg/1200px-University_of_Waterloo_seal.svg.png"
-             alt="University of Waterloo seal.svg"
+      <b-img src="~@/assets/eva.jpg"
+             alt="NEON GENESIS EVANGELION Ayanami Rei.svg"
              width="48"
              height="48" class="mr-3"/>
     </div>

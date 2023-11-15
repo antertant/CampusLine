@@ -123,7 +123,7 @@ export default {
     }
   },
   created() {
-    document.title = 'CampusLine - Knowledge_' + String(this.modName).toUpperCase()
+    document.title = 'Asuka - module_' + String(this.modName).toUpperCase()
   },
   mounted() {
     this.$store.dispatch("modulePostInfo/getModulePostfromServer", this.modName)

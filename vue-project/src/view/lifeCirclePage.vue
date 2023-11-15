@@ -126,7 +126,7 @@ export default {
     }
   },
   created() {
-    document.title = 'CampusLine - Life Circle'
+    document.title = 'Asuka - Life Circle'
   },
   mounted() {
     this.$store.dispatch("lifePostInfo/getlifePostfromServer")

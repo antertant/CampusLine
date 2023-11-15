@@ -32,7 +32,7 @@
             <h5>{{ hotModule1.module_name.toUpperCase() }}</h5>
           </template>
           <!--       Enter the module-->
-          <b-button block :to="'/knowledge-modules/'+hotModule1.module_name"
+          <b-button block :to="'/module-modules/'+hotModule1.module_name"
                     variant="primary" class="shadow-sm">
             Enter the <{{ hotModule1.module_name.toUpperCase() }}> Module
           </b-button>
@@ -55,7 +55,7 @@
             <h5>{{ hotModule2.module_name.toUpperCase() }}</h5>
           </template>
           <!--       Enter the module-->
-          <b-button block :to="'/knowledge-modules/'+hotModule2.module_name"
+          <b-button block :to="'/module-modules/'+hotModule2.module_name"
                     variant="primary" class="shadow-sm">
             Enter the <{{ hotModule2.module_name.toUpperCase() }}> Module
           </b-button>
@@ -75,7 +75,7 @@
             <h5>{{ hotModule3.module_name.toUpperCase() }}</h5>
           </template>
           <!--       Enter the module-->
-          <b-button block :to="'/knowledge-modules/'+hotModule3.module_name"
+          <b-button block :to="'/module-modules/'+hotModule3.module_name"
                     variant="primary" class="shadow-sm">
             Enter the <{{ hotModule3.module_name.toUpperCase() }}> Module
           </b-button>

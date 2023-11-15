@@ -5,9 +5,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import javax.annotation.Resource;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @SpringBootTest
@@ -56,59 +53,59 @@ class UserMapperTest {
 
     @Test
     void existVemail(){
-        Assertions.assertEquals(1,userMapper.existVemail("1173229585@qq.com"));
-        Assertions.assertEquals(0,userMapper.existVemail("1173229"));
+        Assertions.assertEquals(1,userMapper.existVerifyEmail("1173229585@qq.com"));
+        Assertions.assertEquals(0,userMapper.existVerifyEmail("1173229"));
     }
 
     @Test
     void createVcode(){
-        userMapper.createVcode("123123","1234");
-        Assertions.assertEquals(1,userMapper.checkVcode("123123","1234"));
-        userMapper.deleteVcode("123123");
+        userMapper.createVerifyCode("123123","1234");
+        Assertions.assertEquals(1,userMapper.checkVerifyCode("123123","1234"));
+        userMapper.deleteVerifyCode("123123");
     }
 
     @Test
     void checkVcode(){
-        Assertions.assertEquals(1,userMapper.checkVcode("1234@qq.com","1234"));
-        Assertions.assertEquals(0,userMapper.checkVcode("1234@qq.com","123"));
-        Assertions.assertEquals(0,userMapper.checkVcode("124@qq.com","1234"));
+        Assertions.assertEquals(1,userMapper.checkVerifyCode("1234@qq.com","1234"));
+        Assertions.assertEquals(0,userMapper.checkVerifyCode("1234@qq.com","123"));
+        Assertions.assertEquals(0,userMapper.checkVerifyCode("124@qq.com","1234"));
     }
 
     @Test
     void getallnewchat(){
-        List<ChatMessage> chat=userMapper.getallnewchat("Mao");
+        List<ChatMessage> chat=userMapper.getAllNewChat("Mao");
         Assertions.assertEquals("hi!",chat.get(0).getContent());
     }
 
     @Test
     void countunreadchat_all(){
-        Assertions.assertEquals(2,userMapper.countunreadchat_all("Mao"));
+        Assertions.assertEquals(2,userMapper.countUnreadChat_All("Mao"));
     }
 
     @Test
     void countunreadchat(){
-        Assertions.assertEquals(1,userMapper.countunreadchat("Mao","gang"));
+        Assertions.assertEquals(1,userMapper.countUnreadChat("Mao","gang"));
     }
 
     @Test
     void getchat(){
-        List<ChatMessage> chat=userMapper.getchat("Mao","gang");
+        List<ChatMessage> chat=userMapper.getChat("Mao","gang");
         String s=chat.get(0).getContent();
         Assertions.assertEquals("dsss",s);
 
-        userMapper.setunread1("Mao","gang");
-        userMapper.setunread1("gang","Mao");
+        userMapper.setUnread1("Mao","gang");
+        userMapper.setUnread1("gang","Mao");
     }
 
     @Test
     void setunread1(){
-        userMapper.setunread1("Mao","gang");
-        List<ChatMessage> chat=userMapper.getchat("Mao","gang");
+        userMapper.setUnread1("Mao","gang");
+        List<ChatMessage> chat=userMapper.getChat("Mao","gang");
         int s=chat.get(0).getUnread();
         Assertions.assertEquals(1,s);
 
-        userMapper.setunread1("Mao","gang");
-        userMapper.setunread1("gang","Mao");
+        userMapper.setUnread1("Mao","gang");
+        userMapper.setUnread1("gang","Mao");
 
     }
 }

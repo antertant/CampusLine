@@ -31,14 +31,14 @@ class CommentMapperTest {
         postComment0.setComment_id(8);
         postComment0.setPost_id(8);
         postComment0.setComment_content("like like like");
-        Date d = format.parse("2021-02-18 11:22:14");
+        Date d = format.parse("2023-02-18 11:22:14");
         postComment0.setComment_time(d);
 
         PostComment postComment1 = new PostComment();
         postComment1.setComment_id(9);
         postComment1.setPost_id(8);
         postComment1.setComment_content("like like like");
-        Date d1 = format.parse("2021-02-18 11:24:12");
+        Date d1 = format.parse("2023-02-18 11:24:12");
         postComment1.setComment_time(d1);
         list1.add(postComment0);list1.add(postComment1);
 
@@ -62,7 +62,7 @@ class CommentMapperTest {
         commentReply.setReply_id(2);
         commentReply.setComment_id(4);
         commentReply.setCreply_content("no");
-        commentReply.setCreply_time(format.parse("2021-02-17 00:29:57"));
+        commentReply.setCreply_time(format.parse("2023-02-17 00:29:57"));
         commentReply.setFrom_user("meng");
         commentReply.setTo_user("ppp");
         list1.add(commentReply);

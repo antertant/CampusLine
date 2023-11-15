@@ -16,17 +16,17 @@ module.exports = {
       .waitForElementPresent('#lifeHeader')
       .assert.urlContains('/life')
 
-      // test modules popover -- knowledge modules
+      // test modules popover -- module modules
       .click('#modules-popover')
       .waitForElementVisible('#modulePopKnow')
       .click('#modulePopKnow')
       .waitForElementPresent('#java_block')
-      .assert.urlContains('/knowledge-modules')
+      .assert.urlContains('/module-modules')
 
       // test java module enter button
       .click('#java_button')
       .waitForElementNotPresent('#java_block')
-      .assert.urlContains('/knowledge-modules/java')
+      .assert.urlContains('/module-modules/java')
 
       // test message box for visitor
       .click('#message-popover')

@@ -11,7 +11,7 @@ export default {
   name: "modulesPage",
   components: {ModuleCard},
   created() {
-    document.title = 'CampusLine - Modules List'
+    document.title = 'Asuka - Modules List'
   }
 }
 </script>

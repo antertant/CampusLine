@@ -101,7 +101,7 @@ export default {
           if(this.modName === 'life')
             this.$router.replace('/life')
           else
-            this.$router.replace('/knowledge-modules/'+this.modName)
+            this.$router.replace('/module-modules/'+this.modName)
         })
       }
     }

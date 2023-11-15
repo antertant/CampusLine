@@ -3,23 +3,22 @@ package com.example.project.mapper;
 import com.example.project.entity.ChatMessage;
 import com.example.project.entity.User;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
 public interface UserMapper {
     int existUser(@Param(value = "username")String username);
     int existEmail(@Param(value = "email")String email);
-    int existVemail(@Param(value = "email")String email);
-    void updateVcode(@Param(value = "email")String email,@Param(value = "verifycode")String verifycode);
+    int existVerifyEmail(@Param(value = "email")String email);
+    void updateVerifyCode(@Param(value = "email")String email, @Param(value = "verifycode")String verifycode);
     void insertUser(@Param(value = "username")String username,@Param(value = "password")String password,@Param(value = "email")String email);
     void deleteUser(@Param(value = "username")String username);
     User selectByPrimaryKey(@Param(value = "username")String username);
     String usernameByEmail(@Param(value = "email")String email);
-    int updatePassword(@Param(value = "username")String username,@Param(value = "password")String password);
+    void updatePassword(@Param(value = "username")String username, @Param(value = "password")String password);
     List<String> selectFollow(@Param(value = "username")String username);
     List<Integer> selectCollection(@Param(value = "username")String username);
-    int deleteByPrimaryKey(@Param(value = "username")String username);
+    void deleteByPrimaryKey(@Param(value = "username")String username);
 
     //user follower function
     List<String> selectFollower(@Param(value = "username")String username);
@@ -35,18 +34,18 @@ public interface UserMapper {
     //int insert(User record);
     //int insertSelective(User record);
 
-    void createVcode(@Param(value = "email")String email,@Param(value = "verifycode")String verifycode);
-    int checkVcode(@Param(value = "email")String email,@Param(value = "verifycode")String verifycode);
-    void deleteVcode(@Param(value = "email")String email);
+    void createVerifyCode(@Param(value = "email")String email, @Param(value = "verifycode")String verifycode);
+    int checkVerifyCode(@Param(value = "email")String email, @Param(value = "verifycode")String verifycode);
+    void deleteVerifyCode(@Param(value = "email")String email);
     void updatePassword_email(@Param(value = "email")String email,@Param(value = "password")String password);
 
     List<User> getUsers();
     void insertChat(@Param(value = "chatmessage")ChatMessage chatMessage);
-    List<ChatMessage> getallnewchat(@Param(value = "username")String username);
-    int countunreadchat_all(@Param(value = "username")String username);
-    int countunreadchat(@Param(value = "username")String username,@Param(value = "from_user")String from_user);
-    List<ChatMessage> getchat(@Param(value = "username")String username,@Param(value = "from_user")String from_user);
-    void setunread(@Param(value = "username")String username, @Param(value = "from_user")String from_user);
-    void setunread1(@Param(value = "username")String username, @Param(value = "from_user")String from_user);
+    List<ChatMessage> getAllNewChat(@Param(value = "username")String username);
+    int countUnreadChat_All(@Param(value = "username")String username);
+    int countUnreadChat(@Param(value = "username")String username, @Param(value = "from_user")String from_user);
+    List<ChatMessage> getChat(@Param(value = "username")String username, @Param(value = "from_user")String from_user);
+    void setUnread(@Param(value = "username")String username, @Param(value = "from_user")String from_user);
+    void setUnread1(@Param(value = "username")String username, @Param(value = "from_user")String from_user);
 
 }

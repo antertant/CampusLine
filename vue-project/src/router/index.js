@@ -53,7 +53,7 @@ export default new Router({
       props: true
     },
     {
-      path: '/knowledge-modules',
+      path: '/module-modules',
       name: 'modulesPage',
       component: modulesPage
     },
@@ -68,7 +68,7 @@ export default new Router({
       component: newsPage
     },
     {
-      path: '/knowledge-modules/:modName',
+      path: '/module-modules/:modName',
       name: 'modulesContentPage',
       component: modulesContentPage,
       props: true

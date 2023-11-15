@@ -27371,7 +27371,7 @@
 
 	function canNotify(value) {
 	  if (!value) {
-	    var why = value === false ? 'blocked' : 'unacknowledged';
+	    var why = value === false ? 'blocked' : 'unacmoduled';
 	    var reason = 'not permitted by user (' + why + ')';
 	    return Promise.reject(new Error(reason));
 	  }
@@ -29835,7 +29835,7 @@
 	   * A (sync) function to assert a user-supplied plugin implementation is valid.
 	   *
 	   * Defined in a {@link PluginDefinition}.
-	   
+
 	   * @callback PluginValidator
 	   * @param {*} value - Value to check
 	   * @this {PluginDefinition}

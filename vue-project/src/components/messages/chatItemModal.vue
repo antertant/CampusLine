@@ -10,22 +10,24 @@
     </template>
 
     <b-card class="border-0">
+
       <div v-for="singleMessage in chatMessageList">
-        <b-row v-show="singleMessage.to_user === userName" align-h="end" class="mb-3">
+        <b-row v-show="singleMessage.to_user === userName"  class="mb-3">
+          <b-avatar :to="'/profile='+fromUser" :title="fromUser" />
           <b-col cols="auto">
             <b-card style="background-color: #f3da86; max-width: 20rem; border-radius: 10px; padding:0.7rem" no-body>
               {{singleMessage.content}}
             </b-card>
           </b-col>
-          <b-avatar :to="'/profile='+fromUser" :title="fromUser" />
+
         </b-row>
-        <b-row v-show="singleMessage.to_user !== userName" class="mb-3">
-          <b-avatar :title="toUser" />
+        <b-row v-show="singleMessage.to_user !== userName" align-h="end" class="mb-3" >
           <b-col cols="auto">
             <b-card style="background-color: #e3e3e3; max-width: 20rem; border-radius: 10px;padding: 0.7rem" no-body>
               {{singleMessage.content}}
             </b-card>
           </b-col>
+          <b-avatar :title="toUser" />
         </b-row>
       </div>
     </b-card>

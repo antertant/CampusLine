@@ -18,13 +18,13 @@
      </b-col>
      <b-col cols="auto">
        <div>
-         <hot-card-title id="knowledgeEnterButton" style="width: 55rem" mod-name="Knowledge"/>
+         <hot-card-title id="moduleEnterButton" style="width: 55rem" mod-name="module"/>
        </div>
         <b-tabs active-nav-item-class="font-weight-bold text-uppercase text-dark bg-white"
                 v-model="tabIndex"
                 justified>
           <b-tab v-for="singleKnowModule in hotKnowData"
-                 :id="'knowledge-tab-'+singleKnowModule.module_name"
+                 :id="'module-tab-'+singleKnowModule.module_name"
                  :key="singleKnowModule.module_name">
             <template #title>
               <b style="color: #000000">

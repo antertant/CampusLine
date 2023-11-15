@@ -10,7 +10,7 @@ export default {
 name: "forgetPasswordPage",
   components: {ForgetPasswordCard},
   created() {
-    document.title = 'CampusLine - Forget Password'
+    document.title = 'Asuka - Forget Password'
   }
 }
 </script>

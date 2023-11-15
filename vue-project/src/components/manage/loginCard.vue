@@ -74,7 +74,7 @@ name: "loginCard",
   methods:{
     onSubmit(event) {
       event.preventDefault()
-      let emailReg = /^[a-zA-Z0-9_-]+@uwaterloo\.ca$/
+      let emailReg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
       if(emailReg.test(this.loginInfo.username)){
         this.loginWithEmail()
         return
@@ -90,7 +90,7 @@ name: "loginCard",
         .then(successResponse=>{
           console.log(successResponse)
           if(successResponse.data.code === 200){
-            //this.responseResult = JSON.stringify(successResponse.data)
+
             this.$router.replace({path:'/home'})
             this.$store.commit('loginInfo/setLUName', this.loginInfo.username)
             this.$nextTick(()=>{

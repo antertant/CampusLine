@@ -68,7 +68,7 @@ export default {
     }
   },
   created() {
-    document.title = 'CampusLine - Message Box'
+    document.title = 'Asuka - Message Box'
     window.addEventListener("resize", this.getHeight)
     this.getHeight()
   },

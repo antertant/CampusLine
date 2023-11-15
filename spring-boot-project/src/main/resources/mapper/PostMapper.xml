@@ -22,7 +22,7 @@
         order by post_createtime desc
     </select>
 
-    <select id="getPostsbyAuthor" resultType="com.example.project.entity.Post">
+    <select id="getPostsByAuthor" resultType="com.example.project.entity.Post">
         select * from post
         where post_author = #{username}
         order by post_createtime desc

@@ -15,7 +15,7 @@
         <b-button
           variant="warning"
           :id="singleModule.module_name+'_button'"
-          :to="'knowledge-modules/'+singleModule.module_name">
+          :to="'module-modules/'+singleModule.module_name">
           ENTER
         </b-button>
       </b-jumbotron>

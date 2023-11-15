@@ -96,7 +96,7 @@
       </template>
     </b-modal>
 <!--    logo-->
-<!--    <b-img src="https://upload.wikimedia.org/wikipedia/en/thumb/6/6e/University_of_Waterloo_seal.svg/1200px-University_of_Waterloo_seal.svg.png"-->
+<!--    <b-img src="~@/assets/eva.jpg"-->
 <!--           alt="University of Waterloo seal.svg"-->
 <!--           width="32"-->
 <!--           height="32"-->
@@ -134,7 +134,6 @@
         <b-row>
           <span id="post-time"><{{ postTime }}></span>
         </b-row>
-<!--        <b-img src="https://placekitten.com/380/200" class="border-secondary shadow" center></b-img>-->
       </b-col>
 <!--    Post content-->
       <b-card-text style="width:100%; max-height:400px; overflow-y: auto; margin-left: 4.5rem"
@@ -147,7 +146,9 @@
     <!--        Collect Button-->
         <b-list-group-item @click="collectPost"
                            button>
-          <b-icon icon="star"></b-icon>
+          <b-icon icon="star" v-if="!collectPress"></b-icon>
+          <b-icon icon="star" variant="danger" v-if="collectPress"></b-icon>
+          <b-badge variant="warning">{{ postContent.post_collections + collectCount }}</b-badge>
         </b-list-group-item>
 
     <!--        Like Button-->
@@ -200,7 +201,7 @@
         <b-modal :ref="'delete-post-modal-'+postContent.post_id+0"
                  :id="'delete-post-modal-'+postContent.post_id+0"
                  content-class="shadow"
-                 title="Delete Comment"
+                 title="Delete Post"
                  centered>
           Are you sure to delete the post?
           <template #modal-footer>
@@ -221,7 +222,8 @@
                         :post-id="postId"
                         :id="comment.comment_id"
                         @reply-event="cButtonGetCommentHook"
-                        @comment-deleted="getComment"></comment-card>
+                        @comment-deleted="getComment">
+          </comment-card>
         </div>
       </b-collapse>
 
@@ -255,10 +257,12 @@ export default {
       isMod: false,
       tmpContent: '',
       likeCount: 0, // Like counter
+      collectCount:0,//collect counter
       comments: [], // The content of comments
       postId: this.postContent.post_id,
       showPost: true,
       likePress: false,  // Like pressed flag
+      collectPress:false,
       likes: [],  // Like lists
       editorState: true
     }
@@ -328,10 +332,17 @@ export default {
           .then(response => {
             console.log(response)
             if (response.data.code === 200) {
-              if (response.data.data === "collect successfully")
+              if (response.data.data === "collect successfully"){
                 this.constructSuccessToast('Collection added')
-              else if (response.data.data === "remove collection successfully")
+                this.collectCount += 1
+                this.collectPress = true
+              }
+              else if (response.data.data === "remove collection successfully"){
                 this.constructSuccessToast('Collection removed')
+                this.collectCount -= 1
+                this.collectPress = false
+              }
+
             }
           })
           .catch(failResponse => {

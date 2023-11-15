@@ -3,15 +3,18 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     url: jdbc:mysql://localhost:3306/project?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
+    #input the SQL username and password that u set
     username: root
-    password: 123456
+    password: ""
   mail:
-    username: ece651project@163.com
-    password: MFEUWSQDKLNSMDET
-    host: smtp.163.com
+    #turn on smtp service on your email，and input ur smtp email address and verify code in the following two lines
+    username:
+    password:
+    # make suer u input the correct smtp service host and port
+    host: smtp.qq.com
     port: 465
     default-encoding: UTF-8
-    protocol: smtps
+    protocol: smtp
     properties:
       mail:
         smtp:
